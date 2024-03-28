@@ -56,12 +56,12 @@ class main_character
       exp=0;
       atk+=2*level+1;
       hp_max=2*level+5;
-      hp=hpmax;
+      hp=hp_max;
       mp=2*level;
       critical_rate+=level*0.02;
       critical_damage+=0.1;
       evasion_rate+=0.02;
-      if (critical rate>1)
+      if (critical_rate>1)
       {
         critical_rate=1;
       }
