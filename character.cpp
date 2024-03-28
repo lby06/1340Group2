@@ -40,11 +40,11 @@ class main_character
         uniform_real_distribution<> dis(0, 1);
         if (dis(gen)<=critical_rate) 
         {
-           return atk;
+           return atk*critical_damage;
         }
         else
         {
-           return atk*critical_damage;
+           return atk;
         }
      }
 
@@ -59,4 +59,9 @@ int main()
   main_character cha1;
   cha1.reset();
   cha1.display();
-}
+  for (int i=0;i<=10;i++)
+  {
+      cout<<cha1.damage();
+      }
+  }
+  
