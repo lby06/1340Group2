@@ -54,11 +54,11 @@ class main_character
     {
       level++;
       exp=0;
-      atk+=2*level+1;
-      hp_max=2*level+5;
+      atk+=level/2;
+      hp_max=15*level+10;
       hp=hp_max;
       mp=2*level;
-      critical_rate+=level*0.02;
+      critical_rate+=level*0.006;
       critical_damage+=0.1;
       evasion_rate+=0.02;
       if (critical_rate>1)
@@ -80,7 +80,8 @@ int main()
   cha1.display();
   for (int i=0;i<=10;i++)
   {
-      cout<<cha1.damage();
+      cha1.upgrade();
+      cout<<endl;
+      cha1.display();
       }
   }
-  
