@@ -4,18 +4,18 @@ using namespace std;
 class main_character
 {
   public:
-     is_alive=(hp>0);
+     bool is_alive=(hp>0);
      void reset()
      {
        hp=10;
        mp=10;
        exp=0;
-       critical_rate=0.15
-       critical_damage=1.5
+       critical_rate=0.15;
+       critical_damage=1.5;
        mp_recover_rate=1;
        evasion_rate=0.1;
-       memset(skill_status,0,skill_status.length)
-       memset(equipment_status,0,equipment_status.length)
+       memset(skill_status,0,skill_status.length);
+       memset(equipment_status,0,equipment_status.length);
      }
      void display()
      {
@@ -46,7 +46,7 @@ class main_character
   
 
   private:
-     int hp,mp,exp,attack;
+     int hp,mp,exp,atk;
      double critical_rate,critical_damage,evasion_rate,mp_recover_rate.
      int skill_status[6],equipment_status[6];
 };
