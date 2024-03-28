@@ -19,10 +19,6 @@ class main_character
      }
      void display()
      {
-       if (is_alive==0)
-       { 
-         return 0
-       }
        cout<<"HP: "<<hp<<"\n"<<"attack: "<<atk<<"\n"<<"MP: "<<mp<<"\n"<<"EXP: "<<exp<<"\n";
        cout<<"Critical Rate: "<<critical_rate*100<<"%"<<"\n"<<"Critical damage: "<<critical_damage*100<<"%"<<"\n";
        cout<<"Evasion Rate: "<<evasion_rate*100<<"%"<<"\n"<<"MP Recover Rate: "<<mp_recover_rate*100<<"%"<<"\n";
