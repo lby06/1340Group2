@@ -7,6 +7,9 @@ class main_character
      bool is_alive=(hp>0);
      void reset()
      {
+       locate_x=0;
+       locate_y=0;
+       atk=3;
        hp=10;
        mp=10;
        exp=0;
@@ -14,8 +17,15 @@ class main_character
        critical_damage=1.5;
        mp_recover_rate=1;
        evasion_rate=0.1;
-       memset(skill_status,0,skill_status.length);
-       memset(equipment_status,0,equipment_status.length);
+       for (int i = 0; i < 5; ++i) 
+       {
+        skill_status[i] = 0;
+       }
+       for (int i = 0; i < 5; ++i) 
+       {
+        equipment_status[i] = 0;
+       }
+
      }
      void display()
      {
@@ -37,16 +47,16 @@ class main_character
            return atk*critical_damage;
         }
      }
-     
-
-  
 
   private:
+     int locate_x,locate_y;
      int hp,mp,exp,atk;
      double critical_rate,critical_damage,evasion_rate,mp_recover_rate;
      int skill_status[6],equipment_status[6];
 };
 int main()
 {
-  return 0;
+  main_character cha1;
+  cha1.reset();
+  cha1.display();
 }
