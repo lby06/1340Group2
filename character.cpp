@@ -31,7 +31,7 @@ class main_character
      }
      void display()
      {
-       cout<<"LEVEL : "<<level;
+       cout<<"LEVEL : "<<level<<endl;
        cout<<"HP: "<<hp<<"\n"<<"attack: "<<atk<<"\n"<<"MP: "<<mp<<"\n"<<"EXP: "<<exp<<"\n";
        cout<<"Critical Rate: "<<critical_rate*100<<"%"<<"\n"<<"Critical damage: "<<critical_damage*100<<"%"<<"\n";
        cout<<"Evasion Rate: "<<evasion_rate*100<<"%"<<"\n"<<"MP Recover Rate: "<<mp_recover_rate*100<<"%"<<"\n";
