@@ -7,10 +7,12 @@ class main_character
      bool is_alive=(hp>0);
      void reset()
      {
+       level=0;
        locate_x=0;
        locate_y=0;
        atk=3;
        hp=10;
+       hp_max=10;
        mp=10;
        exp=0;
        critical_rate=0.15;
@@ -29,6 +31,7 @@ class main_character
      }
      void display()
      {
+       cout<<"LEVEL : "<<level;
        cout<<"HP: "<<hp<<"\n"<<"attack: "<<atk<<"\n"<<"MP: "<<mp<<"\n"<<"EXP: "<<exp<<"\n";
        cout<<"Critical Rate: "<<critical_rate*100<<"%"<<"\n"<<"Critical damage: "<<critical_damage*100<<"%"<<"\n";
        cout<<"Evasion Rate: "<<evasion_rate*100<<"%"<<"\n"<<"MP Recover Rate: "<<mp_recover_rate*100<<"%"<<"\n";
@@ -47,10 +50,26 @@ class main_character
            return atk;
         }
      }
+     void upgrade()
+    {
+      level++;
+      exp=0;
+      atk+=2*level+1;
+      hp_max=2*level+5;
+      hp=hpmax;
+      mp=2*level;
+      critical_rate+=level*0.02;
+      critical_damage+=0.1;
+      evasion_rate+=0.02;
+      if (critical rate>1)
+      {
+        critical_rate=1;
+      }
+    }
 
   private:
      int locate_x,locate_y;
-     int hp,mp,exp,atk;
+     int hp,mp,exp,atk,level,hp_max;
      double critical_rate,critical_damage,evasion_rate,mp_recover_rate;
      int skill_status[6],equipment_status[6];
 };
