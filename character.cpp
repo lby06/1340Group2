@@ -47,7 +47,7 @@ class main_character
 
   private:
      int hp,mp,exp,attack;
-     doube critical_rate,critical_damage,evasion_rate,mp_recover_rate.
+     double critical_rate,critical_damage,evasion_rate,mp_recover_rate.
      int skill_status[6],equipment_status[6];
 };
 int main()
