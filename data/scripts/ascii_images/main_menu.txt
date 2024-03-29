@@ -1,0 +1,9 @@
+
+     1. new game
+
+     2. save
+
+     3. tutorial
+
+     4. quit
+                
