@@ -60,7 +60,7 @@ class main_character
           if (skill_status[3]==2 && dis(gen)<=critical_rate/2.2+0.05)
           {
             cout<<"Utimate Critical Strike!!!";
-            return atk*critical_damage*critical_damage*1.15;
+            return atk*critical_damage*critical_damage;
           } 
           cout<<"Critical Strike!";
           return atk*critical_damage;
@@ -79,9 +79,9 @@ class main_character
       hp_max=15*level+10;
       hp=hp_max;
       mp=1.4*level+4;
-      critical_rate+=level*0.006;
+      critical_rate+=level*0.006+0.008;
       critical_damage+=0.1;
-      evasion_rate+=0.02;
+      evasion_rate+=0.01;
       if (critical_rate>1)
       {
         critical_rate=1;
@@ -121,6 +121,7 @@ class main_character
            else 
            {
              hp-=y;
+             cout<<"hurt: HP-"<<y;
              mp_recover(1);//受击回蓝
              if (skill_status[3]==1)
              { 
@@ -134,10 +135,11 @@ class main_character
            }
         }
     }
-    double normal_attack()
+    int normal_attack()
     {
       if (rageattack>=1)
       {
+        cout<<"Attack with raaaage"<<endl;
         rageattack-=1;
         return damage()*1.6;
       }
@@ -184,7 +186,7 @@ class main_character
     {
       skill_status[0]=1;
     }
-     double act_bladestorm()
+     int act_bladestorm()
     {
       if (skill_status[0]==2)
       {
@@ -280,7 +282,7 @@ class main_character
     {
       skill_status[2]=2;
     }
-    int act_rage()
+    void act_rage()
     {
       if (skill_status[2]==2)
       {
@@ -289,24 +291,24 @@ class main_character
           mp-=7;
          
           hp_max*=0.8;
-          hp*=0.8;
-          def*=0.8;
+          hp*=0.6;
+          def*=0.7;
           atk*=1.1;
-          critical_rate*=1.1;
-          critical_damage*=1.1;
+          critical_rate*=1.25;
+          critical_damage*=1.3;
           rageattack+=2;
 
         }
         else
         {
           cout<<"Magic power is deficient.";
-          return 0;
+          return ;
         }      
       }
       else
       {
         cout<<"<rage> is not activated yet.";
-        return 0;
+        return ;
       }
     }
     void activate_doublecrit()
@@ -332,12 +334,13 @@ int main()
   main_character cha1;
   cha1.reset();
   cha1.display();
-  for (int i=0;i<=9;i++)
+  for (int i=0;i<=3;i++)
   {
       cha1.upgrade();
       cout<<endl;
       cha1.display();
   }
+  cout<<endl;
   cha1.hurt(20);
   cha1.display();
   cout<<endl;
@@ -346,6 +349,16 @@ int main()
   cout<<endl;
   cha1.display();
   cout<<endl;
+  cha1.mp_recover(0);
+  cha1.activate_rage();
+  cha1.act_rage();
+  cha1.display();
+  cout<<endl;
+  cha1.activate_doublecrit();
+  for(int i=0;i<=20;i++)
+  {
+    cout<<cha1.normal_attack()<<endl;
+  }
 
 }
    
