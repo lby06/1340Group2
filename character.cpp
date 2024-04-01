@@ -1,10 +1,21 @@
 #include<iostream>
 #include<random>
+#include<cmath>
 using namespace std;
 class main_character
 {
   public:
-     bool is_alive=(hp>0);
+     bool is_alive()
+     {
+       if (hp<=0)
+       {
+         return false;
+       }
+       else 
+       {
+         return true;
+       }
+     }
      void reset()
      {
        level=0;
@@ -14,7 +25,7 @@ class main_character
        def=2;
        hp=10;
        hp_max=10;
-       mp=10;
+       mp=5;
        exp=0;
        critical_rate=0.15;
        critical_damage=1.5;
@@ -43,6 +54,7 @@ class main_character
         uniform_real_distribution<> dis(0, 1);
         if (dis(gen)<=critical_rate) 
         {
+           cout<<"Critical Strike!";
            return atk*critical_damage;
         }
         else
@@ -58,7 +70,7 @@ class main_character
       def+=level/3;
       hp_max=15*level+10;
       hp=hp_max;
-      mp=2*level+3;
+      mp=1.4*level+4;
       critical_rate+=level*0.006;
       critical_damage+=0.1;
       evasion_rate+=0.02;
@@ -101,8 +113,13 @@ class main_character
            else 
            {
              hp-=y;
+             mp_recover(1);//受击回蓝
            }
         }
+    }
+    double normal_attack()
+    {
+      return damage();
     }
     void activate_recoverhit()
     {
@@ -112,11 +129,22 @@ class main_character
     {
       if (skill_status[0]==1)
       {
-        if (mp>=4)
+        if (mp>=3)
         {
-          mp-=4;
+          mp-=3;
           hp_recover(atk*1.5);
+          if (skill_status[1]==2)
+          {
+            cout<<"magicdraw: "<<"1";
+            mp_recover(1);
+          }
+          if (skill_status[1]==1)
+          {
+            cout<<"Vampiric effect: "<<0.2*1.5*atk+1;
+            hp_recover(0.2*1.5*atk+1);
+          }
           return atk*1.5;
+          
         }
         else
         {
@@ -130,6 +158,103 @@ class main_character
         return 0;
       }
     }
+    void activate_bladestorm()
+    {
+      skill_status[0]=1;
+    }
+     double act_bladestorm()
+    {
+      if (skill_status[0]==2)
+      {
+        if (mp>=4)
+        {
+          mp-=4;
+          random_device rd;
+          mt19937 gen(rd());
+          uniform_real_distribution<> dis(0.3, 0.6);
+          int dam=0;
+          int da[6];
+          int times=10*dis(gen);
+          cout<<"Number of segments in this attack: "<<times;
+          for (int i=0;i<times;i++)
+          {
+            dam+=damage()*0.3;
+          }
+          critical_damage-=0.4;
+          if (skill_status[1]==2)
+          {
+            cout<<"magicdraw: "<<"1";
+            mp_recover(1);
+          }
+          if (skill_status[1]==1)
+          {
+            cout<<"Vampiric effect: "<<0.2*dam+1;
+            hp_recover(0.2*dam+1);
+          }
+          return dam;
+          
+    
+        }
+        else
+        {
+          cout<<"Magic power is deficient.";
+          return 0;
+        }      
+      }
+      else
+      {
+        cout<<"<blade storm> is not activated yet.";
+        return 0;
+      }
+    }
+    void activate_vengeance()
+    {
+      skill_status[1]=1;
+    }
+    void activate_magicdraw()
+    {
+      skill_status[1]=2;
+    }
+    void activate_hellfire()
+    {
+      skill_status[2]=1;
+    }
+    int act_hellfire()
+    {
+      if (skill_status[0]==1)
+      {
+        if (mp>=1)
+        {
+          cout<<"Magic power used"<<mp;
+          double use=mp;
+          mp=0;
+          int dam=use*sqrt(use)+1;
+          if (skill_status[1]==2)
+          {
+            cout<<"magicdraw: "<<0.2*use+1;
+            mp_recover(0.2*use+1);
+          }
+          if (skill_status[1]==1)
+          {
+            cout<<"Vampiric effect: "<<0.2*dam+1;
+            hp_recover(0.2*1.5*atk+1);
+          }
+          return atk*1.5;
+          
+        }
+        else
+        {
+          cout<<"Magic power is deficient.";
+          return 0;
+        }      
+      }
+      else
+      {
+        cout<<"<hellfire> is not activated yet.";
+        return 0;
+      }
+    }
+    
     
 
   private:
@@ -139,7 +264,7 @@ class main_character
      int skill_status[4],equipment_status[4];
 };
 int main()
-{
+{//试验
   main_character cha1;
   cha1.reset();
   cha1.display();
