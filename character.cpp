@@ -305,7 +305,7 @@ class main_character
       }
       else
       {
-        cout<<"<hellfire> is not activated yet.";
+        cout<<"<rage> is not activated yet.";
         return 0;
       }
     }
@@ -348,5 +348,7 @@ int main()
   cout<<endl;
 
 }
+   
+
    
 
