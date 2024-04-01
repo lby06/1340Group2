@@ -47,6 +47,8 @@ class main_character
        cout<<"HP: "<<hp<<"("<<hp_max<<")"<<"\n"<<"attack: "<<atk<<"\n"<<"defence: "<<def<<"\n"<<"MP: "<<mp<<"\n"<<"EXP: "<<exp<<"\n";
        cout<<"Critical Rate: "<<critical_rate*100<<"%"<<"\n"<<"Critical damage: "<<critical_damage*100<<"%"<<"\n";
        cout<<"Evasion Rate: "<<evasion_rate*100<<"%"<<"\n";
+       cout<<"Rage Attack: "<<rageattack<<"\n";
+
      }
      double damage()
      {
