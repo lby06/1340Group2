@@ -11,13 +11,13 @@ class main_character
        locate_x=0;
        locate_y=0;
        atk=3;
+       def=2;
        hp=10;
        hp_max=10;
        mp=10;
        exp=0;
        critical_rate=0.15;
        critical_damage=1.5;
-       mp_recover_rate=1;
        evasion_rate=0.1;
        for (int i = 0; i < 5; ++i) 
        {
@@ -32,9 +32,9 @@ class main_character
      void display()
      {
        cout<<"LEVEL : "<<level<<endl;
-       cout<<"HP: "<<hp<<"\n"<<"attack: "<<atk<<"\n"<<"MP: "<<mp<<"\n"<<"EXP: "<<exp<<"\n";
+       cout<<"HP: "<<hp<<"\n"<<"attack: "<<atk<<"\n"<<"defence: "<<def<<"\n"<<"MP: "<<mp<<"\n"<<"EXP: "<<exp<<"\n";
        cout<<"Critical Rate: "<<critical_rate*100<<"%"<<"\n"<<"Critical damage: "<<critical_damage*100<<"%"<<"\n";
-       cout<<"Evasion Rate: "<<evasion_rate*100<<"%"<<"\n"<<"MP Recover Rate: "<<mp_recover_rate*100<<"%"<<"\n";
+       cout<<"Evasion Rate: "<<evasion_rate*100<<"%"<<"\n";
      }
      double damage()
      {
@@ -55,6 +55,7 @@ class main_character
       level++;
       exp=0;
       atk+=level/2;
+      def+=level/3;
       hp_max=15*level+10;
       hp=hp_max;
       mp=2*level;
@@ -69,9 +70,9 @@ class main_character
 
   private:
      int locate_x,locate_y;
-     int hp,mp,exp,atk,level,hp_max;
-     double critical_rate,critical_damage,evasion_rate,mp_recover_rate;
-     int skill_status[6],equipment_status[6];
+     int hp,mp,exp,atk,level,hp_max,def;
+     double critical_rate,critical_damage,evasion_rate;
+     int skill_status[4],equipment_status[4];
 };
 int main()
 {
