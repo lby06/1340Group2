@@ -30,6 +30,7 @@ class main_character
        critical_rate=0.15;
        critical_damage=1.5;
        evasion_rate=0.1;
+       rageattack=0;
        for (int i = 0; i < 5; ++i) 
        {
         skill_status[i] = 0;
@@ -54,8 +55,13 @@ class main_character
         uniform_real_distribution<> dis(0, 1);
         if (dis(gen)<=critical_rate) 
         {
-           cout<<"Critical Strike!";
-           return atk*critical_damage;
+          if (skill_status[3]==2 && dis(gen)<=critical_rate/2.2+0.05)
+          {
+            cout<<"Utimate Critical Strike!!!";
+            return atk*critical_damage*critical_damage*1.15;
+          } 
+          cout<<"Critical Strike!";
+          return atk*critical_damage;
         }
         else
         {
@@ -114,11 +120,25 @@ class main_character
            {
              hp-=y;
              mp_recover(1);//受击回蓝
+             if (skill_status[3]==1)
+             { 
+               double rate=hp/hp_max;
+               hp+=y*(1-rate)/1.5;               
+               if(rate<=0.4)
+               {
+                 mp_recover(1);
+               }
+             }
            }
         }
     }
     double normal_attack()
     {
+      if (rageattack>=1)
+      {
+        rageattack-=1;
+        return damage()*1.6;
+      }
       return damage();
     }
     void activate_recoverhit()
@@ -221,7 +241,7 @@ class main_character
     }
     int act_hellfire()
     {
-      if (skill_status[0]==1)
+      if (skill_status[2]==1)
       {
         if (mp>=1)
         {
@@ -254,7 +274,48 @@ class main_character
         return 0;
       }
     }
-    
+    void activate_rage()
+    {
+      skill_status[2]=2;
+    }
+    int act_rage()
+    {
+      if (skill_status[2]==2)
+      {
+        if (mp>=7)
+        {
+          mp-=7;
+         
+          hp_max*=0.8;
+          hp*=0.8;
+          def*=0.8;
+          atk*=1.1;
+          critical_rate*=1.1;
+          critical_damage*=1.1;
+          rageattack+=2;
+
+        }
+        else
+        {
+          cout<<"Magic power is deficient.";
+          return 0;
+        }      
+      }
+      else
+      {
+        cout<<"<hellfire> is not activated yet.";
+        return 0;
+      }
+    }
+    void activate_doublecrit()
+    {
+      skill_status[3]=2;
+    }
+     void activate_ultimatedef()
+    {
+      skill_status[3]=1;
+    }
+
     
 
   private:
@@ -262,6 +323,7 @@ class main_character
      int hp,mp,exp,atk,level,hp_max,def;
      double critical_rate,critical_damage,evasion_rate;
      int skill_status[4],equipment_status[4];
+     int rageattack;
 };
 int main()
 {//试验
