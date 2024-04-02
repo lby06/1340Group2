@@ -135,6 +135,7 @@ class main_character
            }
         }
     }
+    //普通攻击
     int normal_attack()
     {
       if (rageattack>=1)
@@ -145,6 +146,8 @@ class main_character
       }
       return damage();
     }
+    //主动技能1.1：原力攻击 Hit with the Force
+    //造成伤害，一定比例回血，不可暴击
     void activate_recoverhit()
     {
       skill_status[0]=1;
@@ -156,6 +159,7 @@ class main_character
         if (mp>=3)
         {
           mp-=3;
+          cout<<"recover: "<<atk*1.5;
           hp_recover(atk*1.5);
           if (skill_status[1]==2)
           {
@@ -178,10 +182,13 @@ class main_character
       }
       else
       {
-        cout<<"<recover hit> is not activated yet.";
+        cout<<"<Hit with the Force> is not activated yet.";
         return 0;
       }
     }
+   //主动技能1.2：光剑风暴 Storm of lightsaber
+   // 对指定敌方造成3-5段伤害
+   //可暴击，且释放技能期间暴击伤害提升（40%）
     void activate_bladestorm()
     {
       skill_status[0]=1;
@@ -227,18 +234,25 @@ class main_character
       }
       else
       {
-        cout<<"<blade storm> is not activated yet.";
+        cout<<"<Storm of lightsaber> is not activated yet.";
         return 0;
       }
     }
+    //被动技能1.1：血族 Vengeance
+    //普攻，技能最终伤害一定比例回复生命值
     void activate_vengeance()
     {
       skill_status[1]=1;
     }
+    //被动技能1.2 原力汇聚 Force convergence
+    // 使用技能后按一定比例返还技能消耗的原力
     void activate_magicdraw()
     {
       skill_status[1]=2;
     }
+    //主动技能2.1 黑暗烈焰 Dark Force Flame
+    // 耗尽魔法值进行攻击，消耗魔法值越多增伤越高（1.5次方）
+    // 可暴击 
     void activate_hellfire()
     {
       skill_status[2]=1;
@@ -252,7 +266,7 @@ class main_character
           cout<<"Magic power used"<<mp;
           double use=mp;
           mp=0;
-          int dam=use*sqrt(use)+1;
+          int dam=use*sqrt(use)*sqrt(damage())/4+5;
           if (skill_status[1]==2)
           {
             cout<<"magicdraw: "<<0.2*use+1;
@@ -261,9 +275,9 @@ class main_character
           if (skill_status[1]==1)
           {
             cout<<"Vampiric effect: "<<0.2*dam+1;
-            hp_recover(0.2*1.5*atk+1);
+            hp_recover(0.2*1.5*dam+1);
           }
-          return atk*1.5;
+          return dam;
           
         }
         else
@@ -274,10 +288,14 @@ class main_character
       }
       else
       {
-        cout<<"<hellfire> is not activated yet.";
+        cout<<"<Dark Force Flame> is not activated yet.";
         return 0;
       }
     }
+    //主动技能2.2 绝地之怒 Rage of Jedi
+    //一定比例减少生命值，生命值上限，防御
+    //一定比例增加伤害，暴击率，暴击伤害
+    //强化接下来两次普攻，强化为Rage attack（最终伤害值*1.6）
     void activate_rage()
     {
       skill_status[2]=2;
@@ -307,14 +325,18 @@ class main_character
       }
       else
       {
-        cout<<"<rage> is not activated yet.";
+        cout<<"<Rage of Jedi> is not activated yet.";
         return ;
       }
     }
+    //被动2.1 索罗之力 Gift of Solo
+    // 改良暴击机制，触发暴击时有一定概率（根据自身暴击率）触发二次暴击
     void activate_doublecrit()
     {
       skill_status[3]=2;
     }
+    //被动2.2 最终防御 Ultimate shield
+    // 血量越低，减伤越高，且血量低于40%时，受击回能额外加1
      void activate_ultimatedef()
     {
       skill_status[3]=1;
