@@ -5,9 +5,18 @@ using namespace std;
 class main_character
 {
   public:
-     HP=hp;
-     MP=mp;
-     ATK=atk;
+     int HP()
+     {
+       return hp;
+     }
+     int MP()
+     {
+       return mp;
+     }
+     int ATK()
+     {
+       return atk;
+     }
      bool is_alive()
      {
        if (hp<=0)
@@ -384,8 +393,17 @@ int main()
   {
     cout<<cha1.normal_attack()<<endl;
   }
-
+  cout<<endl;
+  //返回HP
+  cout<<cha1.HP()<<endl;
+  //返回MP
+  cout<<cha1.MP()<<endl;
+  //返回ATK
+  cout<<cha1.ATK()<<endl;
 }
+   
+
+   
    
 
    
