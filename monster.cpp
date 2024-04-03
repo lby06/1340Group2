@@ -301,11 +301,129 @@ class cith
         mp-=3;
         return(damage()*2);
     }
+  
   private:
   int hp,hp_max,atk,def,mp;
   double critical_rate,critical_damage;
   double evasion_rate;
   int life;
+
+};
+class mandalorians
+{
+  public:
+   bool is_alive()
+     {
+       if (hp<=0)
+       {
+         return false;
+       }
+       else 
+       {
+         return true;
+       }
+     }
+    void reset(int level,int number)
+    {
+       double rate=level+number*0.2;
+       hp_max=20*rate+8;
+       hp=hp_max;
+       mp=0;
+       def=0+level*1.5+number/4;
+       atk=3+level*1.5+number/4;
+       evasion_rate=0.10+level*0.04+number*0.008;
+       critical_rate=0.2+level*0.05+number*0.01;
+       critical_damage=1.6;
+       beatback=level;
+       damreturn=0;
+       
+    }
+    void rage()
+    {
+      mp-=3;
+      hp_max*=1.1;
+      hp*=1.1;
+      critical_rate*=1.1;
+      atk*=1.1;
+      beatback+=2;
+
+    }
+    int damage()
+     {
+        if (beatback>=1)
+        {
+          return(damreturn);
+          damreturn=0;
+          beatback-=1;
+        }
+        random_device rd;
+        mt19937 gen(rd());
+        uniform_real_distribution<> dis(0, 1);
+        if (dis(gen)<=critical_rate) 
+        {
+          cout<<"Critical Strike!";
+          return atk*critical_damage;
+        }
+        else
+        {
+           return atk;
+        }
+     }
+    int normalattack()
+    {
+      hp_recover((hp_max-hp)*0.1);
+      return(damage());
+    }
+    void hp_recover(int x)
+    {
+        if ((hp_max-hp)>=x)
+        {
+          hp+=x;
+        }
+        else 
+        {
+          hp=hp_max;
+        }
+    }
+    void mp_recover(int x)
+    {
+      mp+=x;
+    }
+    void hurt(int x)
+    {
+      if (beatback>=1)
+      {
+        damreturn=x;
+        return;
+      }
+      random_device rd;
+        mt19937 gen(rd());
+        uniform_real_distribution<> dis(0, 1);
+        if (dis(gen)<=evasion_rate) 
+        {
+           cout<<"Evasion successful.";
+        }
+        else
+        {
+           int y=x-def;
+           if ((hp-y)<=0)
+           {
+             hp=0;
+           }
+           else 
+           {
+             hp-=y;
+             cout<<"hurt: HP-"<<y;
+             mp_recover(1);
+           }
+        }
+    }
+  private:
+  int hp,hp_max,atk,def,mp;
+  double critical_rate,critical_damage;
+  double evasion_rate;
+  int beatback;
+  int damreturn;
 
 };
 
