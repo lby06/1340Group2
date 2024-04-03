@@ -6,7 +6,7 @@ class main_character
 {
   public:
      HP=hp;
-     MP=mp
+     MP=mp;
      ATK=atk;
      bool is_alive()
      {
