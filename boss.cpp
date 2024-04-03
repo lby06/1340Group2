@@ -42,7 +42,7 @@ class bossskill{
     x[3]=1.3*difficulty;
     x[4]=1;
     x[5]=1;
-    x[6]=0;
+    x[6]=1;
     return x;
     }
     double *d(int atk){
@@ -88,7 +88,7 @@ class bossskill{
     cout<<"g";
     double*x=new double [20];
     //自毁
-    x[0]=-8;
+    x[0]=-8*difficulty;
     x[1]=0;
     x[2]=1;
     x[3]=1;
@@ -101,7 +101,7 @@ class bossskill{
     cout<<"h";
     double*x=new double [20];
     //吸血攻击
-    x[0]=atk*0.8;
+    x[0]=atk*0.8*difficulty;
     x[1]=1;
     x[2]=1;
     x[3]=1;
@@ -115,7 +115,7 @@ class bossskill{
       difficulty=x;
     };
     private:
-    int difficulty=1;
+    double difficulty=1;
     int shutdown;
 };
 class Vadar
