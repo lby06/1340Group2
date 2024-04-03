@@ -1,6 +1,7 @@
 #include<iostream>
 #include<random>
 #include<cmath>
+#include <sched.h>
 using namespace std;
 class main_character
 {
@@ -34,8 +35,8 @@ class main_character
        locate_x=0;
        locate_y=0;
        atk=3;
-       def=2;
-       hp=10;
+       def=1;
+       hp=15;
        hp_max=10;
        mp=5;
        exp=0;
@@ -111,7 +112,7 @@ class main_character
        cout<<"Rage Attack: "<<rageattack<<"\n";
 
      }
-     double damage()
+     int damage()
      {
         random_device rd;
         mt19937 gen(rd());
@@ -137,7 +138,7 @@ class main_character
       exp=0;
       atk+=level/2;
       def+=level/3;
-      hp_max=15*level+10;
+      hp_max=20*level+15;
       hp=hp_max;
       mp=1.4*level+4;
       critical_rate+=level*0.006+0.008;
@@ -417,7 +418,6 @@ class main_character
           critical_rate*=1.25;
           critical_damage*=1.3;
           rageattack+=2;
-
         }
         else
         {
@@ -454,12 +454,14 @@ class main_character
      int rageattack;
      int status[3];
 };
+
+
 int main()
 {//试验
   main_character cha1;
   cha1.reset();
   cha1.display();
-  for (int i=0;i<=3;i++)
+  for (int i=0;i<=7;i++)
   {
       cha1.upgrade();
       cout<<endl;
@@ -472,18 +474,6 @@ int main()
   cha1.activate_recoverhit();
   cout<<cha1.act_recoverhit();
   cout<<endl;
-  cha1.display();
-  cout<<endl;
-  cha1.mp_recover(0);
-  cha1.activate_rage();
-  cha1.act_rage();
-  cha1.display();
-  cout<<endl;
-  cha1.activate_doublecrit();
-  for(int i=0;i<=20;i++)
-  {
-    cout<<cha1.normal_attack()<<endl;
-  }
   cout<<endl;
   //返回HP
   cout<<cha1.HP()<<endl;
@@ -502,6 +492,10 @@ int main()
 
 }
    
+
+   
+   
+
 
    
    
