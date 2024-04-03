@@ -5,6 +5,9 @@ using namespace std;
 class main_character
 {
   public:
+     HP=hp;
+     MP=mp
+     ATK=atk;
      bool is_alive()
      {
        if (hp<=0)
