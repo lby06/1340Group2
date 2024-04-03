@@ -47,11 +47,48 @@ class main_character
        {
         skill_status[i] = 0;
        }
-       for (int i = 0; i < 5; ++i) 
+     }
+     void set(double a[])
+     {
+       level=a[0];
+       locate_x=a[1];
+       locate_y=a[2];
+       atk=a[3];
+       def=a[4];
+       hp=a[5];
+       hp_max=a[6];
+       mp=a[7];
+       exp=a[8];
+       critical_rate=a[9];
+       critical_damage=a[10];
+       evasion_rate=a[11];
+       rageattack=a[12];
+       for (int i = 13; i < 17; ++i) 
        {
-        equipment_status[i] = 0;
+        skill_status[i] = a[i];
        }
-
+     }
+     double* save(int num)
+     {
+       double *a= new double [num];
+       a[0]=level;
+       a[1]=locate_x;
+       a[2]=locate_y;
+       a[3]=atk;
+       a[4]=def;
+       a[5]=hp;
+       a[6]=hp_max;
+       a[7]=mp;
+       a[8]=exp;
+       a[9]=critical_rate;
+       a[10]=critical_damage;
+       a[11]=evasion_rate;
+       a[12]=rageattack;
+       for (int i = 13; i < 17; ++i) 
+       {
+         a[i]=skill_status[i];
+       }
+       return a;
      }
      void display()
      {
@@ -403,7 +440,6 @@ int main()
 }
    
 
-   
    
 
    
