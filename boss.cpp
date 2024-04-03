@@ -1,3 +1,4 @@
+//想做一个技能库（类似宝可梦）
 #include<iostream>
 #include<random>
 #include<cmath>
