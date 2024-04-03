@@ -43,9 +43,13 @@ class main_character
        critical_damage=1.5;
        evasion_rate=0.1;
        rageattack=0;
-       for (int i = 0; i < 5; ++i) 
+       for (int i = 0; i < 4; ++i) 
        {
         skill_status[i] = 0;
+       }
+       for (int i = 0; i < 3; ++i) 
+       {
+        status[i] = 0;
        }
      }
      void set(double a[])
@@ -67,6 +71,10 @@ class main_character
        {
         skill_status[i] = a[i];
        }
+       for (int i = 17; i < 20; ++i) 
+       {
+        status[i] = a[i];
+       }
      }
      double* save(int num)
      {
@@ -87,6 +95,10 @@ class main_character
        for (int i = 13; i < 17; ++i) 
        {
          a[i]=skill_status[i];
+       }
+       for (int i = 17; i < 20; ++i) 
+       {
+         a[i]=status[i];
        }
        return a;
      }
@@ -183,6 +195,47 @@ class main_character
              }
            }
         }
+    }
+
+    //状态
+    void activate_attackup()
+    {
+      cout<<"Attack Increased";
+      status[0]=1;
+      atk*=1.2;
+    }
+    void activate_defenceup()
+    {
+      cout<<"Defence Increased";
+      status[1]=1;
+      def*=1.2;
+    }
+    void activate_crup()
+    {
+      cout<<"CR/CD Increased";
+      status[2]=1;
+      critical_damage*=1.15;
+      critical_rate*=1.15;
+    }
+    void clear_status()
+    {
+      if (status[0]==1)
+      {
+        atk/=1.2;
+        status[0]=0;
+      }
+      if (status[1]==1)
+      {
+        def/=1.2;
+        status[1]=0;
+      }
+      if (status[2]==1)
+      {
+        critical_rate/=1.15;
+        critical_damage/=1.15;
+        status[2]=0;
+      }
+      cout<<"Status Cleared";
     }
     //普通攻击
     int normal_attack()
@@ -399,6 +452,7 @@ class main_character
      double critical_rate,critical_damage,evasion_rate;
      int skill_status[4],equipment_status[4];
      int rageattack;
+     int status[3];
 };
 int main()
 {//试验
@@ -437,10 +491,17 @@ int main()
   cout<<cha1.MP()<<endl;
   //返回ATK
   cout<<cha1.ATK()<<endl;
+
+  //读存档
+  double* data=cha1.save(30);
+  cha1.reset();
+  cha1.display();
+  cha1.set(data);
+  cha1.display();
+
+
 }
    
 
    
-
    
-
