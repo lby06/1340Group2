@@ -188,7 +188,7 @@ class Vadar
       mp+=x;
     }
     void set(){
-      atk=10;
+      atk=7;
       critical_rate=0.2;
       critical_damage=1.6;
       def=6;
