@@ -1,4 +1,4 @@
-//想做一个技能库（类似宝可梦）
+//想做一个技能库（类似宝可梦）但问题在于不知道怎么让一个函数调用一个类别里的变量
 #include<iostream>
 #include<random>
 #include<cmath>
