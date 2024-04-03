@@ -84,6 +84,32 @@ class bossskill{
     x[6]=2;
     return x;
     }
+    double *g(int atk){
+    cout<<"g";
+    double*x=new double [20];
+    //自毁
+    x[0]=-8;
+    x[1]=0;
+    x[2]=1;
+    x[3]=1;
+    x[4]=1;
+    x[5]=1;
+    x[6]=1;
+    return x;
+    }
+     double *h(int atk){
+    cout<<"h";
+    double*x=new double [20];
+    //吸血攻击
+    x[0]=atk*0.8;
+    x[1]=1;
+    x[2]=1;
+    x[3]=1;
+    x[4]=1;
+    x[5]=1;
+    x[6]=0;
+    return x;
+    }
     void set(double x)
     {
       difficulty=x;
@@ -97,23 +123,23 @@ class Vadar
   public:
   Vadar(bossskill* j) : ptrB(j) { };
   double* skill1(){
-      double* (bossskill::*set[])(int atk) = {&bossskill::a, &bossskill::b, &bossskill::c, &bossskill::d, &bossskill::e,&bossskill::f};
+      double* (bossskill::*set[])(int atk) = {&bossskill::a, &bossskill::b, &bossskill::c, &bossskill::d, &bossskill::e,&bossskill::f,&bossskill::g,&bossskill::h};
 
             random_device rd;
             mt19937 gen(rd());
-            uniform_int_distribution<> dis(0, 5);  
+            uniform_int_distribution<> dis(0, 7);  
             int randomIndex = dis(gen); 
             seed1=randomIndex;
             return (ptrB->*set[randomIndex])(atk);  
    }
    double* skill2(){
-      double* (bossskill::*set[])(int atk) = {&bossskill::a, &bossskill::b, &bossskill::c, &bossskill::d, &bossskill::e,&bossskill::f};
+      double* (bossskill::*set[])(int atk) = {&bossskill::a, &bossskill::b, &bossskill::c, &bossskill::d, &bossskill::e,&bossskill::f,&bossskill::g,&bossskill::h};
 
             random_device rd;
             mt19937 gen(rd());
-            uniform_int_distribution<> dis(1, 4);  
+            uniform_int_distribution<> dis(1, 6);  
             int randomIndex = dis(gen); 
-            seed2=(seed1+randomIndex)%6;
+            seed2=(seed1+randomIndex)%8;
             return (ptrB->*set[seed2])(atk);  
 
    }
@@ -229,11 +255,10 @@ int main(){
   vada->display();
   
   for (int i=0;i<=10;i++){
- //以下为技能释放过程，若有伤害则会返回伤害值
+
   double* skill1Result = vada->skill1();
   cout<<endl;
   cout << vada->read(skill1Result) << endl;
-//技能释放结束
   vada->display();
   cout<<endl;
   cout<<endl;
