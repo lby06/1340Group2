@@ -1,5 +1,7 @@
 #include "print_features.h"
 #include "character.h"
+#include "monster.h"
+#include "boss.h"
 #include <iostream>
 //目前仅供测试用
 //已实现将主角数据传入战斗界面
