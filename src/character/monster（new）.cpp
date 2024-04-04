@@ -6,7 +6,7 @@
 using namespace std;
 
 
-   bool clone::is_alive()
+   bool Clone::is_alive()
      {
        if (hp<=0)
        {
@@ -17,7 +17,7 @@ using namespace std;
          return true;
        }
      }
-    void clone::reset(int level,int number)
+    void Clone::reset(int level,int number)
     {
        double rate=level+number*0.2;
        hp_max=20*rate+8;
@@ -29,7 +29,7 @@ using namespace std;
        critical_rate=0.2+level*0.05+number*0.01;
        critical_damage=1.6;
     }
-    int clone::damage()
+    int Clone::damage()
      {
         random_device rd;
         mt19937 gen(rd());
@@ -44,12 +44,12 @@ using namespace std;
            return atk;
         }
      }
-    int clone::normalattack()
+    int Clone::normalattack()
     {
       hp_recover((hp_max-hp)*0.1);
       return(damage());
     }
-    void clone::hp_recover(int x)
+    void Clone::hp_recover(int x)
     {
         if ((hp_max-hp)>=x)
         {
@@ -60,11 +60,11 @@ using namespace std;
           hp=hp_max;
         }
     }
-    void clone::mp_recover(int x)
+    void Clone::mp_recover(int x)
     {
       mp+=x;
     }
-    void clone::hurt(int x)
+    void Clone::hurt(int x)
     {
       random_device rd;
         mt19937 gen(rd());
@@ -93,7 +93,7 @@ using namespace std;
 
 
 
-   bool robot::is_alive()
+   bool Robot::is_alive()
      {
        if (hp<=0)
        {
@@ -104,7 +104,7 @@ using namespace std;
          return true;
        }
      }
-    void robot::reset(int level,int number)
+    void Robot::reset(int level,int number)
     {
        double rate=level+number*0.2;
        hp_max=30*rate+10;
@@ -116,7 +116,7 @@ using namespace std;
        critical_rate=0.2+level*0.05+number*0.01;
        critical_damage=1.6;
     }
-    int robot::damage()
+    int Robot::damage()
      {
         random_device rd;
         mt19937 gen(rd());
@@ -131,11 +131,11 @@ using namespace std;
            return atk;
         }
      }
-    int robot::normalattack()
+    int Robot::normalattack()
     {
       return(damage());
     }
-    void robot::hp_recover(int x)
+    void Robot::hp_recover(int x)
     {
         if ((hp_max-hp)>=x)
         {
@@ -146,11 +146,11 @@ using namespace std;
           hp=hp_max;
         }
     }
-    void robot::mp_recover(int x)
+    void Robot::mp_recover(int x)
     {
       mp+=x;
     }
-    void robot::hurt(int x)
+    void Robot::hurt(int x)
     {
       random_device rd;
         mt19937 gen(rd());
@@ -170,11 +170,11 @@ using namespace std;
            {
              hp-=y;
              cout<<"hurt: HP-"<<y;
-             robot::mp_recover(1);
+             mp_recover(1);
            }
         }
     }
-    int robot::lasers()
+    int Robot::lasers()
     {
         mp-=3;
         return(damage()*2);
@@ -182,10 +182,8 @@ using namespace std;
 
 
 
-class cith
-{
-  public:
-   bool is_alive()
+
+   bool Cith::is_alive()
      {
        if (hp<=0)
        {
@@ -196,7 +194,7 @@ class cith
          return true;
        }
      }
-    void reset(int level,int number)
+    void Cith::reset(int level,int number)
     {
        double rate=level+number*0.2;
        hp_max=25*rate+9;
@@ -209,7 +207,7 @@ class cith
        critical_damage=1.6;
        life=0;
     }
-    int damage()
+    int Cith::damage()
      {
         random_device rd;
         mt19937 gen(rd());
@@ -224,11 +222,11 @@ class cith
            return atk;
         }
      }
-    int normalattack()
+    int Cith::normalattack()
     {
       return(damage());
     }
-    void hp_recover(int x)
+    void Cith::hp_recover(int x)
     {
         if ((hp_max-hp)>=x)
         {
@@ -239,19 +237,19 @@ class cith
           hp=hp_max;
         }
     }
-    void mp_recover(int x)
+    void Cith::mp_recover(int x)
     {
       mp+=x;
     }
     //技能1
-    void returntodark()
+    void Cith::returntodark()
     {
       mp-=5;
       life=4;
       critical_rate*=1.2;
       critical_damage=1.8;
     }
-    void hurt(int x)
+    void Cith::hurt(int x)
     {
         if (life>=2)
         {
@@ -285,23 +283,13 @@ class cith
            }
         }
     }
-    int lasers()
+    int Cith::lasers()
     {
         mp-=3;
-        return(damage()*2);
+        return(damage()*1.5);
     }
-  
-  private:
-  int hp,hp_max,atk,def,mp;
-  double critical_rate,critical_damage;
-  double evasion_rate;
-  int life;
 
-};
-class mandalorians
-{
-  public:
-   bool is_alive()
+   bool Mandalorians::is_alive()
      {
        if (hp<=0)
        {
@@ -312,7 +300,7 @@ class mandalorians
          return true;
        }
      }
-    void reset(int level,int number)
+    void Mandalorians::reset(int level,int number)
     {
        double rate=level+number*0.2;
        hp_max=20*rate+8;
@@ -327,7 +315,7 @@ class mandalorians
        damreturn=0;
        
     }
-    void rage()
+    void Mandalorians::rage()
     {
       mp-=3;
       hp_max*=1.1;
@@ -337,7 +325,7 @@ class mandalorians
       beatback+=2;
 
     }
-    int damage()
+    int Mandalorians::damage()
      {
         if (beatback>=1)
         {
@@ -358,12 +346,12 @@ class mandalorians
            return atk;
         }
      }
-    int normalattack()
+    int Mandalorians::normalattack()
     {
       hp_recover((hp_max-hp)*0.1);
       return(damage());
     }
-    void hp_recover(int x)
+    void Mandalorians::hp_recover(int x)
     {
         if ((hp_max-hp)>=x)
         {
@@ -374,11 +362,11 @@ class mandalorians
           hp=hp_max;
         }
     }
-    void mp_recover(int x)
+    void Mandalorians::mp_recover(int x)
     {
       mp+=x;
     }
-    void hurt(int x)
+    void Mandalorians::hurt(int x)
     {
       if (beatback>=1)
       {
@@ -407,32 +395,5 @@ class mandalorians
            }
         }
     }
-  private:
-  int hp,hp_max,atk,def,mp;
-  double critical_rate,critical_damage;
-  double evasion_rate;
-  int beatback;
-  int damreturn;
 
-};
 
-int main(){
-    return 0;
-}
-void Mandalorians::hurt(int x) {
-    random_device rd;
-    mt19937 gen(rd());
-    uniform_real_distribution<> dis(0, 1);
-    if (dis(gen) <= evasion_rate) {
-        cout << "Evasion successful.";
-    } else {
-        int y = x - def;
-        if ((hp - y) <= 0) {
-            hp = 0;
-        } else {
-            hp -= y;
-            cout << "hurt: HP-" << y;
-            mp_recover(1);
-        }
-    }
-}
