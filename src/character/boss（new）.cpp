@@ -231,6 +231,7 @@ class Vadar
            }
         }
     }
+Vadar vada1;
 
 
 
