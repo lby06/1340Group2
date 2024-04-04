@@ -1,8 +1,12 @@
+#include<iostream>
+#include<random>
+#include<cmath>
+#include <sched.h>
 #include "monster.h"
 using namespace std;
 
-  public:
-   bool is_alive()
+
+   bool robot::is_alive()
      {
        if (hp<=0)
        {
