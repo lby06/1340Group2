@@ -2,6 +2,7 @@
     - `saveings`：存档保存位置
     - `scripts`：剧情文案
     - `monsters`： 怪物数据
+    - `animations`:ASCii图像
     - （Optional）`skills`：技能、增益
     - `maps`：地图数据
 - `src`：源代码位置
