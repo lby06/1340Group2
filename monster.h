@@ -1,6 +1,5 @@
 #ifndef MONSTER_H
 #define MONSTER_H
-#include <monster.h>
 #include <random>
 #include <iostream>
 
