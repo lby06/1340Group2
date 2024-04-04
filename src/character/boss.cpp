@@ -2,6 +2,7 @@
 #include<random>
 #include<cmath>
 #include <sched.h>
+#include "boss.h"
 using namespace std;
 
 class bossskill{
