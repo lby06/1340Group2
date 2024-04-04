@@ -6,19 +6,19 @@ using namespace std;
 class main_character
 {
   public:
-     int HP()
+     int main_character::HP()
      {
        return hp;
      }
-     int MP()
+     int main_character::MP()
      {
        return mp;
      }
-     int ATK()
+     int main_character::ATK()
      {
        return atk;
      }
-     bool is_alive()
+     bool main_character::is_alive()
      {
        if (hp<=0)
        {
@@ -29,7 +29,7 @@ class main_character
          return true;
        }
      }
-     void reset()
+     void main_character::reset()
      {
        level=0;
        locate_x=0;
@@ -53,7 +53,7 @@ class main_character
         status[i] = 0;
        }
      }
-     void set(double a[])
+     void main_character::set(double a[])
      {
        level=a[0];
        locate_x=a[1];
@@ -77,7 +77,7 @@ class main_character
         status[i] = a[i];
        }
      }
-     double* save(int num)
+     double* main_character::save(int num)
      {
        double *a= new double [num];
        a[0]=level;
@@ -103,7 +103,7 @@ class main_character
        }
        return a;
      }
-     void display()
+     void main_character::display()
      {
        cout<<"LEVEL : "<<level<<endl;
        cout<<"HP: "<<hp<<"("<<hp_max<<")"<<"\n"<<"attack: "<<atk<<"\n"<<"defence: "<<def<<"\n"<<"MP: "<<mp<<"\n"<<"EXP: "<<exp<<"\n";
@@ -112,7 +112,7 @@ class main_character
        cout<<"Rage Attack: "<<rageattack<<"\n";
 
      }
-     int damage()
+     int main_character::damage()
      {
         random_device rd;
         mt19937 gen(rd());
@@ -132,7 +132,7 @@ class main_character
            return atk;
         }
      }
-     void upgrade()
+     void main_character::upgrade()
     {
       level++;
       exp=0;
@@ -149,7 +149,7 @@ class main_character
         critical_rate=1;
       }
     }
-    void hp_recover(int x)
+    void main_character::hp_recover(int x)
     {
         if ((hp_max-hp)>=x)
         {
@@ -160,11 +160,11 @@ class main_character
           hp=hp_max;
         }
     }
-    void mp_recover(int x)
+    void main_character::mp_recover(int x)
     {
       mp+=x;
     }
-    void hurt(int x)
+    void main_character::hurt(int x)
     {
       random_device rd;
         mt19937 gen(rd());
@@ -199,26 +199,26 @@ class main_character
     }
 
     //状态
-    void activate_attackup()
+    void main_character::activate_attackup()
     {
       cout<<"Attack Increased";
       status[0]=1;
       atk*=1.2;
     }
-    void activate_defenceup()
+    void main_character::activate_defenceup()
     {
       cout<<"Defence Increased";
       status[1]=1;
       def*=1.2;
     }
-    void activate_crup()
+    void main_character::activate_crup()
     {
       cout<<"CR/CD Increased";
       status[2]=1;
       critical_damage*=1.15;
       critical_rate*=1.15;
     }
-    void clear_status()
+    void main_character::clear_status()
     {
       if (status[0]==1)
       {
@@ -239,7 +239,7 @@ class main_character
       cout<<"Status Cleared";
     }
     //普通攻击
-    int normal_attack()
+    int main_character::normal_attack()
     {
       if (rageattack>=1)
       {
@@ -251,11 +251,11 @@ class main_character
     }
     //主动技能1.1：原力攻击 Hit with the Force
     //造成伤害，一定比例回血，不可暴击
-    void activate_recoverhit()
+    void main_character::activate_recoverhit()
     {
       skill_status[0]=1;
     }
-    int act_recoverhit()
+    int main_character::act_recoverhit()
     {
       if (skill_status[0]==1)
       {
@@ -292,11 +292,11 @@ class main_character
    //主动技能1.2：光剑风暴 Storm of lightsaber
    // 对指定敌方造成3-5段伤害
    //可暴击，且释放技能期间暴击伤害提升（40%）
-    void activate_bladestorm()
+    void main_character::activate_bladestorm()
     {
       skill_status[0]=1;
     }
-     int act_bladestorm()
+     int main_character::act_bladestorm()
     {
       if (skill_status[0]==2)
       {
@@ -343,24 +343,24 @@ class main_character
     }
     //被动技能1.1：血族 Vengeance
     //普攻，技能最终伤害一定比例回复生命值
-    void activate_vengeance()
+    void main_character::activate_vengeance()
     {
       skill_status[1]=1;
     }
     //被动技能1.2 原力汇聚 Force convergence
     // 使用技能后按一定比例返还技能消耗的原力
-    void activate_magicdraw()
+    void main_character::activate_magicdraw()
     {
       skill_status[1]=2;
     }
     //主动技能2.1 黑暗烈焰 Dark Force Flame
     // 耗尽魔法值进行攻击，消耗魔法值越多增伤越高（1.5次方）
     // 可暴击 
-    void activate_hellfire()
+    void main_character::activate_hellfire()
     {
       skill_status[2]=1;
     }
-    int act_hellfire()
+    int main_character::act_hellfire()
     {
       if (skill_status[2]==1)
       {
@@ -399,11 +399,11 @@ class main_character
     //一定比例减少生命值，生命值上限，防御
     //一定比例增加伤害，暴击率，暴击伤害
     //强化接下来两次普攻，强化为Rage attack（最终伤害值*1.6）
-    void activate_rage()
+    void main_character::activate_rage()
     {
       skill_status[2]=2;
     }
-    void act_rage()
+    void main_character::act_rage()
     {
       if (skill_status[2]==2)
       {
@@ -433,13 +433,13 @@ class main_character
     }
     //被动2.1 索罗之力 Gift of Solo
     // 改良暴击机制，触发暴击时有一定概率（根据自身暴击率）触发二次暴击
-    void activate_doublecrit()
+    void main_character::activate_doublecrit()
     {
       skill_status[3]=2;
     }
     //被动2.2 最终防御 Ultimate shield
     // 血量越低，减伤越高，且血量低于40%时，受击回能额外加1
-     void activate_ultimatedef()
+     void main_character::activate_ultimatedef()
     {
       skill_status[3]=1;
     }
@@ -454,48 +454,3 @@ class main_character
      int rageattack;
      int status[3];
 };
-
-
-int main()
-{//试验
-  main_character cha1;
-  cha1.reset();
-  cha1.display();
-  for (int i=0;i<=7;i++)
-  {
-      cha1.upgrade();
-      cout<<endl;
-      cha1.display();
-  }
-  cout<<endl;
-  cha1.hurt(20);
-  cha1.display();
-  cout<<endl;
-  cha1.activate_recoverhit();
-  cout<<cha1.act_recoverhit();
-  cout<<endl;
-  cout<<endl;
-  //返回HP
-  cout<<cha1.HP()<<endl;
-  //返回MP
-  cout<<cha1.MP()<<endl;
-  //返回ATK
-  cout<<cha1.ATK()<<endl;
-
-  //读存档
-  double* data=cha1.save(30);
-  cha1.reset();
-  cha1.display();
-  cha1.set(data);
-  cha1.display();
-
-
-}
-   
-
-   
-   
-
-
-   
-   
