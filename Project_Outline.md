@@ -13,4 +13,5 @@
     - `character`：主角、怪物
     - `battle`：战斗机制相关
     - `ui`：启动界面的 UI
+    - `main`：主程序
 - `README.md`
