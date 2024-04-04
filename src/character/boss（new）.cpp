@@ -2,6 +2,7 @@
 #include<random>
 #include<cmath>
 #include <sched.h>
+#include "boss.h"
 using namespace std;
 
 
@@ -114,10 +115,7 @@ using namespace std;
       difficulty=x;
     }
 
-class Vadar
-{
-  public:
-  Vadar(bossskill* j) : ptrB(j) { };
+  Vadar::Vadar(bossskill* j) : ptrB(j) { };
   double* Vadar::skill1(){
       double* (bossskill::*set[])(int atk) = {&bossskill::a, &bossskill::b, &bossskill::c, &bossskill::d, &bossskill::e,&bossskill::f,&bossskill::g,&bossskill::h};
 
@@ -231,7 +229,6 @@ class Vadar
            }
         }
     }
-Vadar vada1;
-
-
+bossskill skilla;
+Vadar *vada=new Vadar(&skilla);
 
