@@ -9,9 +9,10 @@ class main_character
      int ATK();
      bool is_alive();
      void reset();
-     void set(double a[])
+     void set(double a[]);
+     double* save(int num);
      void display();
-     double damage();
+     int damage();
      void upgrade();
      void hp_recover(int x);
      void mp_recover(int x);
@@ -19,21 +20,22 @@ class main_character
 
      void activate_attackup();
      void activate_defenceup();
-     void activate_crup()
-     void clear_status()
+     void activate_crup();
+     void clear_status();
 
-     int normal_attack()
-     void activate_recoverhit()
-     int act_recoverhit()
+     int normal_attack();
+     void activate_recoverhit();
+     int act_recoverhit();
      void activate_bladestorm();
-     int act_bladestorm()
-     void activate_vengeance()
-     void activate_magicdraw()
-     void activate_hellfire()
-     void activate_rage()
-     void act_rage()
-     void activate_doublecrit()
-     void activate_ultimatedef()
+     int act_bladestorm();
+     void activate_vengeance();
+     void activate_magicdraw();
+     void activate_hellfire();
+     int act_hellfire();
+     void activate_rage();
+     void act_rage();
+     void activate_doublecrit();
+     void activate_ultimatedef();
   private:
      int locate_x,locate_y;
      int hp,mp,exp,atk,level,hp_max,def;
