@@ -6,7 +6,7 @@
 using namespace std;
 
 
-   bool robot::is_alive()
+   bool clone::is_alive()
      {
        if (hp<=0)
        {
@@ -17,7 +17,7 @@ using namespace std;
          return true;
        }
      }
-    void reset(int level,int number)
+    void clone::reset(int level,int number)
     {
        double rate=level+number*0.2;
        hp_max=20*rate+8;
@@ -29,7 +29,7 @@ using namespace std;
        critical_rate=0.2+level*0.05+number*0.01;
        critical_damage=1.6;
     }
-    int damage()
+    int clone::damage()
      {
         random_device rd;
         mt19937 gen(rd());
@@ -44,12 +44,12 @@ using namespace std;
            return atk;
         }
      }
-    int normalattack()
+    int clone::normalattack()
     {
       hp_recover((hp_max-hp)*0.1);
       return(damage());
     }
-    void hp_recover(int x)
+    void clone::hp_recover(int x)
     {
         if ((hp_max-hp)>=x)
         {
@@ -60,11 +60,11 @@ using namespace std;
           hp=hp_max;
         }
     }
-    void mp_recover(int x)
+    void clone::mp_recover(int x)
     {
       mp+=x;
     }
-    void hurt(int x)
+    void clone::hurt(int x)
     {
       random_device rd;
         mt19937 gen(rd());
@@ -88,18 +88,12 @@ using namespace std;
            }
         }
     }
-  private:
-  int hp,hp_max,atk,def,mp;
-  double critical_rate,critical_damage;
-  double evasion_rate;
 
 
 
 
-class robot
-{
-  public:
-   bool is_alive()
+
+   bool robot::is_alive()
      {
        if (hp<=0)
        {
@@ -110,7 +104,7 @@ class robot
          return true;
        }
      }
-    void reset(int level,int number)
+    void robot::reset(int level,int number)
     {
        double rate=level+number*0.2;
        hp_max=30*rate+10;
@@ -122,7 +116,7 @@ class robot
        critical_rate=0.2+level*0.05+number*0.01;
        critical_damage=1.6;
     }
-    int damage()
+    int robot::damage()
      {
         random_device rd;
         mt19937 gen(rd());
@@ -137,11 +131,11 @@ class robot
            return atk;
         }
      }
-    int normalattack()
+    int robot::normalattack()
     {
       return(damage());
     }
-    void hp_recover(int x)
+    void robot::hp_recover(int x)
     {
         if ((hp_max-hp)>=x)
         {
@@ -152,11 +146,11 @@ class robot
           hp=hp_max;
         }
     }
-    void mp_recover(int x)
+    void robot::mp_recover(int x)
     {
       mp+=x;
     }
-    void hurt(int x)
+    void robot::hurt(int x)
     {
       random_device rd;
         mt19937 gen(rd());
@@ -176,21 +170,17 @@ class robot
            {
              hp-=y;
              cout<<"hurt: HP-"<<y;
-             mp_recover(1);
+             robot::mp_recover(1);
            }
         }
     }
-    int lasers()
+    int robot::lasers()
     {
         mp-=3;
         return(damage()*2);
     }
-  private:
-  int hp,hp_max,atk,def,mp;
-  double critical_rate,critical_damage;
-  double evasion_rate;
 
-};
+
 
 class cith
 {
