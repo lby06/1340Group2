@@ -9,3 +9,4 @@ void new_game();
 void start_page();
 int rename_slot();
 int save();
+void end();
