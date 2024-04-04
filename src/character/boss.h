@@ -14,7 +14,7 @@ public:
     void set(double x);
     
 private:
-    double difficulty = 1;
+    double difficulty;
     int shutdown;
 };
 
@@ -39,3 +39,6 @@ private:
     bossskill* ptrB;
     int shield;
 };
+extern bossskill skilla;
+extern Vadar *vada;
+#endif
