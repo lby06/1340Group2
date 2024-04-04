@@ -3,9 +3,7 @@
 #include<cmath>
 #include <sched.h>
 using namespace std;
-class main_character
-{
-  public:
+
      int main_character::HP()
      {
        return hp;
@@ -444,13 +442,3 @@ class main_character
       skill_status[3]=1;
     }
 
-    
-
-  private:
-     int locate_x,locate_y;
-     int hp,mp,exp,atk,level,hp_max,def;
-     double critical_rate,critical_damage,evasion_rate;
-     int skill_status[4],equipment_status[4];
-     int rageattack;
-     int status[3];
-};
