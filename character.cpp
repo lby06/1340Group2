@@ -442,3 +442,18 @@ using namespace std;
       skill_status[3]=1;
     }
 
+//a test
+    main_character cha1;
+    string heroname="lby";
+    string monstername="clone";
+    string boardcast_word="You hit a strike with rage";
+    string skillname1="Darkforce";
+    string skillmp1="MP:0";
+    string skillname2="Heal";
+    string skillmp2="MP:100"; 
+    string skillname3="anger";
+    string skillmp3="Mp:60";
+    string skillname4="suicide";
+    string skillmp4="MP:-30";
+    
+
