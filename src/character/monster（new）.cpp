@@ -5,6 +5,55 @@
 #include "monster.h"
 using namespace std;
 
+  int Clone::HP()
+     {
+       return hp;
+     }
+     int Clone::MP()
+     {
+       return mp;
+     }
+     int Clone::ATK()
+     {
+       return atk;
+     }
+    int Robot::HP()
+     {
+       return hp;
+     }
+     int Robot::MP()
+     {
+       return mp;
+     }
+     int Robot::ATK()
+     {
+       return atk;
+     }
+  int Cith::HP()
+     {
+       return hp;
+     }
+     int Cith::MP()
+     {
+       return mp;
+     }
+     int Cith::ATK()
+     {
+       return atk;
+     }
+  int Mandalorians::HP()
+     {
+       return hp;
+     }
+     int Mandalorians::MP()
+     {
+       return mp;
+     }
+     int Mandalorians::ATK()
+     {
+       return atk;
+     }
+
 
    bool Clone::is_alive()
      {
@@ -395,5 +444,5 @@ using namespace std;
            }
         }
     }
-
+Clone clo1;
 
