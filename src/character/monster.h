@@ -5,6 +5,9 @@
 
 class Clone {
 public:
+    int HP();
+    int MP();
+    int ATK();
     bool is_alive();
     void reset(int level, int number);
     int normalattack();
@@ -21,6 +24,9 @@ private:
 
 class Robot {
 public:
+    int HP();
+    int MP();
+    int ATK();
     bool is_alive();
     void reset(int level, int number);
     int normalattack();
@@ -38,6 +44,9 @@ private:
 
 class Cith {
 public:
+    int HP();
+    int MP();
+    int ATK();
     bool is_alive();
     void reset(int level, int number);
     int normalattack();
@@ -57,6 +66,9 @@ private:
 
 class Mandalorians {
 public:
+    int HP();
+    int MP();
+    int ATK();
     bool is_alive();
     void reset(int level, int number);
     int normalattack();
@@ -73,5 +85,5 @@ private:
     int damreturn;
     int damage();
 };
-
+extern Clone clo1;
 #endif
