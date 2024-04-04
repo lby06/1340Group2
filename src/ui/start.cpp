@@ -4,17 +4,20 @@
 #include <fstream>
 #include <thread>
 #include <chrono>
+#include <vector>
+#include "startpage.h"
+#include "endpage.h"
 using namespace std;
 
 void clear_screen(){
 #ifdef _WIN32
-    system("CLS");
+    system("CLS"); // 奇形怪状的bug
 #elif __unix__
-    system("clear");
+    system("clear"); // 正常
 #endif
 }
 
-int print_file(const string filename, int wait_time){
+int print_file(const string filename, int wait_time, bool clean){
     ifstream file;
     string line;
     file.open(filename.c_str());
@@ -22,32 +25,32 @@ int print_file(const string filename, int wait_time){
         cout << "error: file not found" << endl;
         exit(1);
     }
-    //clear_screen();
+    if(clean) clear_screen();
     while(getline(file, line)){
         cout << line << endl;
     }
     file.close();
-    this_thread::sleep_for(chrono::seconds(wait_time));
+    this_thread::sleep_for(chrono::seconds(wait_time)); // windows 上无法运行, linux 上正常
     return line.size();
 }
 
 void new_game(){
-    print_file("../../data/scripts/ascii_images/sith_code.txt", 3);
-    print_file("../../data/scripts/ascii_images/script1.txt", 3);
+    print_file("../../data/scripts/ascii_images/sith_code.txt", 3, true);
+    print_file("../../data/scripts/ascii_images/script1.txt", 3, true);
 
     int choice;
     do{
-        print_file("../../data/scripts/ascii_images/luke_skywalker.txt", 0);
-        print_file("../../data/scripts/ascii_images/darth_vader.txt", 0);
+        print_file("../../data/scripts/ascii_images/luke_skywalker.txt", 1, false);
+        print_file("../../data/scripts/ascii_images/darth_vader.txt", 0, true);
         cout << "Enter your choice ( 1 / 2 ): ";
         cin >> choice;
 
         switch(choice){
             case 1:
-                print_file("../../data/scripts/ascii_images/script2.txt", 3);
+                print_file("../../data/scripts/ascii_images/script2.txt", 3, true);
                 break;
             case 2:
-                print_file("../../data/scripts/ascii_images/script3.txt", 3);
+                print_file("../../data/scripts/ascii_images/script3.txt", 3, true);
                 break;
             default:
                 cout << "invalid choice, please try again" << endl;
@@ -61,13 +64,13 @@ void new_game(){
 void start_page(){
     int padding;
     string press_key = "Press any key to continue...";
-    padding = 0.5*print_file("../../data/scripts/ascii_images/start1.txt", 0) - 0.5*press_key.size();
+    padding = 0.5*print_file("../../data/scripts/ascii_images/start1.txt", 0, true) - 0.5*press_key.size();
     cout << string(padding, ' ') << press_key;
     cin.ignore();
     
-    int choice;
+    int choice, slot;
     do{
-        print_file("../../data/scripts/ascii_images/main_menu.txt", 0);
+        print_file("../../data/scripts/ascii_images/main_menu.txt", 0, true);
         cout << "Enter your choice: ";
         cin >> choice;
 
@@ -76,21 +79,59 @@ void start_page(){
                 new_game();
                 break;
             case 2:
-                //save();
+                slot = save();
                 break;
             case 3:
                 //tutorial();
                 break;
             case 4:
-                //end();
+                end();
                 break;
             default:
                 cout << "invalid choice, please try again" << endl;
                 break;
         }
     }while(choice != 4);
+    return;
+}
+
+int rename_slot() {
+    int slot;
+    string new_name;
+    bool valid = false;
+
+    while(!valid){
+        cout << "Enter the number of the slot you want to rename: ";
+        cin >> slot;
+        if (slot == 1 || slot == 2 || slot == 3){
+            valid = true;
+        }else{
+            cout << "Invalid slot number.\n";
+        }   
+    }
+
+    cout << "Enter a new name for the slot: ";
+    cin >> new_name;
+
+    ifstream file_in("../../data/scripts/ascii_images/save.txt");
+    vector<string> lines;
+    string line;
+    while (getline(file_in, line)) {
+        lines.push_back(line);
+    }
+    file_in.close();
+    lines[2*slot - 1] = "        " + new_name;
     
-    
+    ofstream file_out("../../data/scripts/ascii_images/save.txt");
+    for (const string& line : lines) {
+        file_out << line << "\n";
+    }
+
+    return slot;
+}
+int save(){
+    print_file("../../data/scripts/ascii_images/save.txt", 0, true);
+    return rename_slot();
 }
 
 // void save(){
@@ -99,12 +140,4 @@ void start_page(){
 // void tutorial(){
 //     return;
 // }
-// void end(){
-//     return;
-// }
 // void main_game(int choice)
-
-int main(){
-    start_page();
-    return 0;
-}
