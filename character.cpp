@@ -2,6 +2,7 @@
 #include<random>
 #include<cmath>
 #include <sched.h>
+#include "character.h"
 using namespace std;
 
      int main_character::HP()
@@ -456,4 +457,3 @@ using namespace std;
     string skillname4="suicide";
     string skillmp4="MP:-30";
     
-
