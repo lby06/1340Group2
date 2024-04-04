@@ -1,8 +1,6 @@
 #include "monster.h"
 using namespace std;
 
-class clone
-{
   public:
    bool is_alive()
      {
@@ -91,7 +89,7 @@ class clone
   double critical_rate,critical_damage;
   double evasion_rate;
 
-};
+
 
 
 class robot
