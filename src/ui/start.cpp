@@ -34,13 +34,13 @@ int print_file(const string filename, int wait_time, bool clean){
 }
 
 void new_game(){
-    print_file("../../data/scripts/ascii_images/sith_code.txt", 3, true);
-    print_file("../../data/scripts/ascii_images/script1.txt", 3, true);
+    print_file("../../data/scripts/ascii_images/sith_code.txt", 8, true);
+    print_file("../../data/scripts/ascii_images/script1.txt", 10, true);
 
     int choice;
     do{
-        print_file("../../data/scripts/ascii_images/luke_skywalker.txt", 1, false);
-        print_file("../../data/scripts/ascii_images/binks.txt", 0, true);
+        print_file("../../data/scripts/ascii_images/luke_skywalker.txt", 1, true);
+        print_file("../../data/scripts/ascii_images/binks.txt", 0, false);
         cout << "Enter your choice ( 1 / 2 ): ";
         cin >> choice;
 
@@ -110,8 +110,9 @@ int rename_slot() {
     }
 
     cout << "Enter a new name for the slot: ";
-    cin >> new_name;
-
+    cin.ignore();
+    getline(cin, new_name);
+    
     ifstream file_in("../../data/scripts/ascii_images/save.txt");
     vector<string> lines;
     string line;
@@ -122,10 +123,14 @@ int rename_slot() {
     lines[2*slot - 1] = "        " + new_name;
     
     ofstream file_out("../../data/scripts/ascii_images/save.txt");
+    if(file_out.fail()){
+        cout << "error: file not found" << endl;
+    }
     for (const string& line : lines) {
         file_out << line << "\n";
     }
-
+    file_out.close();
+    
     return slot;
 }
 int save(){
@@ -134,8 +139,9 @@ int save(){
 }
 
 void end(){
-    bool quit;
+    bool quit = true;
     cout << "       Are you sure ?  Enter 1 (Yes) / 0 (No):    " << endl;
+    cin >> quit;
     if(!quit) return;
     print_file("../../data/scripts/ascii_images/end.txt", 3, true);
     exit(1);
