@@ -5,8 +5,7 @@
 #include <thread>
 #include <chrono>
 #include <vector>
-#include "startpage.h"
-#include "endpage.h"
+#include "start_endpage.h"
 using namespace std;
 
 void clear_screen(){
@@ -41,7 +40,7 @@ void new_game(){
     int choice;
     do{
         print_file("../../data/scripts/ascii_images/luke_skywalker.txt", 1, false);
-        print_file("../../data/scripts/ascii_images/darth_vader.txt", 0, true);
+        print_file("../../data/scripts/ascii_images/binks.txt", 0, true);
         cout << "Enter your choice ( 1 / 2 ): ";
         cin >> choice;
 
@@ -132,6 +131,14 @@ int rename_slot() {
 int save(){
     print_file("../../data/scripts/ascii_images/save.txt", 0, true);
     return rename_slot();
+}
+
+void end(){
+    bool quit;
+    cout << "       Are you sure ?  Enter 1 (Yes) / 0 (No):    " << endl;
+    if(!quit) return;
+    print_file("../../data/scripts/ascii_images/end.txt", 3, true);
+    exit(1);
 }
 
 // void save(){
