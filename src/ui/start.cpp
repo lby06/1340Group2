@@ -33,31 +33,61 @@ int print_file(const string filename, int wait_time, bool clean){
     return line.size();
 }
 
-void new_game(){
+string new_game(){
     print_file("../../data/scripts/ascii_images/sith_code.txt", 8, true);
     print_file("../../data/scripts/ascii_images/script1.txt", 10, true);
 
-    int choice;
+    string name;
+    bool valid = false;
     do{
-        print_file("../../data/scripts/ascii_images/luke_skywalker.txt", 1, true);
-        print_file("../../data/scripts/ascii_images/binks.txt", 0, false);
-        cout << "Enter your choice ( 1 / 2 ): ";
-        cin >> choice;
+        print_file("../../data/scripts/ascii_images/computer.txt", 0, true);
+        cin.ignore();
+        cout << "Enter your name (no more than 10 chars): ";
+        getline(cin, name);
 
-        switch(choice){
-            case 1:
-                print_file("../../data/scripts/ascii_images/script2.txt", 3, true);
-                break;
-            case 2:
-                print_file("../../data/scripts/ascii_images/script3.txt", 3, true);
-                break;
-            default:
-                cout << "invalid choice, please try again" << endl;
-                break;
+        if(name.size() < 11){  
+            valid = true   ;   
+            ifstream file_in("../../data/scripts/ascii_images/script3.txt");
+            vector<string> lines;
+            string line;
+            while (getline(file_in, line)) {
+                lines.push_back(line);
+            }
+            file_in.close();
+            lines[25] = "  \"" + name + ", my most unlikely servant. Your ";
+    
+            ofstream file_out("../../data/scripts/ascii_images/script3.txt");
+            if(file_out.fail()){
+                cout << "error: file not found" << endl;
+            }
+            for (const string& line : lines) {
+                file_out << line << "\n";
+            }
+            file_out.close();
+
+            ifstream fin("../../data/scripts/ascii_images/luke_skywalker.txt");
+            vector<string> sec_lines;
+            string sec_line;
+            while (getline(fin, sec_line)) {
+                sec_lines.push_back(sec_line);
+            }
+            fin.close();
+            sec_lines[17] = "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣾⣿⣿⡿⣿⣿⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀         ****  " + name + "  ****";
+    
+            ofstream fout("../../data/scripts/ascii_images/luke_skywalker.txt");
+            if(fout.fail()){
+                cout << "error: file not found" << endl;
+            }
+            for (const string& sec_line : sec_lines) {
+                fout << sec_line << "\n";
+            }
+            fout.close();
         }
-    }while(choice != 1 && choice != 2);
+    }while(!valid);
+    print_file("../../data/scripts/ascii_images/luke_skywalker.txt", 4, true);
+    print_file("../../data/scripts/ascii_images/script3.txt", 6, true);
     // main_game(choice);
-    return;
+    return name;
 }
 
 void start_page(){
@@ -68,6 +98,7 @@ void start_page(){
     cin.ignore();
     
     int choice, slot;
+    string name;
     do{
         print_file("../../data/scripts/ascii_images/main_menu.txt", 0, true);
         cout << "Enter your choice: ";
@@ -75,7 +106,7 @@ void start_page(){
 
         switch(choice){
             case 1:
-                new_game();
+                name = new_game();
                 break;
             case 2:
                 slot = save();
@@ -154,3 +185,7 @@ void end(){
 //     return;
 // }
 // void main_game(int choice)
+int main(){
+    start_page();
+    return 0;
+}

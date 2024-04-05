@@ -1,5 +1,5 @@
         
-        Slot 1
+        slot 1
 
         Slot 2
 
