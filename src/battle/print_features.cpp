@@ -170,8 +170,22 @@ void WordInsert(vector<string>& fight_map, const string& word, vector<pair<int, 
 
     fight_map[start_row].replace(start_col, spaceLength, ExpendWord);
 }
+void WordInsert_front(vector<string>& fight_map, const string& word, vector<pair<int, int>> positions) {
+    int start_row = positions[0].first;
+    int start_col = positions[0].second;
+    int end_col   = positions[1].second;
+
+    string ExpendWord = word;
+    int wordLength = word.length();
+    int spaceLength = end_col - start_col;
+    if (wordLength < spaceLength) {
+        ExpendWord.insert(0, spaceLength - wordLength, ' ');
+    }
+
+    fight_map[start_row].replace(start_col, spaceLength, ExpendWord);
+}
 void Includeword() {
-    WordInsert(fight_map, heroname, name_mc);
+    WordInsert_front(fight_map, heroname, name_mc);
     WordInsert(fight_map, monstername, name_ms);
     WordInsert(fight_map, boardcast_word, boardcast);
     WordInsert(fight_map, skillname1, skill1_1);
