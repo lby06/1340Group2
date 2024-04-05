@@ -28,6 +28,7 @@ void CharacterInsert(vector<string>& fight_map, const vector<string>& lines, vec
 string convertNumber(int HP, int MP, int ATK);
 void StateInsert(vector<string>& fight_map, string number, vector<pair<int, int>> positions);
 void WordInsert(vector<string>& fight_map, const string& word, vector<pair<int, int>> positions);
+void WordInsert_front(vector<string>& fight_map, const string& word, vector<pair<int, int>> positions);
 void Includeword();
 void NewRound(vector<string>& fight_map, int& roundNumber);
 void clearScreen();
