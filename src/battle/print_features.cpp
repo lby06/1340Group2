@@ -7,7 +7,7 @@
 #include <cstdlib>
 #include <unistd.h>
 #include"print_features.h"
-#include"character.h"
+#include"../character/character.h"
 using namespace std;
 //postion of the Character
 vector<pair<int, int>> position_mc = {{5, 1}, {5, 27}, {15, 1}, {15, 27}};
@@ -33,8 +33,8 @@ vector<pair<int, int>> skill4_2 = {{18, 40},{18, 51}};
 int Round =1,HP1=2,HP2=500,MP1=232,MP2=32,ATK1=321,ATK2=52;
 int roundNumber = 0;
 //a test
-string filepath_ms="./characters/monster_ASCII.txt";
-string filepath_mc="./characters/hero_ASCII.txt";
+string filepath_ms="./1340Group2/data/animations/monsters_ASCii.txt";
+string filepath_mc="./1340Group2/data/animations/main_character_ASCii.txt";
 int line_number = 23;
 int col_number = 77;
 
@@ -211,6 +211,6 @@ void NewRound(vector<string>& fight_map,int& roundNumber) {
 void clearScreen() {
         system("clear");
 }
-void waitOneSecond() {
-    sleep(1);
+void waitSecond(int SleepTime) {
+    sleep(SleepTime);
 }
