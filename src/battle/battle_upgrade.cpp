@@ -3,15 +3,11 @@
 #include <fstream>
 #include <chrono>
 #include <thread>
-
+#include "battle_upgrade.h"
+#include "string"
 using namespace std;
 
 
-#define RESET_COLOR "\033[0m"
-#define RED_COLOR "\033[31m"
-#define GREEN_COLOR "\033[32m"
-#define YELLOW_COLOR "\033[33m"
-#define BLUE_COLOR "\033[34m"
 
 //clear screen
 void clearScreen() {
@@ -177,7 +173,7 @@ vector<vector<string>> make (vector<vector<vector<string>>> generaters, vector<s
     vector<vector<string>> matrix = makematrix(from,Upgrading,Upgraded,to,col_num,line__);
     return matrix;
 }
-int main()
+void upgrade()
 {
     // string target;
     // cin >> target;
@@ -185,7 +181,9 @@ int main()
     string filename = "./../../data/animations/paint.txt";
     string filename2 = "./../../data/animations/text.txt";
     string filename3 = "./../../data/animations/main_character.txt";
-
+    // string filename = "./upgrade/paint.txt";
+    // string filename2 = "./upgrade/text.txt";
+    // string filename3 = "./upgrade/main_character.txt";
     int line_number = 23;
     int col_number = 77;
     int line__ = 16;
