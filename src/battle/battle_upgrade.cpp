@@ -182,9 +182,9 @@ int main()
     // string target;
     // cin >> target;
 
-    string filename = "./upgrade/paint.txt";
-    string filename2 = "./upgrade/text.txt";
-    string filename3 = "./upgrade/main_character.txt";
+    string filename = "./../../data/animations/paint.txt";
+    string filename2 = "./../../data/animations/text.txt";
+    string filename3 = "./../../data/animations/main_character.txt";
 
     int line_number = 23;
     int col_number = 77;
@@ -266,7 +266,11 @@ int main()
     // printmatrix(matrix1,BLUE_COLOR);
     // printmatrix(matrix2,RED_COLOR);
     // printmatrix(matrix3,GREEN_COLOR);
-    for(int i = 0; i< 9;i++)
-    {vector<vector<string>> matrix = make(generaters,Upgraded,Upgrading,toframe,i,line_number,col_number,line__);
-    printmatrix(matrix,BLUE_COLOR);}
+    cout << "which level you are?" << endl;
+    int i;
+    cin >> i;
+    cout << "now you will upgrade to " << i+1 << "level" << endl;
+    this_thread::sleep_for(chrono::seconds(1));
+    vector<vector<string>> matrix = make(generaters,Upgraded,Upgrading,toframe,i,line_number,col_number,line__);
+    printmatrix(matrix,BLUE_COLOR);
  }
