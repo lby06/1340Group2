@@ -2,8 +2,23 @@
 #include<random>
 #include<cmath>
 #include <sched.h>
+#include<string>
 #include "character.h"
 using namespace std;
+
+string cha_show_crit="";
+string cha_show_evasion="";
+string cha_show1="";
+string cha_show2="";
+string cha_show3="";
+void cha_show_reset()
+{
+    cha_show_crit="";
+    cha_show_evasion="";
+    cha_show1="";
+    cha_show2="";
+    cha_show3="";
+}
 
      int main_character::HP()
      {
@@ -36,7 +51,7 @@ using namespace std;
        atk=3;
        def=1;
        hp=15;
-       hp_max=10;
+       hp_max=15;
        mp=5;
        exp=0;
        critical_rate=0.15;
@@ -120,10 +135,10 @@ using namespace std;
         {
           if (skill_status[3]==2 && dis(gen)<=critical_rate/2.2+0.05)
           {
-            cout<<"Utimate Critical Strike!!!";
+            cha_show_crit="Utimate Critical Strike!!!";
             return atk*critical_damage*critical_damage;
           } 
-          cout<<"Critical Strike!";
+          cha_show_crit="Critical Strike!";
           return atk*critical_damage;
         }
         else
@@ -170,7 +185,7 @@ using namespace std;
         uniform_real_distribution<> dis(0, 1);
         if (dis(gen)<=evasion_rate) 
         {
-           cout<<"Evasion successful.";
+           cha_show_evasion="Evasion successful.";
         }
         else
         {
@@ -182,7 +197,6 @@ using namespace std;
            else 
            {
              hp-=y;
-             cout<<"hurt: HP-"<<y;
              mp_recover(1);//受击回蓝
              if (skill_status[3]==1)
              { 
@@ -242,7 +256,7 @@ using namespace std;
     {
       if (rageattack>=1)
       {
-        cout<<"Attack with raaaage"<<endl;
+        //cout<<"Attack with raaaage"<<endl;
         rageattack-=1;
         return damage()*1.6;
       }
@@ -261,16 +275,16 @@ using namespace std;
         if (mp>=3)
         {
           mp-=3;
-          cout<<"recover: "<<atk*1.5;
+          //cout<<"recover: "<<atk*1.5;
           hp_recover(atk*1.5);
           if (skill_status[1]==2)
           {
-            cout<<"magicdraw: "<<"1";
+            //cout<<"magicdraw: "<<"1";
             mp_recover(1);
           }
           if (skill_status[1]==1)
           {
-            cout<<"Vampiric effect: "<<0.2*1.5*atk+1;
+            //cout<<"Vampiric effect: "<<0.2*1.5*atk+1;
             hp_recover(0.2*1.5*atk+1);
           }
           return atk*1.5;
@@ -278,13 +292,13 @@ using namespace std;
         }
         else
         {
-          cout<<"Magic power is deficient.";
+          cha_show1="Magic power is deficient.";
           return 0;
         }      
       }
       else
       {
-        cout<<"<Hit with the Force> is not activated yet.";
+        cha_show2="<Hit with the Force> is not activated yet.";
         return 0;
       }
     }
@@ -308,7 +322,9 @@ using namespace std;
           int dam=0;
           int da[6];
           int times=10*dis(gen);
-          cout<<"Number of segments in this attack: "<<times;
+          string time;
+          time=times;
+          cha_show3="Number of segments in this attack: "+time;
           for (int i=0;i<times;i++)
           {
             dam+=damage()*0.3;
@@ -316,12 +332,12 @@ using namespace std;
           critical_damage-=0.4;
           if (skill_status[1]==2)
           {
-            cout<<"magicdraw: "<<"1";
+            //cout<<"magicdraw: "<<"1";
             mp_recover(1);
           }
           if (skill_status[1]==1)
           {
-            cout<<"Vampiric effect: "<<0.2*dam+1;
+            //cout<<"Vampiric effect: "<<0.2*dam+1;
             hp_recover(0.2*dam+1);
           }
           return dam;
@@ -330,13 +346,13 @@ using namespace std;
         }
         else
         {
-          cout<<"Magic power is deficient.";
+          cha_show1="Magic power is deficient.";
           return 0;
         }      
       }
       else
       {
-        cout<<"<Storm of lightsaber> is not activated yet.";
+       cha_show2="<Storm of lightsaber> is not activated yet.";
         return 0;
       }
     }
@@ -365,18 +381,18 @@ using namespace std;
       {
         if (mp>=1)
         {
-          cout<<"Magic power used"<<mp;
+          //cout<<"Magic power used"<<mp;
           double use=mp;
           mp=0;
           int dam=use*sqrt(use)*sqrt(damage())/4+5;
           if (skill_status[1]==2)
           {
-            cout<<"magicdraw: "<<0.2*use+1;
+            //cout<<"magicdraw: "<<0.2*use+1;
             mp_recover(0.2*use+1);
           }
           if (skill_status[1]==1)
           {
-            cout<<"Vampiric effect: "<<0.2*dam+1;
+            //cout<<"Vampiric effect: "<<0.2*dam+1;
             hp_recover(0.2*1.5*dam+1);
           }
           return dam;
@@ -384,13 +400,13 @@ using namespace std;
         }
         else
         {
-          cout<<"Magic power is deficient.";
+          //cha_show1="Magic power is deficient.";
           return 0;
         }      
       }
       else
       {
-        cout<<"<Dark Force Flame> is not activated yet.";
+        cha_show2="<Dark Force Flame> is not activated yet.";
         return 0;
       }
     }
@@ -420,13 +436,13 @@ using namespace std;
         }
         else
         {
-          cout<<"Magic power is deficient.";
+          cha_show1="Magic power is deficient.";
           return ;
         }      
       }
       else
       {
-        cout<<"<Rage of Jedi> is not activated yet.";
+        cha_show2="<Rage of Jedi> is not activated yet.";
         return ;
       }
     }
@@ -456,4 +472,3 @@ using namespace std;
     string skillmp3="Mp:60";
     string skillname4="suicide";
     string skillmp4="MP:-30";
-    
