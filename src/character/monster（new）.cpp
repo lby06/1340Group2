@@ -162,7 +162,7 @@ int Mandalorians::damage() {
 	mt19937 gen(rd());
 	uniform_real_distribution<> dis(0, 1);
 	if (dis(gen) <= critical_rate_) {
-		cout << "Critical Strike!";
+		mon_show_crit= "Critical Strike!";//改动----------------
 		return atk_ * critical_damage_;
 	} else {
 		return atk_;
