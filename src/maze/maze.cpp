@@ -27,7 +27,8 @@ void Maze::loadMaze() {
 	int saveID = 1;
 
 	// Retrieve save path.
-	auto path = constructPath(saveID);
+	// auto path = constructPath(saveID);
+	auto path = "./data/maps/preset1.dat";
 
 	std::ifstream fin(path);
 	if (!fin.is_open()) {
@@ -72,10 +73,32 @@ void Maze::saveMaze() {
 	}
 }
 
-// Get grid.
-std::vector<std::string> Maze::getGrid() { return this->grid_; }
+// Get extended grid.
+std::vector<std::string> Maze::getExtendedGrid() {
+	std::vector<std::string> extended_grid;
+	for (const auto &row : this->grid_) {
+		std::string extended_row;
+		for (const auto &ch : row) {
+			// extended_row.push_back(' ');
+			extended_row.push_back(ch);
+			extended_row.push_back(' ');
+		}
+		extended_grid.push_back(extended_row);
+	}
+	return extended_grid;
+}
 
 // Create a new maze.
 void Maze::newMaze() {
 	// TODO
+}
+
+// Function test
+int main() {
+	Maze maze;
+	maze.loadMaze();
+	for (const auto &line : maze.getExtendedGrid()) {
+		std::cout << line << std::endl;
+	}
+	return 0;
 }

@@ -29,12 +29,18 @@ class Maze {
 	main_character main_character_; // Store main character's info
 
   public:
-	void init_grid();
-	std::vector<std::string> getGrid();
+	// Get extended grid (i.e. filled with spaces), otherwise height is much
+	// larger than width. Not suitable for display.
+	std::vector<std::string> getExtendedGrid();
+	// Deprecated. As API is provided in `battle/print_features.h`.
 	void showMaze();
+	// Load the maze from data file.
 	void loadMaze();
+	// Save the maze to data file.
 	void saveMaze();
 
 	// Create a new maze. (Entering a new level / New game)
 	void newMaze();
+	// Fill the maze with monsters
+	void init_grid();
 };
