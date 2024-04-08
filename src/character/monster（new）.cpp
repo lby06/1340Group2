@@ -12,10 +12,12 @@ using namespace std;
 //改动---------------
 string mon_show_crit="";
 string mon_show_evasion="";
+string mon_show="";
 void mon_show_reset()
 {
     mon_show_crit="";
     mon_show_evasion="";
+    mon_show="";
 }
 //改动----------------
 int Monster::HP() { return hp_; }
