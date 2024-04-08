@@ -72,5 +72,6 @@ extern Cith cit1;
 extern Mandalorians man1;
 extern std::string mon_show_crit;
 extern std::string mon_show_evasion;
+extern std::string mon_show;
 //改动
 #endif
