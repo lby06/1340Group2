@@ -10,7 +10,7 @@ int kMaxMazeSizeWidth = 50;
 int kMaxMazeSizeHeight = 50;
 
 // Define the max number of monsters in each maze.
-extern constexpr int kMaxNumberOfMonsters = 10;
+int kMaxNumberOfMonsters = 10;
 
 const std::string kPathPrefix = "./data/savings/sav";
 const std::string kPathSuffix = ".dat";

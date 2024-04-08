@@ -3,7 +3,7 @@
 
 #include <cstdlib>
 #include <ctime>
-#include <iostream>
+// #include <iostream>
 #include <termio.h>
 
 int readKeyboard() {
@@ -32,10 +32,10 @@ std::pair<int, int> randomPosition() {
 }
 
 // FUNCTION TEST
-int main() {
-	// while (1) {
-	// 	std::cout << "Retrieved input: " << char(readKeyboard()) << std::endl;
-	// }
-	auto pr = randomPosition();
-	std::cout << pr.first << " " << pr.second << std::endl;
-}
+// int main() {
+// 	// while (1) {
+// 	// 	std::cout << "Retrieved input: " << char(readKeyboard()) << std::endl;
+// 	// }
+// 	auto pr = randomPosition();
+// 	std::cout << pr.first << " " << pr.second << std::endl;
+// }

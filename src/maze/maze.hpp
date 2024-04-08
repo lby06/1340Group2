@@ -6,7 +6,7 @@
 #include <string>
 #include <vector>
 
-extern int kMaxMazeSizeWidth, kMaxMazeSizeHeight;
+extern int kMaxMazeSizeWidth, kMaxMazeSizeHeight, kMaxNumberOfMonsters;
 
 /**
  * @brief Defines the basic elements of each maze. It also enacts as the hub of
