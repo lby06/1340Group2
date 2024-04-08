@@ -1,25 +1,40 @@
 #pragma once
 
-/**
- * @brief Defines the basic elements of each maze.
- *
- */
-#include <array>
+#include "../character/character.h"
+#include "../character/monster.h"
+
 #include <string>
 #include <vector>
 
-// Defines the size of a maze
-const int MAX_MAZE_SIZE_WIDTH = 50;
-const int MAX_MAZE_SIZE_LENGTH = 50;
+// Defines the size of a maze.
+static constexpr int kMaxMazeSizeWidth = 50;
+static constexpr int kMaxMazeSizeLength = 50;
 
+// Define the max number of monsters in each maze.
+static constexpr int kMaxNumberOfMonsters = 10;
+
+/**
+ * @brief Defines the basic elements of each maze. It also enacts as the hub of
+ * all the others.
+ *
+ * @details Contains `main character`, `game board`, collection of `monster`s
+ *
+ */
 class Maze {
   private:
-    std::array<std::array<char, MAX_MAZE_SIZE_LENGTH>, MAX_MAZE_SIZE_WIDTH> maze;
-    /// TODO: Finish definition of arrays of monsters and characters
-    // std::vector<> monsters; // To store monsters' info
+	// By default, `#` represents walls.
+	std::vector<std::string> grid_;
+
+	std::vector<Monster> monsters_; // Store monsters' info
+	main_character main_character_; // Store main character's info
 
   public:
-    void showMaze();
-    void loadMaze(std::string);
-    void saveMaze();
+	void init_grid();
+	std::vector<std::string> getGrid();
+	void showMaze();
+	void loadMaze();
+	void saveMaze();
+
+	// Create a new maze. (Entering a new level / New game)
+	void newMaze();
 };

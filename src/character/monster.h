@@ -3,87 +3,63 @@
 #include <random>
 #include <iostream>
 
-class Clone {
-public:
-    int HP();
-    int MP();
-    int ATK();
-    bool is_alive();
-    void reset(int level, int number);
-    int normalattack();
-    void hp_recover(int x);
-    void mp_recover(int x);
-    void hurt(int x);
+class Monster {
+  public:
+	// Returns monsters' HP (Health point)
+	double HP();
+	double MP();
+	double ATK();
+	bool isAlive();
+	virtual void reset(int, int);
+	virtual double normalAttack();
+	void recoverHP(double);
+	void recoverMP(double);
+	virtual void hurt(double);
+	virtual double damage();
 
-private:
-    int hp, hp_max, atk, def, mp;
-    double critical_rate, critical_damage;
-    double evasion_rate;
-    int damage();
+  protected:
+	double hp_, hp_max_;
+	double atk_;
+	int def_;
+	double mp_;
+	double critical_rate_, critical_damage_;
+	double evasion_rate_;
 };
 
-class Robot {
-public:
-    int HP();
-    int MP();
-    int ATK();
-    bool is_alive();
-    void reset(int level, int number);
-    int normalattack();
-    void hp_recover(int x);
-    void mp_recover(int x);
-    void hurt(int x);
-    int lasers();
-
-private:
-    int hp, hp_max, atk, def, mp;
-    double critical_rate, critical_damage;
-    double evasion_rate;
-    int damage();
+class Clone : public Monster {
+  public:
+	virtual void reset(int, int);
+	virtual double normalAttack();
 };
 
-class Cith {
-public:
-    int HP();
-    int MP();
-    int ATK();
-    bool is_alive();
-    void reset(int level, int number);
-    int normalattack();
-    void hp_recover(int x);
-    void mp_recover(int x);
-    void returntodark();
-    void hurt(int x);
-    int lasers();
-
-private:
-    int hp, hp_max, atk, def, mp;
-    double critical_rate, critical_damage;
-    double evasion_rate;
-    int life;
-    int damage();
+class Robot : Monster {
+  public:
+	double lasers();
+	virtual void reset(int, int);
 };
 
-class Mandalorians {
-public:
-    int HP();
-    int MP();
-    int ATK();
-    bool is_alive();
-    void reset(int level, int number);
-    int normalattack();
-    void hp_recover(int x);
-    void mp_recover(int x);
-    void rage();
-    void hurt(int x);
+class Cith : Monster {
+  public:
+	void returntodark();
+	double lasers();
+	virtual void hurt(double);
+	virtual void reset(int, int);
 
-private:
-    int hp, hp_max, atk, def, mp;
-    double critical_rate, critical_damage;
-    double evasion_rate;
-    int beatback;
-    int damreturn;
-    int damage();
+  private:
+	int life;
+};
+
+class Mandalorians : Monster {
+  public:
+	virtual double normalAttack();
+	virtual void hurt(double);
+	void rage();
+	virtual double damage();
+	virtual void reset(int, int);
+
+  private:
+	int beatback;
+	int damreturn;
 };
 extern Clone clo1;
 #endif
