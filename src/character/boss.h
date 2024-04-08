@@ -39,6 +39,10 @@ private:
     bossskill* ptrB;
     int shield;
 };
+void boss_show_reset();
 extern bossskill skilla;
 extern Vadar *vada;
+extern std::string boss_show_crit;
+extern std::string boss_show_evasion;
+extern std::string boss_show;
 #endif
