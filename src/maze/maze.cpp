@@ -4,6 +4,14 @@
 #include <iostream>
 #include <string>
 
+// Defines the size of a maze.
+
+int kMaxMazeSizeWidth = 50;
+int kMaxMazeSizeHeight = 50;
+
+// Define the max number of monsters in each maze.
+extern constexpr int kMaxNumberOfMonsters = 10;
+
 const std::string kPathPrefix = "./data/savings/sav";
 const std::string kPathSuffix = ".dat";
 std::string constructPath(int i) {
@@ -45,6 +53,9 @@ void Maze::loadMaze() {
 
 	// 2. Load main character.
 	// 3. Load monsters.
+
+	// Close file.
+	fin.close();
 }
 
 // Saves maze to saving.
@@ -70,6 +81,9 @@ void Maze::saveMaze() {
 
 		// 2. Write main character.
 		// 3. Write monsters.
+
+		// Close file.
+		fout.close();
 	}
 }
 
@@ -93,12 +107,12 @@ void Maze::newMaze() {
 	// TODO
 }
 
-// Function test
-int main() {
-	Maze maze;
-	maze.loadMaze();
-	for (const auto &line : maze.getExtendedGrid()) {
-		std::cout << line << std::endl;
-	}
-	return 0;
-}
+// FUNCTION TEST
+// int main() {
+// 	Maze maze;
+// 	maze.loadMaze();
+// 	for (const auto &line : maze.getExtendedGrid()) {
+// 		std::cout << line << std::endl;
+// 	}
+// 	return 0;
+// }

@@ -6,12 +6,7 @@
 #include <string>
 #include <vector>
 
-// Defines the size of a maze.
-static constexpr int kMaxMazeSizeWidth = 50;
-static constexpr int kMaxMazeSizeLength = 50;
-
-// Define the max number of monsters in each maze.
-static constexpr int kMaxNumberOfMonsters = 10;
+extern int kMaxMazeSizeWidth, kMaxMazeSizeHeight;
 
 /**
  * @brief Defines the basic elements of each maze. It also enacts as the hub of
