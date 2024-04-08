@@ -9,6 +9,15 @@ using namespace std;
 	Defines common behaviours of monsters.
 
  */
+//改动---------------
+string mon_show_crit="";
+string mon_show_evasion="";
+void mon_show_reset()
+{
+    mon_show_crit="";
+    mon_show_evasion="";
+}
+//改动----------------
 int Monster::HP() { return hp_; }
 int Monster::MP() { return mp_; }
 int Monster::ATK() { return atk_; }
@@ -182,4 +191,9 @@ void Mandalorians::hurt(int x) {
 		}
 	}
 }
+//改动----------------
 Clone clo1;
+Robot rob1;
+Cith cit1;
+Mandalorians man1;
+//改动----------------
