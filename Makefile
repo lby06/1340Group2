@@ -19,6 +19,12 @@ utils.o: $(UTILS)
 utils: utils.o
 	g++ $(FLAG) utils.o -o utils.out
 
+maze.o: $(MAZE)
+	g++ $(FLAG) -c $(MAZE) -o maze.o
+
+# Seperate Testing (maze)
+maze: maze.o
+	g++ $(FLAG) maze.o -o maze.out
 
 main.o: $(MAIN)
 	g++ $(FLAG) -c $(MAIN) -o main.o
