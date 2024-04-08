@@ -48,6 +48,24 @@ int Monster::damage() {
 	}
 }
 
+void Monster::hurt(int x) {
+	random_device rd;
+	mt19937 gen(rd());
+	uniform_real_distribution<> dis(0, 1);
+	if (dis(gen) <= evasion_rate_) {
+		cout << "Evasion successful.";
+	} else {
+		int y = x - def_;
+		if ((hp_ - y) <= 0) {
+			hp_ = 0;
+		} else {
+			hp_ -= y;
+			cout << "hurt: HP-" << y;
+			recoverMP(1);
+		}
+	}
+}
+
 void Clone::reset(int level, int number) {
 	int rate = level + number * 0.2;
 	hp_max_ = 20 * rate + 8;
