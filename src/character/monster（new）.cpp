@@ -41,7 +41,7 @@ int Monster::damage() {
 	mt19937 gen(rd());
 	uniform_real_distribution<> dis(0, 1);
 	if (dis(gen) <= critical_rate_) {
-		cout << "Critical Strike!";
+		mon_show_crit= "Critical Strike!";//改动----------------
 		return atk_ * critical_damage_;
 	} else {
 		return atk_;
@@ -112,7 +112,7 @@ void Cith::hurt(int x) {
 	mt19937 gen(rd());
 	uniform_real_distribution<> dis(0, 1);
 	if (dis(gen) <= evasion_rate_) {
-		cout << "Evasion successful.";
+		mon_show_evasion= "Evasion successful.";//改动--------------
 	} else {
 		int y = x - def_;
 		if ((hp_ - y) <= 0) {
@@ -179,7 +179,7 @@ void Mandalorians::hurt(int x) {
 	mt19937 gen(rd());
 	uniform_real_distribution<> dis(0, 1);
 	if (dis(gen) <= evasion_rate_) {
-		cout << "Evasion successful.";
+		mon_show_evasion= "Evasion successful.";//改动--------------
 	} else {
 		int y = x - def_;
 		if ((hp_ - y) <= 0) {
