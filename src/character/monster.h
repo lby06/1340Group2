@@ -2,7 +2,7 @@
 #define MONSTER_H
 #include <random>
 #include <iostream>
-
+#include <string>
 class Monster {
   public:
 	// Returns monsters' HP (Health point)
