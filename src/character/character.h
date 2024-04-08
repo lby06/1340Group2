@@ -1,6 +1,7 @@
 #ifndef CHARACTER_H
 #define CHARACTER_H
 #include <string>
+void cha_show_reset();
 class main_character
 {
   public:
@@ -44,6 +45,7 @@ class main_character
      int rageattack;
      int status[3];
 };
+
 extern main_character cha1;
 extern std::string heroname;
 extern std::string monstername;
@@ -56,5 +58,10 @@ extern std::string skillname3;
 extern std::string skillmp3;
 extern std::string skillname4;
 extern std::string skillmp4;
+extern std::string cha_show_crit;
+extern std::string cha_show_evasion;
+extern std::string cha_show1;
+extern std::string cha_show2;
+extern std::string cha_show3;
 
 #endif // CHARACTER_H
