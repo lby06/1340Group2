@@ -10,7 +10,7 @@ class Monster {
 	double MP();
 	double ATK();
 	bool isAlive();
-	virtual void reset(int, int);
+	virtual void reset(double, double);
 	virtual double normalAttack();
 	void recoverHP(double);
 	void recoverMP(double);
@@ -20,7 +20,7 @@ class Monster {
   protected:
 	double hp_, hp_max_;
 	double atk_;
-	int def_;
+	double def_;
 	double mp_;
 	double critical_rate_, critical_damage_;
 	double evasion_rate_;
@@ -28,14 +28,14 @@ class Monster {
 
 class Clone : public Monster {
   public:
-	virtual void reset(int, int);
+	virtual void reset(double, double);
 	virtual double normalAttack();
 };
 
 class Robot : Monster {
   public:
 	double lasers();
-	virtual void reset(int, int);
+	virtual void reset(double, double);
 };
 
 class Cith : Monster {
@@ -43,7 +43,7 @@ class Cith : Monster {
 	void returntodark();
 	double lasers();
 	virtual void hurt(double);
-	virtual void reset(int, int);
+	virtual void reset(double, double);
 
   private:
 	int life;
@@ -55,7 +55,7 @@ class Mandalorians : Monster {
 	virtual void hurt(double);
 	void rage();
 	virtual double damage();
-	virtual void reset(int, int);
+	virtual void reset(double, double);
 
   private:
 	int beatback;

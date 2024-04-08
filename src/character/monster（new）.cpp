@@ -39,7 +39,7 @@ double Monster::damage() {
 	}
 }
 
-void Clone::reset(int level, int number) {
+void Clone::reset(double level, double number) {
 	double rate = level + number * 0.2;
 	hp_max_ = 20 * rate + 8;
 	hp_ = hp_max_;
@@ -55,7 +55,7 @@ double Clone::normalAttack() {
 	return (damage());
 }
 
-void Robot::reset(int level, int number) {
+void Robot::reset(double level, double number) {
 	double rate = level + number * 0.2;
 	hp_max_ = 30 * rate + 10;
 	hp_ = hp_max_;
@@ -71,7 +71,7 @@ double Robot::lasers() {
 	mp_ -= 3;
 	return (damage() * 2);
 }
-void Cith::reset(int level, int number) {
+void Cith::reset(double level, double number) {
 	double rate = level + number * 0.2;
 	hp_max_ = 25 * rate + 9;
 	hp_ = hp_max_;
@@ -105,7 +105,7 @@ void Cith::hurt(double x) {
 	if (dis(gen) <= evasion_rate_) {
 		cout << "Evasion successful.";
 	} else {
-		int y = x - def_;
+		double y = x - def_;
 		if ((hp_ - y) <= 0) {
 			hp_ = 0;
 		} else {
@@ -120,7 +120,7 @@ double Cith::lasers() {
 	return (damage() * 1.5);
 }
 
-void Mandalorians::reset(int level, int number) {
+void Mandalorians::reset(double level, double number) {
 	double rate = level + number * 0.2;
 	hp_max_ = 20 * rate + 8;
 	hp_ = hp_max_;
@@ -172,7 +172,7 @@ void Mandalorians::hurt(double x) {
 	if (dis(gen) <= evasion_rate_) {
 		cout << "Evasion successful.";
 	} else {
-		int y = x - def_;
+		double y = x - def_;
 		if ((hp_ - y) <= 0) {
 			hp_ = 0;
 		} else {
