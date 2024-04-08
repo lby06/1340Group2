@@ -6,44 +6,44 @@
 class Monster {
   public:
 	// Returns monsters' HP (Health point)
-	double HP();
-	double MP();
-	double ATK();
+	int HP();
+	int MP();
+	int ATK();
 	bool isAlive();
-	virtual void reset(double, double);
-	virtual double normalAttack();
-	void recoverHP(double);
-	void recoverMP(double);
-	virtual void hurt(double);
-	virtual double damage();
+	virtual void reset(int, int);
+	virtual int normalAttack();
+	void recoverHP(int);
+	void recoverMP(int);
+	virtual void hurt(int);
+	virtual int damage();
 
   protected:
-	double hp_, hp_max_;
-	double atk_;
-	double def_;
-	double mp_;
+	int hp_, hp_max_;
+	int atk_;
+	int def_;
+	int mp_;
 	double critical_rate_, critical_damage_;
 	double evasion_rate_;
 };
 
 class Clone : public Monster {
   public:
-	virtual void reset(double, double);
-	virtual double normalAttack();
+	virtual void reset(int, int);
+	virtual int normalAttack();
 };
 
 class Robot : Monster {
   public:
-	double lasers();
-	virtual void reset(double, double);
+	int lasers();
+	virtual void reset(int, int);
 };
 
 class Cith : Monster {
   public:
 	void returntodark();
-	double lasers();
-	virtual void hurt(double);
-	virtual void reset(double, double);
+	int lasers();
+	virtual void hurt(int);
+	virtual void reset(int, int);
 
   private:
 	int life;
@@ -51,11 +51,11 @@ class Cith : Monster {
 
 class Mandalorians : Monster {
   public:
-	virtual double normalAttack();
-	virtual void hurt(double);
+	virtual int normalAttack();
+	virtual void hurt(int);
 	void rage();
-	virtual double damage();
-	virtual void reset(double, double);
+	virtual int damage();
+	virtual void reset(int, int);
 
   private:
 	int beatback;

@@ -9,9 +9,9 @@ using namespace std;
 	Defines common behaviours of monsters.
 
  */
-double Monster::HP() { return hp_; }
-double Monster::MP() { return mp_; }
-double Monster::ATK() { return atk_; }
+int Monster::HP() { return hp_; }
+int Monster::MP() { return mp_; }
+int Monster::ATK() { return atk_; }
 bool Monster::isAlive() {
 	if (hp_ <= 0) {
 		return false;
@@ -19,15 +19,15 @@ bool Monster::isAlive() {
 		return true;
 	}
 }
-void Monster::recoverHP(double x) {
+void Monster::recoverHP(int x) {
 	if ((hp_max_ - hp_) >= x) {
 		hp_ += x;
 	} else {
 		hp_ = hp_max_;
 	}
 }
-void Monster::recoverMP(double x) { mp_ += x; }
-double Monster::damage() {
+void Monster::recoverMP(int x) { mp_ += x; }
+int Monster::damage() {
 	random_device rd;
 	mt19937 gen(rd());
 	uniform_real_distribution<> dis(0, 1);
@@ -39,8 +39,8 @@ double Monster::damage() {
 	}
 }
 
-void Clone::reset(double level, double number) {
-	double rate = level + number * 0.2;
+void Clone::reset(int level, int number) {
+	int rate = level + number * 0.2;
 	hp_max_ = 20 * rate + 8;
 	hp_ = hp_max_;
 	mp_ = 0;
@@ -50,13 +50,13 @@ void Clone::reset(double level, double number) {
 	critical_rate_ = 0.2 + level * 0.05 + number * 0.01;
 	critical_damage_ = 1.6;
 }
-double Clone::normalAttack() {
+int Clone::normalAttack() {
 	recoverHP((hp_max_ - hp_) * 0.1);
 	return (damage());
 }
 
-void Robot::reset(double level, double number) {
-	double rate = level + number * 0.2;
+void Robot::reset(int level, int number) {
+	int rate = level + number * 0.2;
 	hp_max_ = 30 * rate + 10;
 	hp_ = hp_max_;
 	mp_ = 0;
@@ -67,12 +67,12 @@ void Robot::reset(double level, double number) {
 	critical_damage_ = 1.6;
 }
 
-double Robot::lasers() {
+int Robot::lasers() {
 	mp_ -= 3;
 	return (damage() * 2);
 }
-void Cith::reset(double level, double number) {
-	double rate = level + number * 0.2;
+void Cith::reset(int level, int number) {
+	int rate = level + number * 0.2;
 	hp_max_ = 25 * rate + 9;
 	hp_ = hp_max_;
 	mp_ = 0;
@@ -90,7 +90,7 @@ void Cith::returntodark() {
 	critical_rate_ *= 1.2;
 	critical_damage_ = 1.8;
 }
-void Cith::hurt(double x) {
+void Cith::hurt(int x) {
 	if (life >= 2) {
 		life -= 1;
 		return;
@@ -105,7 +105,7 @@ void Cith::hurt(double x) {
 	if (dis(gen) <= evasion_rate_) {
 		cout << "Evasion successful.";
 	} else {
-		double y = x - def_;
+		int y = x - def_;
 		if ((hp_ - y) <= 0) {
 			hp_ = 0;
 		} else {
@@ -115,13 +115,13 @@ void Cith::hurt(double x) {
 		}
 	}
 }
-double Cith::lasers() {
+int Cith::lasers() {
 	mp_ -= 3;
 	return (damage() * 1.5);
 }
 
-void Mandalorians::reset(double level, double number) {
-	double rate = level + number * 0.2;
+void Mandalorians::reset(int level, int number) {
+	int rate = level + number * 0.2;
 	hp_max_ = 20 * rate + 8;
 	hp_ = hp_max_;
 	mp_ = 0;
@@ -141,7 +141,7 @@ void Mandalorians::rage() {
 	atk_ *= 1.1;
 	beatback += 2;
 }
-double Mandalorians::damage() {
+int Mandalorians::damage() {
 	if (beatback >= 1) {
 		return (damreturn);
 		damreturn = 0;
@@ -157,11 +157,11 @@ double Mandalorians::damage() {
 		return atk_;
 	}
 }
-double Mandalorians::normalAttack() {
+int Mandalorians::normalAttack() {
 	recoverHP((hp_max_ - hp_) * 0.1);
 	return (damage());
 }
-void Mandalorians::hurt(double x) {
+void Mandalorians::hurt(int x) {
 	if (beatback >= 1) {
 		damreturn = x;
 		return;
@@ -172,7 +172,7 @@ void Mandalorians::hurt(double x) {
 	if (dis(gen) <= evasion_rate_) {
 		cout << "Evasion successful.";
 	} else {
-		double y = x - def_;
+		int y = x - def_;
 		if ((hp_ - y) <= 0) {
 			hp_ = 0;
 		} else {
