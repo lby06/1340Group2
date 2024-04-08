@@ -2,7 +2,9 @@
 #define MONSTER_H
 #include <random>
 #include <iostream>
+//改动
 #include <string>
+//改动
 class Monster {
   public:
 	// Returns monsters' HP (Health point)
@@ -61,12 +63,14 @@ class Mandalorians : Monster {
 	int beatback;
 	int damreturn;
 };
-void mon_show_reset();
 
+//改动
+void mon_show_reset();
 extern Clone clo1;
 extern Robot robo1;
 extern Cith cit1;
 extern Mandalorians man1;
 extern std::string mon_show_crit;
 extern std::string mon_show_evasion;
+//改动
 #endif
