@@ -61,5 +61,12 @@ class Mandalorians : Monster {
 	int beatback;
 	int damreturn;
 };
+void mon_show_reset();
+
 extern Clone clo1;
+extern Robot robo1;
+extern Cith cit1;
+extern Mandalorians man1;
+extern std::string mon_show_crit;
+extern std::string mon_show_evasion;
 #endif
