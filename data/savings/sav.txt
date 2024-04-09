@@ -1,0 +1,15 @@
+@slot 1
+@character
+@maze
+@slotnumber
+@username
+@slot 2
+@character
+@maze
+@slotnumber
+@username
+@slot 3
+@character
+@maze
+@slotnumber
+@username

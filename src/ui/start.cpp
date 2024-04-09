@@ -6,6 +6,7 @@
 #include <chrono>
 #include <vector>
 #include "start_endpage.h"
+#include "../character/character.h"
 using namespace std;
 
 void clear_screen(){
@@ -106,15 +107,17 @@ void start_page(){
 
         switch(choice){
             case 1:
+                continue_game();
+            case 2:
                 name = new_game();
                 break;
-            case 2:
-                slot = save();
-                break;
             case 3:
-                //tutorial();
+                save();
                 break;
             case 4:
+                //tutorial();
+                break;
+            case 5:
                 end();
                 break;
             default:
@@ -122,6 +125,30 @@ void start_page(){
                 break;
         }
     }while(choice != 4);
+    return;
+}
+
+void continue_game(){
+    print_file("../../data/scripts/ascii_images/save.txt", 0, true);
+
+    int slot;
+    cin.ignore();
+    cout << "Choose your game to continue: ";
+    cin >> slot;
+
+    save_file s;
+    parse_file("../../data/savings/sav.txt", s, slot);
+    main_game(s);
+    return;
+}
+
+void parse_file(const string filename, save_file &s, int slot){
+    ifstream fin;
+    fin.open(filename.c_str());
+    if(fin.fail()){
+        cout << "error: file not found" << endl;
+    }
+    //
     return;
 }
 
@@ -151,7 +178,7 @@ int rename_slot() {
         lines.push_back(line);
     }
     file_in.close();
-    lines[2*slot - 1] = "        " + new_name;
+    lines[2*slot - 1] = lines[2*slot - 1].substr(0, 11) + new_name;
     
     ofstream file_out("../../data/scripts/ascii_images/save.txt");
     if(file_out.fail()){
@@ -162,11 +189,16 @@ int rename_slot() {
     }
     file_out.close();
     
-    return slot;
+    return slot - 1;    // index of the real save_file vector
 }
-int save(){
+void save(save_file s){
+    static save_file save_files[3];
+    int slot;
+    
     print_file("../../data/scripts/ascii_images/save.txt", 0, true);
-    return rename_slot();
+    slot = rename_slot();
+    save_files[slot] = s;
+    return;
 }
 
 void end(){
@@ -178,6 +210,11 @@ void end(){
     exit(1);
 }
 
+void main_game(save_file s){
+    //
+    return;
+}
+
 // void save(){
 //     return;
 // }
@@ -185,7 +222,7 @@ void end(){
 //     return;
 // }
 // void main_game(int choice)
-int main(){
+int main(){ // for test
     start_page();
     return 0;
 }
