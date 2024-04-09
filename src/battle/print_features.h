@@ -9,7 +9,7 @@
 using namespace std;
 
 extern vector<pair<int, int>> position_mc, position_ms, state_mc, state_ms;
-extern vector<pair<int, int>> name_mc, name_ms, boardcast;
+extern vector<pair<int, int>> name_mc_p, name_ms_p, boardcast_p1,boardcast_p2;
 extern vector<pair<int, int>> skill1_1, skill1_2, skill2_1, skill2_2;
 extern vector<pair<int, int>> skill3_1, skill3_2, skill4_1, skill4_2;
 
@@ -20,7 +20,7 @@ extern int line_number, col_number;
 extern vector<string> fight_map;
 
 string readName();
-vector<string> ReadCharacters(const string& filePath, const string& name);
+vector<string> ReadCharacters(const string& filePath,string name);
 void printLineLengths(const vector<string>& lines);
 void printPositions(const vector<string>& fight_map);
 void printMap(const vector<string>& lines);
@@ -32,6 +32,6 @@ void WordInsert_front(vector<string>& fight_map, const string& word, vector<pair
 void Includeword();
 void NewRound(vector<string>& fight_map, int& roundNumber);
 void clearScreen();
-void waitOneSecond();
+void WaitSecond(int SleepTime);
 
 #endif // PRINT_FEATURES_H
