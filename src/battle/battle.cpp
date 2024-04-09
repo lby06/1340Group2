@@ -9,7 +9,7 @@ void battle_monster(std::string name_mc,std::string name_ms){
     3.
     */
     //if clone    need to implement ohter
-//step1.1 encounter monster(unfinish assum encounter clon)
+//step1.1 encounter monster
     if (name_ms =="clone"){
         CharacterInsert(fight_map, ReadCharacters(filepath_ms, name_ms), position_ms);
     //step1.2 fill in character state
