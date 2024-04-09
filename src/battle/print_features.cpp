@@ -107,7 +107,7 @@ vector<string> ReadCharacters(const string& filePath, string name) {
     return lines;
 }
 
-//testing how lone the string is
+//testing how long the string is
 void printLineLengths(const vector<string>& lines) {
     for (const auto& line : lines) {
         cout << line << " " << line.length() << endl;
@@ -123,7 +123,7 @@ void printPositions(const vector<string>& fight_map) {
         }
     }
 }
-//printing everything by lines
+//printing everything out
 void printMap(const vector<string>& lines) {
     for (const auto& line : lines) {
         cout << line << endl;
@@ -160,6 +160,7 @@ void StateInsert(vector<string>& fight_map, string number,vector<pair<int, int>>
             fight_map[start_row + i].replace(start_col, 3, part);
         }
     }
+//insert word and fill the empty space with " "
 void WordInsert(vector<string>& fight_map, const string& word, vector<pair<int, int>> positions) {
     int start_row = positions[0].first;
     int start_col = positions[0].second;
@@ -174,6 +175,7 @@ void WordInsert(vector<string>& fight_map, const string& word, vector<pair<int, 
 
     fight_map[start_row].replace(start_col, spaceLength, ExpendWord);
 }
+//To make formate symmetric, fill " " and insert word afterward
 void WordInsert_front(vector<string>& fight_map, const string& word, vector<pair<int, int>> positions) {
     int start_row = positions[0].first;
     int start_col = positions[0].second;
@@ -188,6 +190,7 @@ void WordInsert_front(vector<string>& fight_map, const string& word, vector<pair
 
     fight_map[start_row].replace(start_col, spaceLength, ExpendWord);
 }
+//include all words in, simplify calling
 void Includeword() {
     WordInsert_front(fight_map, heroname, name_mc_p);
     WordInsert(fight_map, monstername, name_ms_p);
@@ -202,7 +205,7 @@ void Includeword() {
     WordInsert(fight_map, skillname4, skill4_1);
     WordInsert(fight_map, skillmp4, skill4_2);
 }
-
+//add roundnumer
 void NewRound(vector<string>& fight_map,int& roundNumber) {//need implement
     Includeword();
     string& roundLine = fight_map[0]; 
@@ -211,9 +214,11 @@ void NewRound(vector<string>& fight_map,int& roundNumber) {//need implement
     newRoundNumberStr << setw(3) << setfill('0') << roundNumber; 
     roundLine.replace(37, 3, newRoundNumberStr.str()); 
 }
+//clean the whole screen
 void clearScreen() {
         system("clear");
 }
+//stop for SleepTime seconds
 void WaitSecond(int SleepTime) {
     sleep(SleepTime);
 }
