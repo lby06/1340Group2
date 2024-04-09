@@ -1,5 +1,5 @@
 // upgrade.h
-// call function: upgrade() in main.cpp to show the animation of upgrading
+// call function: UPGRADE(int,string,string) in main.cpp to show the animation of upgrading and it will return the user's choice
 
 #ifndef BATTLE_UPGRADE_H  
 #define BATTLE_UPGRADE_H
