@@ -20,7 +20,10 @@ void battle_monster(std::string name_mc,std::string name_ms){
         StateInsert(fight_map, convertNumber(clo1.HP(), clo1.MP(), clo1.ATK()), state_ms);
     //2.keep battling by rounds
         while (true){
+            //a round start
             printMap(fight_map);
+
+            //for player to choose skill
             char in;
             while (true) {
                 in = readKeyboard();
@@ -30,16 +33,25 @@ void battle_monster(std::string name_mc,std::string name_ms){
                     break;
                 }
                 //implement here
+                /*
+                1.skills need implement
+                2.info function
+                */
             }
             cha1.hurt(clo1.normalattack());
             clearScreen();
             WaitSecond(1);
+            //one round finish
+
+            //implement win or lose
             if (clo1.is_alive() == false){
                 break;
             }
             if (cha1.is_alive() == false){
                 break;
             }
+
+            //refresh status and round number
             NewRound(fight_map, roundNumber);
             StateInsert(fight_map, convertNumber(cha1.HP(), cha1.MP(), cha1.ATK()), state_mc);
             StateInsert(fight_map, convertNumber(clo1.HP(), clo1.MP(), clo1.ATK()), state_ms);
