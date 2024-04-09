@@ -49,7 +49,8 @@ class main_character
 extern main_character cha1;
 extern std::string heroname;
 extern std::string monstername;
-extern std::string boardcast_word;
+extern std::string boardcast_word1;
+extern std::string boardcast_word2;
 extern std::string skillname1;
 extern std::string skillmp1;
 extern std::string skillname2;
