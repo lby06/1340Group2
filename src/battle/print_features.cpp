@@ -8,6 +8,8 @@
 #include <unistd.h>
 #include"print_features.h"
 #include"../character/character.h"
+#include"../character/monster.h"
+#include"../character/boss.h"
 using namespace std;
 //postion of the Character
 vector<pair<int, int>> position_mc = {{5, 1}, {5, 27}, {15, 1}, {15, 27}};
@@ -17,9 +19,11 @@ vector<pair<int, int>> position_ms = {{5, 39}, {5, 65}, {15, 39}, {15, 65}};
 vector<pair<int, int>> state_mc = {{1, 8}};
 vector<pair<int, int>> state_ms = {{1, 59}};
 //postion of texts
-vector<pair<int, int>> name_mc = {{3, 22},{3,33}};
-vector<pair<int, int>> name_ms = {{3, 34},{3,45}};
-vector<pair<int, int>> boardcast = {{15, 20},{15,48}};
+vector<pair<int, int>> name_mc_p = {{3, 22},{3,32}};
+vector<pair<int, int>> name_ms_p = {{3, 35},{3,45}};
+vector<pair<int, int>> boardcast_p1 = {{15, 2},{15,32}};
+vector<pair<int, int>> boardcast_p2 = {{15, 34},{15,65}};
+
 vector<pair<int, int>> skill1_1 = {{17, 1},{17, 12}};
 vector<pair<int, int>> skill1_2 = {{18, 1},{18, 12}};
 vector<pair<int, int>> skill2_1 = {{17, 14},{17, 25}};
@@ -56,7 +60,7 @@ vector<string> fight_map = {
 "|                                |                                |",
 "|                                |                                |",
 "|                                |                                |",
-"|                  |[                          ]|                 |",
+"|[                              ][                               ]|",
 "* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *",
 "*            *            *            *             * Strike(S)  *",
 "*            *            *            *             * Info(I)    *",
@@ -66,13 +70,13 @@ vector<string> fight_map = {
 //read in names
 string readName() {
     string name;
-    cout << "Enter the file name: ";
+    cout << "The name of character(test) ";
     cin >> name;
     return name;
 }
 
 //Store the ASCii art of the character
-vector<string> ReadCharacters(const string& filePath, const string& name) {
+vector<string> ReadCharacters(const string& filePath, string name) {
     ifstream file(filePath);
     if (!file) {
         cerr << "Unable to open file " << filePath << endl;
@@ -185,9 +189,10 @@ void WordInsert_front(vector<string>& fight_map, const string& word, vector<pair
     fight_map[start_row].replace(start_col, spaceLength, ExpendWord);
 }
 void Includeword() {
-    WordInsert_front(fight_map, heroname, name_mc);
-    WordInsert(fight_map, monstername, name_ms);
-    WordInsert(fight_map, boardcast_word, boardcast);
+    WordInsert_front(fight_map, heroname, name_mc_p);
+    WordInsert(fight_map, monstername, name_ms_p);
+    WordInsert(fight_map, boardcast_word1, boardcast_p1);
+    WordInsert(fight_map, boardcast_word2, boardcast_p2);
     WordInsert(fight_map, skillname1, skill1_1);
     WordInsert(fight_map, skillmp1, skill1_2);
     WordInsert(fight_map, skillname2, skill2_1);
@@ -198,9 +203,7 @@ void Includeword() {
     WordInsert(fight_map, skillmp4, skill4_2);
 }
 
-void NewRound(vector<string>& fight_map,int& roundNumber) {
-     StateInsert(fight_map, convertNumber(cha1.HP(), cha1.MP(), cha1.ATK()), state_mc);
-     StateInsert(fight_map, convertNumber(HP2, MP2, ATK2), state_ms);
+void NewRound(vector<string>& fight_map,int& roundNumber) {//need implement
     Includeword();
     string& roundLine = fight_map[0]; 
     roundNumber++; 
@@ -211,6 +214,6 @@ void NewRound(vector<string>& fight_map,int& roundNumber) {
 void clearScreen() {
         system("clear");
 }
-void waitSecond(int SleepTime) {
+void WaitSecond(int SleepTime) {
     sleep(SleepTime);
 }
