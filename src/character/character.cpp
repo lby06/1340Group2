@@ -461,14 +461,15 @@ void cha_show_reset()
 
 //a test
     main_character cha1;
-    string heroname="lby";
-    string monstername="clone";
-    string boardcast_word="You hit a strike with rage";
-    string skillname1="Darkforce";
-    string skillmp1="MP:0";
-    string skillname2="Heal";
-    string skillmp2="MP:100"; 
-    string skillname3="anger";
-    string skillmp3="Mp:60";
-    string skillname4="suicide";
-    string skillmp4="MP:-30";
+    string heroname="";
+    string monstername="";
+    string boardcast_word1="";
+    string boardcast_word2="";
+    string skillname1="";
+    string skillmp1="";
+    string skillname2="";
+    string skillmp2=""; 
+    string skillname3="";
+    string skillmp3="";
+    string skillname4="";
+    string skillmp4="";
