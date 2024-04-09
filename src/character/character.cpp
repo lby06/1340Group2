@@ -91,9 +91,9 @@ void cha_show_reset()
         status[i] = a[i];
        }
      }
-     double* main_character::save(int num)
+     double* main_character::save()
      {
-       double *a= new double [num];
+       double *a= new double [20];
        a[0]=level;
        a[1]=locate_x;
        a[2]=locate_y;

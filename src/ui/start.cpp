@@ -148,7 +148,23 @@ void parse_file(const string filename, save_file &s, int slot){
     if(fin.fail()){
         cout << "error: file not found" << endl;
     }
-    //
+
+    double parameters[20];
+    int cnt = 0;
+    string username, line;
+    while(getline(fin, line)){
+        if(line.substr(0, 7) == "@slot " + to_string(slot)){
+            cnt = -2;
+        }
+        if(cnt >= 0 && cnt < 20) parameters[cnt] = stod(line);
+        if(cnt == 24) username = line;
+        cnt++;
+    }
+    s.save_character.set(parameters);
+    // s.save_maze
+    s.slot_number = slot;
+    s.username = username;
+    fin.close();
     return;
 }
 
@@ -198,6 +214,11 @@ void save(save_file s){
     print_file("../../data/scripts/ascii_images/save.txt", 0, true);
     slot = rename_slot();
     save_files[slot] = s;
+
+    double *save_parameters;
+    // Map savemap;
+    string username;
+    save_parameters = s.save_character.save();
     return;
 }
 

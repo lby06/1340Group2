@@ -11,7 +11,7 @@ class main_character
      bool is_alive();
      void reset();
      void set(double a[]);
-     double* save(int num);
+     double* save();
      void display();
      int damage();
      void upgrade();
