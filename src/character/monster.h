@@ -67,7 +67,7 @@ class Mandalorians : Monster {
 //改动
 void mon_show_reset();
 extern Clone clo1;
-extern Robot robo1;
+extern Robot rob1;
 extern Cith cit1;
 extern Mandalorians man1;
 extern std::string mon_show_crit;
