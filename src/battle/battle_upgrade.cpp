@@ -5,6 +5,7 @@
 #include <thread>
 #include "battle_upgrade.h"
 #include "string"
+//#include "./../utils/utils.hpp"
 using namespace std;
 
 
@@ -84,6 +85,17 @@ vector<string> merge(vector<vector<string>> vectors,int line_number,int length)
     return output;
 }
 
+void insert (vector <string> & frame, string name, pair<int,int> position)
+{
+    int x = position.first;
+    int y = position.second;
+    int length = name.length();
+    for (int i = y; i < y+length;i++ )
+    {
+        frame[x][i] = name[i-y];
+    }
+}
+
 
 //given a certain position of a vector string, Change all positions on that line （except the tail） after this position to spaces.
 vector<string> selectframe(vector<string> input, int line,int col)
@@ -130,7 +142,7 @@ void printvectorwithcolor(vector<string> vector, string color, string reset)
     }
 }
 //print out the matrix vector by vector, clear screen between to vectors in a certain speed
-void printmatrix(vector<vector<string>> matrix, string color)
+int printmatrix(vector<vector<string>> matrix, string color,bool trigger)
 {
     for(int i = 0;i < matrix.size()-1;i++)
     {
@@ -150,7 +162,19 @@ void printmatrix(vector<vector<string>> matrix, string color)
     clearScreen();
     printvectorwithcolor(matrix[matrix.size()-1],color,RESET_COLOR);
     this_thread::sleep_for(chrono::seconds(1));
-    cin.get();
+    cin.ignore();
+    if(trigger == false)
+    {
+        cin.get();
+        return 0;
+    }
+    else
+    {
+        int choice;
+        cin >> choice;
+        return choice;
+    }
+    //cout << "finishing" <<endl;
 
 }
 
@@ -163,17 +187,23 @@ vector<vector<string>> fromtoto (vector<vector<string>> generater, vector<string
 }
 
 
-vector<vector<string>> make (vector<vector<vector<string>>> generaters, vector<string> Upgraded, vector<string> Upgrading, vector<string> toframe, int level, int line_num, int col_num,int line__)
+int make (vector<vector<vector<string>>> generaters, vector<string> Upgraded, vector<string> Upgrading, vector<string> toframe,vector<string> chooseframe, int level, int line_num, int col_num,int line__)
 {
- 
+    bool trigger = false;
+    if (level == 0||level ==3 || level == 6 || level == 9)
+    {
+        trigger = true;
+    }
     vector<vector<string>> before_generater = generaters[level];
     vector<vector<string>> after_generater = generaters[level+1];
     vector<string> from = merge(before_generater,line_num,col_num);
-    vector<string> to = merge(fromtoto(after_generater,toframe),line_num,col_num);
+    vector <string> afterframe = trigger?chooseframe:toframe;
+    vector<string> to = merge(fromtoto(after_generater,afterframe),line_num,col_num);
     vector<vector<string>> matrix = makematrix(from,Upgrading,Upgraded,to,col_num,line__);
-    return matrix;
+    int choice = printmatrix(matrix,BLUE_COLOR,trigger);
+    return choice;
 }
-void upgrade()
+int upgrade(string name1,string name2,int level)
 {
     // string target;
     // cin >> target;
@@ -187,18 +217,25 @@ void upgrade()
     int line_number = 23;
     int col_number = 77;
     int line__ = 16;
-
+    
+    
+    vector<string> mc4 = getpaint(filename3,"mc4",line_number,col_number);
     vector<string> jedi = getpaint(filename2,"jedi",line_number,col_number);
+    vector<string> legendary = getpaint(filename2,"legendary",line_number,col_number);
     vector<string> frame = getpaint(filename,"frame",line_number,col_number);
     vector<string> toframe = getpaint(filename,"toframe",line_number,col_number);
+    vector<string> chooseframe = getpaint(filename,"chooseframe",line_number,col_number);
     vector<string> mc1 = getpaint(filename3,"mc1",line_number,col_number);
     vector<string> mc2 = getpaint(filename3,"mc2",line_number,col_number);
     vector<string> mc3 = getpaint(filename3,"mc3",line_number,col_number);
-    vector<string> mc4 = getpaint(filename3,"mc4",line_number,col_number);
+    
+    
+    vector<string> apprentice = getpaint(filename2,"apprentice",line_number,col_number);
+    
     vector<string> trainee = getpaint(filename2,"trainee",line_number,col_number);
     vector<string> knight = getpaint(filename2,"knight",line_number,col_number);
     vector<string> master = getpaint(filename2,"master",line_number,col_number);
-    vector<string> legendary = getpaint(filename2,"legendary",line_number,col_number);
+
     vector<string> upgrading = getpaint(filename,"upgrading",line_number,col_number);
     vector<string> upgraded = getpaint(filename,"upgraded",line_number,col_number);
     vector<string> blank = getpaint(filename,"blank",line_number,col_number);
@@ -206,8 +243,12 @@ void upgrade()
     vector<string> two = getpaint(filename2,"two",line_number,col_number);
     vector<string> three = getpaint(filename2,"three",line_number,col_number);
 
+    pair <int,int> position1(21,6);
+    pair <int,int> position2(21,42);
+    insert(chooseframe,name1,position1);
+    insert(chooseframe,name2,position2);
     // printvector(jedi);
-    // printvector(frame);
+    //printvector(frame);
     //printvector(mc1);
     // printvector(mc2);
     // printvector(mc3);
@@ -220,6 +261,10 @@ void upgrade()
     // printvector(one);
     // printvector(two);
     // printvector(three);
+    //printvector(apprentice);
+    // printvector(chooseframe);
+    // exit(0);
+    vector<vector<string>> LEVEL0_GENERATER = {mc1,jedi,apprentice,frame};
     vector<vector<string>> LEVEL1_one_GENERATER = {mc1,jedi,trainee,one,frame};
     vector<vector<string>> LEVEL1_two_GENERATER = {mc1,jedi,trainee,two,frame};
     vector<vector<string>> LEVEL1_three_GENERATER = {mc1,jedi,trainee,three,frame};
@@ -234,6 +279,7 @@ void upgrade()
     vector<vector<string>> LEVEL4_GENERATER = {mc4,jedi,legendary,toframe};
 
     vector<vector<vector<string>>> generaters = {
+        LEVEL0_GENERATER,
         LEVEL1_one_GENERATER,
         LEVEL1_two_GENERATER,
         LEVEL1_three_GENERATER,
@@ -264,11 +310,75 @@ void upgrade()
     // printmatrix(matrix1,BLUE_COLOR);
     // printmatrix(matrix2,RED_COLOR);
     // printmatrix(matrix3,GREEN_COLOR);
-    cout << "which level you are?" << endl;
-    int i;
-    cin >> i;
-    cout << "now you will upgrade to " << i+1 << "level" << endl;
+    clearScreen();
+    cout << "you are in the "<< level << " level now;" << endl;
     this_thread::sleep_for(chrono::seconds(1));
-    vector<vector<string>> matrix = make(generaters,Upgraded,Upgrading,toframe,i,line_number,col_number,line__);
-    printmatrix(matrix,BLUE_COLOR);
+    cout << "now you will upgrade to " << level+1 << " level" << endl;
+    this_thread::sleep_for(chrono::seconds(1));
+    int choice = make(generaters,Upgraded,Upgrading,toframe,chooseframe,level,line_number,col_number,line__);
+    //cout << "you choose number "<< choice << endl;
+    //printmatrix(matrix,BLUE_COLOR);
+    return choice;
  }
+
+
+
+ void upgrade()
+ {
+    string filename = "./../../data/animations/paint.txt";
+    string filename2 = "./../../data/animations/text.txt";
+    string filename3 = "./../../data/animations/main_character.txt";
+    // string filename = "./upgrade/paint.txt";
+    // string filename2 = "./upgrade/text.txt";
+    // string filename3 = "./upgrade/main_character.txt";
+    int line_number = 23;
+    int col_number = 77;
+    int line__ = 16;
+    
+    vector<string> mc4 = getpaint(filename3,"mc4",line_number,col_number);
+    vector<string> jedi = getpaint(filename2,"jedi",line_number,col_number);
+    vector<string> legendary = getpaint(filename2,"legendary",line_number,col_number);
+    vector<string> frame = getpaint(filename,"frame",line_number,col_number);
+    vector<string> toframe = getpaint(filename,"toframe",line_number,col_number);
+    vector<string> upgrading = getpaint(filename,"upgrading",line_number,col_number);
+    vector<string> upgraded = getpaint(filename,"upgraded",line_number,col_number);
+
+    vector<vector<string>> LEVEL4_GENERATER = {mc4,jedi,legendary,frame};
+    vector<vector<string>> LEVEL4_to_GENERATER = {mc4,jedi,legendary,toframe};
+    vector<vector<string>> Upgraded_GENERATER = {upgraded,frame};
+    vector<vector<string>> Upgrading_GENERATER = {upgrading,frame};
+    
+    vector<string> Upgraded = merge(Upgraded_GENERATER,line_number,col_number);
+    vector<string> Upgrading = merge(Upgrading_GENERATER,line_number,col_number);
+    vector<string> level4 = merge(LEVEL4_GENERATER,line_number,col_number);
+    vector<string> tolevel4 = merge(LEVEL4_to_GENERATER,line_number,col_number);
+
+    vector<vector<string>> matrix =  makematrix(level4,Upgrading,Upgraded,tolevel4,col_number,line__);
+    int choice = printmatrix(matrix,BLUE_COLOR,false);
+    return;
+
+ }
+
+int UPGRADE(int level, string name1,string name2)
+{
+    int choice;
+    if (level <=9)
+    {
+        choice = upgrade(name1,name2,level);
+    }
+    else
+    {
+        upgrade();
+        choice = 0;
+    }
+    return choice;
+}
+
+
+
+
+
+
+
+
+
