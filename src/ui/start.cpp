@@ -208,14 +208,57 @@ int rename_slot() {
     return slot;  
 }
 
+int delete_slot(){
+    int slot;
+    bool valid = false;
+
+    while(!valid){
+        cout << "Enter the number of the slot you want to delete: ";
+        cin >> slot;
+        if (slot == 1 || slot == 2 || slot == 3){
+            valid = true;
+        }else{
+            cout << "Invalid slot number.\n";
+        }   
+    }
+
+    ifstream file_in("../../data/scripts/ascii_images/save.txt");
+    vector<string> lines;
+    string line;
+    while (getline(file_in, line)) {
+        lines.push_back(line);
+    }
+    file_in.close();
+    lines[2*slot - 1] = lines[2*slot - 1].substr(0, 11) + "Slot " + to_string(slot);
+    
+    ofstream file_out("../../data/scripts/ascii_images/save.txt");
+    if(file_out.fail()){
+        cout << "error: file not found" << endl;
+    }
+    for (const string& line : lines) {
+        file_out << line << "\n";
+    }
+    file_out.close();
+    
+    return slot;  
+}
+
 void save(save_file s){
     static save_file save_files[3];
     int slot;
+    char command;
     
     print_file("../../data/scripts/ascii_images/save.txt", 0, true);
-    slot = rename_slot();
-    save_files[slot - 1] = s;
-
+    cin.ignore();
+    cout << "Enter \"s\" to save your game; enter \"d\" to erase existing slot: ";
+    cin >> command;
+    if(command == 's'){
+        slot = rename_slot();
+        save_files[slot - 1] = s;
+    }else if(command == 'd'){
+        slot = delete_slot();
+    }
+    
     double *save_parameters;
     // Map savemap;
     string username;
@@ -246,10 +289,29 @@ void save(save_file s){
         init_position = 54;
     }
     // change content of the save file
+    if(command == 'd'){
+        for(int i = 0; i < 20; i++){
+            lines[init_position + 2 + i] = "";
+        }
+        lines[init_position + 24] = "";
+        lines[init_position + 26] = "";
+
+        // rewrite save file
+        ofstream fout("../../data/savings/sav.txt");
+        if(fout.fail()){
+            cout << "error: file not found" << endl;
+        }
+        for (const string& line : lines) {
+            fout << line << "\n";
+        }
+        fout.close();
+
+        return;
+    }
     for(int i = 0; i < 20; i++){
         lines[init_position + 2 + i] = to_string(save_parameters[i]);
     }
-    lines[init_position + 24] = slot;
+    lines[init_position + 24] = to_string(slot);
     lines[init_position + 26] = username;
 
     // rewrite save file

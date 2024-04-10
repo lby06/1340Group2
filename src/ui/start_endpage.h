@@ -19,6 +19,8 @@ string new_game();
 void start_page();
 // enables the player to change the name of the saving file
 int rename_slot();
+// enables the player to delete a slot and saving
+int delete_slot();
 // save the game
 void save();
 // exits the whole game
