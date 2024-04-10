@@ -112,7 +112,7 @@ void start_page(){
                 name = new_game();
                 break;
             case 3:
-                save();
+                save(save_file);
                 break;
             case 4:
                 //tutorial();
@@ -205,20 +205,63 @@ int rename_slot() {
     }
     file_out.close();
     
-    return slot - 1;    // index of the real save_file vector
+    return slot;  
 }
+
 void save(save_file s){
     static save_file save_files[3];
     int slot;
     
     print_file("../../data/scripts/ascii_images/save.txt", 0, true);
     slot = rename_slot();
-    save_files[slot] = s;
+    save_files[slot - 1] = s;
 
     double *save_parameters;
     // Map savemap;
     string username;
     save_parameters = s.save_character.save();
+    // savemap = 
+    slot = slot
+    username = s.username;
+
+    // input save file
+    fstream fin;
+    fin.open("../../data/savings/sav.txt");
+    if(fin.fail()){
+        cout << "error: file not found" << endl;
+    }
+    vector<string> lines;
+    string line;
+    while (getline(fin, line)) {
+        lines.push_back(line);
+    }
+    fin.close();
+
+    int init_position;
+    if(slot == 1){
+        init_position = 0;
+    }else if(slot == 2){
+        init_position = 27;
+    }else if(slot == 3){
+        init_position = 54;
+    }
+    // change content of the save file
+    for(int i = 0; i < 20; i++){
+        lines[init_position + 2 + i] = to_string(save_parameters[i]);
+    }
+    lines[init_position + 24] = slot;
+    lines[init_position + 26] = username;
+
+    // rewrite save file
+    ofstream fout("../../data/savings/sav.txt");
+    if(fout.fail()){
+        cout << "error: file not found" << endl;
+    }
+    for (const string& line : lines) {
+        fout << line << "\n";
+    }
+    fout.close();
+
     return;
 }
 
