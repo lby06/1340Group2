@@ -1,3 +1,5 @@
+//this is a assistant file for "battle_upgrade.cpp"
+
 #include <iostream>
 #include "battle_upgrade.h"
 #include "./../character/character.h"
