@@ -447,16 +447,16 @@ int main()
             switch(level)
             {
                 case 0:
-                    //main_character::activate_recoverhit();
+                    cha1.activate_recoverhit();
                     break;
                 case 3:
-                    //main_character::activate_vengeance();
+                    cha1.activate_vengeance();
                     break;
                 case 6:
-                    //main_character::activate_hellfire();
+                    cha1.activate_hellfire();
                     break;
                 case 9:
-                    //main_character::activate_doublecrit();
+                    cha1.activate_doublecrit();
                     break;
                 default:
                     cout << "there may be some error" << endl;
@@ -468,16 +468,16 @@ int main()
             switch(level)
             {
                 case 0:
-                    //main_character::activate_bladestorm();
+                    cha1.activate_bladestorm();
                     break;
                 case 3:
-                    //main_character::activate_magicdraw();
+                    cha1.activate_magicdraw();
                     break;
                 case 6:
-                    //main_character::activate_rage();
+                    cha1.activate_rage();
                     break;
                 case 9:
-                    //main_character::activate_ultimatedef();
+                    cha1.activate_ultimatedef();
                     break;
                 default:
                     cout << "there may be some error" << endl;
