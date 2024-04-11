@@ -1,5 +1,5 @@
 // upgrade.h
-// call function: UPGRADE(int,string,string) in main.cpp to show the animation of upgrading and it will return the user's choice
+// call function: upgrade() in main.cpp to show the animation of upgrading
 
 #ifndef BATTLE_UPGRADE_H  
 #define BATTLE_UPGRADE_H
@@ -13,7 +13,7 @@
 #define YELLOW_COLOR "\033[33m"
 #define BLUE_COLOR "\033[34m"
 using namespace std;
-int upgrade(string name1,string name2,int level);
+int upgrade(string name1,string name2,string des1,string des2,int level);
 
 void clearScreen();
 string appendspace(string line,int length);
@@ -28,7 +28,11 @@ vector<vector<string>> fromtoto (vector<vector<string>> generater, vector<string
 int make (vector<vector<vector<string>>> generaters, vector<string> Upgraded, vector<string> Upgrading, vector<string> toframe,vector<string> chooseframe, int level, int line_num, int col_num,int line__);
 void insert (vector <string> & frame, string name, pair<int,int> position);
 void upgrade();
-int UPGRADE(int level, string name1,string name2);
+int UPGRADE(int level);
+
+extern vector<pair<string,string>> names;
+extern vector<pair<string,string>> description;
+extern vector<pair<string,string>> activate_funs;
 
 
 

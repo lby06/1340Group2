@@ -5,8 +5,41 @@
 #include <thread>
 #include "battle_upgrade.h"
 #include "string"
+#include "./../character/character.h"
+
+
 //#include "./../utils/utils.hpp"
 using namespace std;
+
+
+
+//define some vectors to store the skills 
+// vector<pair<string,string>> names = 
+// {
+//     make_pair("ac1.1","ac1.2"),
+//     make_pair("ac2.1","ac2.2"),
+//     make_pair("pa3.1","pa3.2"),
+//     make_pair("pa4.1","pa4.2")
+  
+// };
+// vector<pair<string,string>> description = 
+// {
+//     make_pair("des1.1","des1.2"),
+//     make_pair("des2.1","des2.2"),
+//     make_pair("des3.1","des3.2"),
+//     make_pair("des4.1","des4.2")
+// };
+
+// vector<pair<void (*)(),void(*)()>> activate_funs =
+// {
+//     make_pair(main_character::activate_recoverhit,main_character::activate_bladestorm),
+//     make_pair(main_character::activate_vengeance,main_character::activate_magicdraw),
+//     make_pair(main_character::activate_hellfire,main_character::activate_rage),
+//     make_pair(main_character::activate_doublecrit,main_character::activate_ultimatedef)
+// }
+
+
+
 
 
 
@@ -170,9 +203,17 @@ int printmatrix(vector<vector<string>> matrix, string color,bool trigger)
     }
     else
     {
-        int choice;
-        cin >> choice;
-        return choice;
+        string choice;
+        while(1)
+        {
+            getline(cin,choice);
+            if(choice == "1" || choice == "2"){break;}
+            cout << "invalid input" << endl;
+            this_thread::sleep_for(chrono::seconds(1));
+            cout << "\033[1A\033[2K";
+            cout << "\033[1A\033[2K";
+        }
+        return choice=="1"?1:2;
     }
     //cout << "finishing" <<endl;
 
@@ -203,7 +244,7 @@ int make (vector<vector<vector<string>>> generaters, vector<string> Upgraded, ve
     int choice = printmatrix(matrix,BLUE_COLOR,trigger);
     return choice;
 }
-int upgrade(string name1,string name2,int level)
+int upgrade(string name1,string name2,string des1,string des2,int level)
 {
     // string target;
     // cin >> target;
@@ -243,10 +284,15 @@ int upgrade(string name1,string name2,int level)
     vector<string> two = getpaint(filename2,"two",line_number,col_number);
     vector<string> three = getpaint(filename2,"three",line_number,col_number);
 
-    pair <int,int> position1(21,6);
-    pair <int,int> position2(21,42);
+    pair <int,int> position1(20,6);
+    pair <int,int> position2(20,42);
+    pair <int,int> position3(21,2);
+    pair <int,int> position4(21,38);
+
     insert(chooseframe,name1,position1);
     insert(chooseframe,name2,position2);
+    insert(chooseframe,des1,position3);
+    insert(chooseframe,des2,position4);
     // printvector(jedi);
     //printvector(frame);
     //printvector(mc1);
@@ -359,12 +405,19 @@ int upgrade(string name1,string name2,int level)
 
  }
 
-int UPGRADE(int level, string name1,string name2)
+int UPGRADE(int level)
 {
     int choice;
     if (level <=9)
     {
-        choice = upgrade(name1,name2,level);
+        if(level == 0|| level == 3 || level == 6 || level ==9)
+        {
+        choice = upgrade(names[(level)/3].first,names[(level)/3].second,description[level/3].first,description[level/3].second, level);
+        }
+        else
+        {
+            choice = upgrade("","","","",level);
+        }
     }
     else
     {
@@ -372,6 +425,66 @@ int UPGRADE(int level, string name1,string name2)
         choice = 0;
     }
     return choice;
+}
+
+
+//test
+
+// void test(int level)
+// {
+//     cout << "success with "<< level <<endl;
+//     return;
+// }
+int main()
+{
+    int level;
+    cin >> level;
+    int choice = UPGRADE(level);
+    if(choice != 0)
+    {
+        if(choice == 1)
+        {
+            switch(level)
+            {
+                case 0:
+                    //main_character::activate_recoverhit();
+                    break;
+                case 3:
+                    //main_character::activate_vengeance();
+                    break;
+                case 6:
+                    //main_character::activate_hellfire();
+                    break;
+                case 9:
+                    //main_character::activate_doublecrit();
+                    break;
+                default:
+                    cout << "there may be some error" << endl;
+                    break;
+            }
+        }
+        else
+        {
+            switch(level)
+            {
+                case 0:
+                    //main_character::activate_bladestorm();
+                    break;
+                case 3:
+                    //main_character::activate_magicdraw();
+                    break;
+                case 6:
+                    //main_character::activate_rage();
+                    break;
+                case 9:
+                    //main_character::activate_ultimatedef();
+                    break;
+                default:
+                    cout << "there may be some error" << endl;
+                    break;
+            }            
+        }
+    }
 }
 
 
