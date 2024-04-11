@@ -29,10 +29,11 @@ int make (vector<vector<vector<string>>> generaters, vector<string> Upgraded, ve
 void insert (vector <string> & frame, string name, pair<int,int> position);
 void upgrade();
 int UPGRADE(int level);
+void activate(int level);
 
 extern vector<pair<string,string>> names;
 extern vector<pair<string,string>> description;
-extern vector<pair<string,string>> activate_funs;
+//extern vector<pair<string,string>> activate_funs;
 
 
 

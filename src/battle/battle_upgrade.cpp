@@ -435,10 +435,9 @@ int UPGRADE(int level)
 //     cout << "success with "<< level <<endl;
 //     return;
 // }
-int main()
+void activate(int level)
 {
-    int level;
-    cin >> level;
+
     int choice = UPGRADE(level);
     if(choice != 0)
     {
@@ -485,7 +484,17 @@ int main()
             }            
         }
     }
+    return;
 }
+
+
+int main()
+{
+    int level;
+    cin >> level;
+    activate(level);
+}
+
 
 
 
