@@ -100,6 +100,7 @@ void start_page(){
     
     int choice, slot;
     string name;
+    save_file s;
     do{
         print_file("../../data/scripts/ascii_images/main_menu.txt", 0, true);
         cout << "Enter your choice: ";
@@ -112,7 +113,7 @@ void start_page(){
                 name = new_game();
                 break;
             case 3:
-                save(save_file);
+                save(s);
                 break;
             case 4:
                 //tutorial();
@@ -150,19 +151,44 @@ void parse_file(const string filename, save_file &s, int slot){
     }
 
     double parameters[20];
-    int cnt = 0;
+    vector<string> lines;
+    vector<string> maze;
     string username, line;
+    bool valid = false;
+
     while(getline(fin, line)){
         if(line.substr(0, 7) == "@slot " + to_string(slot)){
-            cnt = -2;
+            valid = true;
+        }else if(line.substr(0, 7) == "@slot" + to_string(slot + 1)){
+            break;
         }
-        if(cnt >= 0 && cnt < 20) parameters[cnt] = stod(line);
-        if(cnt == 24) username = line;
-        cnt++;
+        if(valid){
+            lines.push_back(line);
+        }
     }
+    int temp_m;
+    for(int i = 0; i < lines.size(); i++){
+        if(i > 1 && i < 22){
+            parameters[i - 2] = stod(lines[i]);
+        }else if(lines[i].substr(0, 5) == "@maze"){
+            temp_m = i;
+        }else if(i > temp_m && lines[i].substr(0, 9) != "@username" && lines[i] != ""){
+            maze.push_back(lines[i]);
+        }else if(lines[i].substr(0, 11) == "@username"){
+            username = lines[i + 1];
+            break;
+        }
+    }
+    // while(getline(fin, line)){
+    //     if(line.substr(0, 7) == "@slot " + to_string(slot)){
+    //         cnt = -2;
+    //     }
+    //     if(cnt >= 0 && cnt < 20) parameters[cnt] = stod(line);
+    //     if(line.substr(0, 11) == "@username") username = line;
+    //     cnt++;
+    // }
     s.save_character.set(parameters);
-    // s.save_maze
-    s.slot_number = slot;
+    s.maze = maze;
     s.username = username;
     fin.close();
     return;
@@ -244,10 +270,14 @@ int delete_slot(){
 }
 
 void save(save_file s){
-    static save_file save_files[3];
+    save_file save_files[3];
     int slot;
     char command;
-    
+    // init save_files
+    parse_file("../../data/savings/sav.txt", save_files[0], 1);
+    parse_file("../../data/savings/sav.txt", save_files[1], 2);
+    parse_file("../../data/savings/sav.txt", save_files[2], 3);
+    // waiting for user input
     print_file("../../data/scripts/ascii_images/save.txt", 0, true);
     cin.ignore();
     cout << "Enter \"s\" to save your game; enter \"d\" to erase existing slot: ";
@@ -260,15 +290,15 @@ void save(save_file s){
     }
     
     double *save_parameters;
-    // Map savemap;
+    vector<string> savemap;
     string username;
     save_parameters = s.save_character.save();
     // savemap = 
-    slot = slot
+    slot = slot;
     username = s.username;
 
     // input save file
-    fstream fin;
+    ifstream fin;
     fin.open("../../data/savings/sav.txt");
     if(fin.fail()){
         cout << "error: file not found" << endl;
@@ -280,47 +310,93 @@ void save(save_file s){
     }
     fin.close();
 
-    int init_position;
+    int init_pos, end_pos;
     if(slot == 1){
-        init_position = 0;
+        for(int i = 25; i < lines.size(); i++){
+            if(lines[i].substr(0, 7) == "@slot" + to_string(slot)){
+                init_pos = i;
+            }
+            if(lines[i].substr(0, 7) == "@slot" + to_string(slot + 1)){
+                end_pos = i;
+                break;
+            }
+        }
     }else if(slot == 2){
-        init_position = 27;
+        for(int i = 25; i < lines.size(); i++){
+            if(lines[i].substr(0, 7) == "@slot" + to_string(slot)){
+                init_pos = i;
+            }
+            if(lines[i].substr(0, 7) == "@slot" + to_string(slot + 1)){
+                end_pos = i;
+                break;
+            }
+        }
     }else if(slot == 3){
-        init_position = 54;
+        for(int i = 50; i < lines.size(); i++){
+            if(lines[i].substr(0, 7) == "@slot" + to_string(slot)){
+                init_pos = i;
+                end_pos = lines.size();
+                break;
+            }
+        }
     }
     // change content of the save file
+    //      delete
     if(command == 'd'){
-        for(int i = 0; i < 20; i++){
-            lines[init_position + 2 + i] = "";
+        for(int i = init_pos; i < end_pos; i++){
+            if(lines[i].substr(0, 1) != "@"){
+                lines[i] = "";
+            }
         }
-        lines[init_position + 24] = "";
-        lines[init_position + 26] = "";
 
         // rewrite save file
         ofstream fout("../../data/savings/sav.txt");
         if(fout.fail()){
             cout << "error: file not found" << endl;
         }
-        for (const string& line : lines) {
-            fout << line << "\n";
+        for(int i = 0; i < lines.size(); i++){
+            if(i == lines.size() - 1){
+                fout << lines[i];
+                break;
+            }
+            fout << lines[i] << "\n";
         }
         fout.close();
 
         return;
     }
-    for(int i = 0; i < 20; i++){
-        lines[init_position + 2 + i] = to_string(save_parameters[i]);
+    //      save
+    for(int i = init_pos + 2; i < end_pos; i++){
+        if(i > init_pos + 1 && i < init_pos + 22){
+            lines[i] = to_string(save_parameters[i - init_pos - 2]);
+        }else if(lines[i].substr(0, 5) == "@maze"){
+            for(int j = 0; j < savemap.size(); j++){
+                if(lines[i + 1 + j].substr(0, 9) != "@username"){
+                    lines[i + 1 + j] = savemap[j];
+                }else{
+                    lines.insert(lines.begin() + i + 1 + j, savemap[j]);
+                    end_pos++;
+                }
+            }
+            i += savemap.size();
+        }else if(lines[i].substr(0, 9) == "@username"){
+            lines[i + 1] = username;
+            i++;
+        }
+
     }
-    lines[init_position + 24] = to_string(slot);
-    lines[init_position + 26] = username;
 
     // rewrite save file
     ofstream fout("../../data/savings/sav.txt");
     if(fout.fail()){
         cout << "error: file not found" << endl;
     }
-    for (const string& line : lines) {
-        fout << line << "\n";
+    for(int i = 0; i < lines.size(); i++){
+        if(i == lines.size() - 1){
+            fout << lines[i];
+            break;
+        }
+        fout << lines[i] << "\n";
     }
     fout.close();
 
