@@ -10,14 +10,13 @@ using namespace std;
 
  */
 //改动---------------
-string mon_show_crit="";
-string mon_show_evasion="";
-string mon_show="";
-void mon_show_reset()
-{
-    mon_show_crit="";
-    mon_show_evasion="";
-    mon_show="";
+string mon_show_crit = "";
+string mon_show_evasion = "";
+string mon_show = "";
+void mon_show_reset() {
+	mon_show_crit = "";
+	mon_show_evasion = "";
+	mon_show = "";
 }
 //改动----------------
 int Monster::HP() { return hp_; }
@@ -43,7 +42,7 @@ int Monster::damage() {
 	mt19937 gen(rd());
 	uniform_real_distribution<> dis(0, 1);
 	if (dis(gen) <= critical_rate_) {
-		mon_show_crit= "Critical Strike!";//改动----------------
+		mon_show_crit = "Critical Strike!"; //改动----------------
 		return atk_ * critical_damage_;
 	} else {
 		return atk_;
@@ -132,7 +131,7 @@ void Cith::hurt(int x) {
 	mt19937 gen(rd());
 	uniform_real_distribution<> dis(0, 1);
 	if (dis(gen) <= evasion_rate_) {
-		mon_show_evasion= "Evasion successful.";//改动--------------
+		mon_show_evasion = "Evasion successful."; //改动--------------
 	} else {
 		int y = x - def_;
 		if ((hp_ - y) <= 0) {
@@ -180,7 +179,7 @@ int Mandalorians::damage() {
 	mt19937 gen(rd());
 	uniform_real_distribution<> dis(0, 1);
 	if (dis(gen) <= critical_rate_) {
-		mon_show_crit= "Critical Strike!";//改动----------------
+		mon_show_crit = "Critical Strike!"; //改动----------------
 		return atk_ * critical_damage_;
 	} else {
 		return atk_;
@@ -199,7 +198,7 @@ void Mandalorians::hurt(int x) {
 	mt19937 gen(rd());
 	uniform_real_distribution<> dis(0, 1);
 	if (dis(gen) <= evasion_rate_) {
-		mon_show_evasion= "Evasion successful.";//改动--------------
+		mon_show_evasion = "Evasion successful."; //改动--------------
 	} else {
 		int y = x - def_;
 		if ((hp_ - y) <= 0) {
