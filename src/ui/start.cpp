@@ -1,9 +1,9 @@
 #include "../character/character.h"
+#include "../utils/utils.hpp"
 #include "start_endpage.h"
 #include <chrono>
 #include <fstream>
 #include <iostream>
-#include <sstream>
 #include <string>
 #include <thread>
 #include <vector>
@@ -35,13 +35,16 @@ int print_file(const string filename, int wait_time, bool clean) {
 	return line.size();
 }
 
+/// Starts a new game, including animation, starting page.
 string new_game() {
+	// Loading Animation
 	print_file("../../data/scripts/ascii_images/sith_code.txt", 8, true);
 	print_file("../../data/scripts/ascii_images/script1.txt", 10, true);
 
 	string name;
 	bool valid = false;
 	do {
+		// Starting page
 		print_file("../../data/scripts/ascii_images/computer.txt", 0, true);
 		cin.ignore();
 		cout << "Enter your name (no more than 10 chars): ";
@@ -49,6 +52,8 @@ string new_game() {
 
 		if (name.size() < 11) {
 			valid = true;
+
+			// Story Introduction
 			ifstream file_in("../../data/scripts/ascii_images/script3.txt");
 			vector<string> lines;
 			string line;
@@ -58,9 +63,11 @@ string new_game() {
 			file_in.close();
 			lines[25] = "  \"" + name + ", my most unlikely servant. Your ";
 
+			// Store user name to file
 			ofstream file_out("../../data/scripts/ascii_images/script3.txt");
 			if (file_out.fail()) {
 				cout << "error: file not found" << endl;
+				exit(1);
 			}
 			for (const string &line : lines) {
 				file_out << line << "\n";
@@ -74,6 +81,8 @@ string new_game() {
 				sec_lines.push_back(sec_line);
 			}
 			fin.close();
+
+			// REVIEW - [17]: out of index error?
 			sec_lines[17] = "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣾⣿⣿⡿⣿⣿⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
 							"⠀         ****  " +
 							name + "  ****";
@@ -108,11 +117,15 @@ void continue_game() {
 	return;
 }
 
+/// Read information from files.
 void parse_file(const string filename, save_file &s, int slot) {
 	ifstream fin;
 	fin.open(filename.c_str());
+
+	// Check if saving file is opened succussfully
 	if (fin.fail()) {
 		cout << "error: file not found" << endl;
+		return;
 	}
 
 	double parameters[20];
@@ -154,7 +167,7 @@ void parse_file(const string filename, save_file &s, int slot) {
 	//     cnt++;
 	// }
 	s.save_character.set(parameters);
-	s.maze = maze;
+	s.maze.loadMaze(maze);
 	s.username = username;
 	fin.close();
 	return;
@@ -379,44 +392,84 @@ void end() {
 	exit(1);
 }
 
+// Prints the start page and returns verdict of operation.
+int print_start_page_helper() {
+	// Show formatted options;
+	vector<string> options = {"New Game", "Continue", "Edit Saves", "Tutorial",
+							  "Exit"};
+	int verdict = -1;
+	int cursor = 0; // Which entry is the cursor pointing.
+
+	auto printPadded = [](const string &s, int padding) {
+		cout << string(padding, ' ') << s << endl;
+	};
+
+	while (verdict == -1) {
+		clear_screen();
+		cout << "\n\n"; // Upper padding
+
+		// Print Logo.
+		int padding =
+			0.05 * print_file("data/scripts/ascii_images/start1.txt", 0, true);
+
+		// Show cursor movement help tips.
+		printPadded("Press [W] to move up, [S] to move down, [C] to confirm",
+					padding);
+
+		// Print Formatted Options
+		cout << "\n";
+		for (int i = 0; i < options.size(); i++) {
+			printPadded("+---+", padding); // Upper border of selector
+			string tmp = "";
+			if (i == cursor) {
+				tmp += "| > |";
+			} else {
+				tmp += "|   |";
+			}
+			printPadded(tmp + "   " + options[i], padding);
+			printPadded("+---+", padding); // Lower border of selector
+		}
+
+		// Move cursor.
+		int key = readKeyboard();
+		if (key == 'W' || key == 'w') {
+			cursor = (cursor - 1 + options.size()) % options.size();
+		} else if (key == 'S' || key == 's') {
+			cursor = (cursor + 1) % options.size();
+		} else if (key == 'C' || key == 'c') {
+			verdict = cursor;
+		}
+	}
+
+	return verdict;
+}
+
 void start_page() {
-	int padding;
-	string press_key = "Press any key to continue...";
-	padding = 0.5 * print_file("../../data/scripts/ascii_images/start1.txt", 0,
-							   true) -
-			  0.5 * press_key.size();
-	cout << string(padding, ' ') << press_key;
-	cin.ignore();
-
-	int choice, slot;
-	string name;
-	save_file s;
-	do {
-		print_file("../../data/scripts/ascii_images/main_menu.txt", 0, true);
-		cout << "Enter your choice: ";
-		cin >> choice;
-
-		switch (choice) {
+	int tmp_verdict = -1;
+	while (tmp_verdict != 4) {
+		tmp_verdict = print_start_page_helper();
+		switch (tmp_verdict) {
+		case 0:
+			new_game();
+			break;
 		case 1:
 			continue_game();
+			break;
 		case 2:
-			name = new_game();
+			save(save_file());
 			break;
 		case 3:
-			save(s);
-			break;
-		case 4:
 			// tutorial();
 			break;
-		case 5:
+		case 4:
 			end();
 			break;
 		default:
+			// Never reach here. LOL
 			cout << "invalid choice, please try again" << endl;
 			break;
 		}
-	} while (choice != 4);
-	return;
+	}
 }
 
 void main_game(save_file s) {
@@ -432,6 +485,6 @@ void main_game(save_file s) {
 // }
 // void main_game(int choice)
 int main() { // for test
-	start_page();
+	print_start_page_helper();
 	return 0;
 }

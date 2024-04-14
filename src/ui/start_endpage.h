@@ -8,7 +8,7 @@ struct save_file{
     // struct of character
     main_character save_character;
     // struct of maze
-	std::vector<std::string> maze;
+	Maze maze;
 	// int seed;
 	// Needed if the maze will be generated from the beginning
     int slot_number;
@@ -18,6 +18,8 @@ struct save_file{
 void clear_screen();
 int print_file(const std::string filename, int wait_time, bool clean);
 void continue_game();
+
+// Read player info.
 void parse_file(const std::string filename, save_file &s, int slot);
 std::string new_game();
 void save();

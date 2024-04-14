@@ -1,4 +1,4 @@
-FLAG=-pedantic-errors -std=c++11
+FLAG=-std=c++11
 
 SRC=./src
 CHARAC_DIR=$(SRC)/character
@@ -14,33 +14,39 @@ START=$(SRC)/ui/start.cpp
 
 MAIN=$(SRC)/main/main.cpp
 
-BATTLE_HEADER=$(SRC)/battle/battle_upgrade.hpp
+BATTLE_HEADER=$(SRC)/battle/battle_upgrade.h
 BATTLE=$(SRC)/battle/battle_upgrade.cpp
 
-MONSTER_HEADRER=$(CHARAC_DIR)/monster.hpp
-MONSTER=$(CHARAC_DIR)/monster.cpp
+MONSTER_HEADRER=$(CHARAC_DIR)/monster.h
+MONSTER=$(CHARAC_DIR)/monster（new）.cpp
 
-BOSS_HEADER=$(CHARAC_DIR)/boss.hpp
-BOSS=$(CHARAC_DIR)/boss.cpp
+BOSS_HEADER=$(CHARAC_DIR)/boss.h
+BOSS=$(CHARAC_DIR)/boss（new）.cpp
 
-CHARACTER_HEADER=$(CHARAC_DIR)/character.hpp
+CHARACTER_HEADER=$(CHARAC_DIR)/character.h
 CHARACTER=$(CHARAC_DIR)/character.cpp
 
 SAVING_UI_HEADER=$(SRC)/ui/saving_ui.hpp
 SAVING_UI=$(SRC)/ui/saving_ui.cpp
-
-# START
-start.o: $(START) $(START_HEADER)
-	g++ $(FLAG) -c $< -o start.o
-start: start.o
-	g++ $(FLAG) $< -o start.out
 
 # MAZE
 maze.o: $(MAZE) $(MAZE_HEADER) $(CHARACTER) $(MONSTER)
 	g++ $(FLAG) -c $< -o maze.o
 
 maze: maze.o
-	g++ $(FLAG) $< -o maze.out
+	g++ $(FLAG) $^ -o maze.out
+
+# MONSTER
+monster.o: $(MONSTER) $(MONSTER_HEADRER)
+	g++ $(FLAG) -c $< -o monster.o
+monster: monster.o
+	g++ $(FLAG) $^ -o monster.out
+
+# CHARACTER
+character.o: $(CHARACTER) $(CHARACTER_HEADER)
+	g++ $(FLAG) -c $< -o character.o
+character: character.o
+	g++ $(FLAG) $^ -o character.out
 
 # UTILS
 utils.o: $(UTILS) ${UTILS_HEADER} $(MAZE)
@@ -48,6 +54,13 @@ utils.o: $(UTILS) ${UTILS_HEADER} $(MAZE)
 
 utils: utils.o maze.o
 	g++ $(FLAG) utils.o maze.o -o utils.out
+
+# START
+start.o: $(START) $(START_HEADER)
+	g++ $(FLAG) -c $< -o start.o
+start: start.o utils.o maze.o character.o
+	g++ $(FLAG) $^ -o start.out
+
 
 # SAVING_UI
 saving_ui.o: $(SAVING_UI)

@@ -1,23 +1,27 @@
 #ifndef MONSTER_H
 #define MONSTER_H
-#include <random>
+
 #include <iostream>
+#include <random>
 //改动
 #include <string>
 //改动
 class Monster {
   public:
+	Monster(){};
+	Monster(const Monster &monster){};
+	~Monster(){};
 	// Returns monsters' HP (Health point)
 	int HP();
 	int MP();
 	int ATK();
 	bool isAlive();
-	virtual void reset(int, int);
-	virtual int normalAttack();
 	void recoverHP(int);
 	void recoverMP(int);
-	virtual void hurt(int);
-	virtual int damage();
+	void reset(int, int);
+	int normalAttack();
+	void hurt(int);
+	int damage();
 
   protected:
 	int hp_, hp_max_;
@@ -30,22 +34,23 @@ class Monster {
 
 class Clone : public Monster {
   public:
-	virtual void reset(int, int);
-	virtual int normalAttack();
+	Clone(){};
+	void reset(int, int);
+	int normalAttack();
 };
 
 class Robot : Monster {
   public:
 	int lasers();
-	virtual void reset(int, int);
+	void reset(int, int);
 };
 
 class Cith : Monster {
   public:
 	void returntodark();
 	int lasers();
-	virtual void hurt(int);
-	virtual void reset(int, int);
+	void hurt(int);
+	void reset(int, int);
 
   private:
 	int life;
@@ -53,11 +58,11 @@ class Cith : Monster {
 
 class Mandalorians : Monster {
   public:
-	virtual int normalAttack();
-	virtual void hurt(int);
 	void rage();
-	virtual int damage();
-	virtual void reset(int, int);
+	int normalAttack();
+	void hurt(int);
+	int damage();
+	void reset(int, int);
 
   private:
 	int beatback;

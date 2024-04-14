@@ -20,42 +20,19 @@ std::string constructPath(int i) {
 
 // Refresh screen. And print the maze to the terminal.
 void Maze::showMaze() {
-    for (const auto &row : this->grid_) {
-        for (const auto &cell : row) {
-            std::cout << cell << " ";
-        }
-        std::cout << std::endl;
-    }
+	for (const auto &row : this->grid_) {
+		for (const auto &cell : row) {
+			std::cout << cell << " ";
+		}
+		std::cout << std::endl;
+	}
 }
 
 // Read information from savings.
-void Maze::loadMaze() {
+void Maze::loadMaze(std::vector<std::string> &m) {
 	// Select a save.
 	// TODO let user select saveID.
-	int saveID = 1;
-
-	// Retrieve save path.
-	// auto path = constructPath(saveID);
-	auto path = "./data/maps/preset1.dat";
-
-	std::ifstream fin(path);
-	if (!fin.is_open()) {
-		std::cerr << "Error: Cannot open file." << std::endl;
-		return;
-	}
-
-	// 1. Load maze.
-	std::string line;
-	this->grid_.clear();
-	while (std::getline(fin, line)) {
-		this->grid_.push_back(line);
-	}
-
-	// 2. Load main character.
-	// 3. Load monsters.
-
-	// Close file.
-	fin.close();
+	this->grid_ = m;
 }
 
 // Saves maze to saving.
@@ -107,10 +84,12 @@ void Maze::newMaze() {
 	// TODO
 }
 
-// FUNCTION TEST
+// // FUNCTION TEST
 // int main() {
 // 	Maze maze;
-// 	maze.loadMaze();
+// 	auto p =
+// 		std::vector<std::string>{"#####", "#   #", "#   #", "#   #", "#####"};
+// 	maze.loadMaze(p);
 // 	for (const auto &line : maze.getExtendedGrid()) {
 // 		std::cout << line << std::endl;
 // 	}

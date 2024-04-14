@@ -29,8 +29,8 @@ class Maze {
 	std::vector<std::string> getExtendedGrid();
 	// Deprecated. As API is provided in `battle/print_features.h`.
 	void showMaze();
-	// Load the maze from data file.
-	void loadMaze();
+	// Load the maze from loaded.
+	void loadMaze(std::vector<std::string> &);
 	// Save the maze to data file.
 	void saveMaze();
 

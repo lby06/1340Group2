@@ -7,7 +7,7 @@
 #include <iostream>
 #include <string>
 
-static constexpr int kMaxSavings = 5;
+static constexpr int kMaxSavings = 3;
 
 static const std::string sav_info_path = "./data/savings/sav.dat";
 void SavingsUI::loadEntries() {
@@ -73,6 +73,7 @@ void SavingsUI::display() {
 	}
 }
 
+// TESTING
 int main() {
 	SavingsUI ui;
 	ui.loadEntries();

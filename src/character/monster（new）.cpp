@@ -19,6 +19,16 @@ void mon_show_reset() {
 	mon_show = "";
 }
 //改动----------------
+// Monster::Monster(const Monster &monster) {
+// 	hp_ = monster.hp_;
+// 	hp_max_ = monster.hp_max_;
+// 	mp_ = monster.mp_;
+// 	atk_ = monster.atk_;
+// 	def_ = monster.def_;
+// 	critical_rate_ = monster.critical_rate_;
+// 	critical_damage_ = monster.critical_damage_;
+// 	evasion_rate_ = monster.evasion_rate_;
+// }
 int Monster::HP() { return hp_; }
 int Monster::MP() { return mp_; }
 int Monster::ATK() { return atk_; }
@@ -211,8 +221,8 @@ void Mandalorians::hurt(int x) {
 	}
 }
 //改动----------------
-Clone clo1;
-Robot rob1;
-Cith cit1;
-Mandalorians man1;
+// Clone clo1;
+// Robot rob1;
+// Cith cit1;
+// Mandalorians man1;
 //改动----------------
