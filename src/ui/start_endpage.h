@@ -8,7 +8,7 @@ struct save_file{
     // struct of character
     main_character save_character;
     // struct of maze
-	Maze maze;
+	std::vector<std::string> maze;
 	// int seed;
 	// Needed if the maze will be generated from the beginning
     int slot_number;

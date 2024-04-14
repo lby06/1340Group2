@@ -90,7 +90,7 @@ string new_game() {
 
 			// REVIEW - [17]: out of index error?
 			sec_lines[17] = "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣾⣿⣿⡿⣿⣿⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
-							"⠀         ****  " +
+							"          ****  " +
 							name + "  ****";
 
 			ofstream fout("data/scripts/ascii_images/luke_skywalker.txt");
@@ -206,7 +206,7 @@ void parse_file(const string filename, save_file &s, int slot) {
 	//     cnt++;
 	// }
 	s.save_character.set(parameters);
-	s.maze.loadMaze(maze);
+	s.maze = maze;
 	s.username = username;
 	fin.close();
 	return;
@@ -300,7 +300,7 @@ void save(save_file s) {
 	// waiting for user input
 	print_file("data/scripts/ascii_images/save.txt", 0, true);
 	cin.ignore();
-	cout << "Enter \"s\" to save your game; enter \"d\" to erase existing "
+	cout << "Enter [S] to save your game, [D] to erase existing "
 			"slot: ";
 	cin >> command;
 	if (command == 's') {
@@ -482,6 +482,7 @@ int print_start_page_helper() {
 	return verdict;
 }
 
+// Includes: New Game, Continue Game, Save, Start Tutorial, Exit.
 void start_page() {
 	int tmp_verdict = -1;
 	while (tmp_verdict != 4) {
@@ -522,7 +523,7 @@ void main_game(save_file s) {
 //     return;
 // }
 // void main_game(int choice)
-int main() { // for test
-	start_page();
-	return 0;
-}
+// int main() { // for test
+// 	start_page();
+// 	return 0;
+// }
