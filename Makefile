@@ -9,6 +9,9 @@ UTILS=$(SRC)/utils/utils.cpp
 MAZE_HEADER=$(SRC)/maze/maze.hpp
 MAZE=$(SRC)/maze/maze.cpp
 
+START_HEADER=$(SRC)/ui/start_endpage.h
+START=$(SRC)/ui/start.cpp
+
 MAIN=$(SRC)/main/main.cpp
 
 BATTLE_HEADER=$(SRC)/battle/battle_upgrade.hpp
@@ -25,6 +28,12 @@ CHARACTER=$(CHARAC_DIR)/character.cpp
 
 SAVING_UI_HEADER=$(SRC)/ui/saving_ui.hpp
 SAVING_UI=$(SRC)/ui/saving_ui.cpp
+
+# START
+start.o: $(START) $(START_HEADER)
+	g++ $(FLAG) -c $< -o start.o
+start: start.o
+	g++ $(FLAG) $< -o start.out
 
 # MAZE
 maze.o: $(MAZE) $(MAZE_HEADER) $(CHARACTER) $(MONSTER)
