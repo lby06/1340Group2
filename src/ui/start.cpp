@@ -38,14 +38,14 @@ int print_file(const string filename, int wait_time, bool clean) {
 /// Starts a new game, including animation, starting page.
 string new_game() {
 	// Loading Animation
-	print_file("../../data/scripts/ascii_images/sith_code.txt", 8, true);
-	print_file("../../data/scripts/ascii_images/script1.txt", 10, true);
+	print_file("data/scripts/ascii_images/sith_code.txt", 8, true);
+	print_file("data/scripts/ascii_images/script1.txt", 10, true);
 
 	string name;
 	bool valid = false;
 	do {
 		// Starting page
-		print_file("../../data/scripts/ascii_images/computer.txt", 0, true);
+		print_file("data/scripts/ascii_images/computer.txt", 0, true);
 		cin.ignore();
 		cout << "Enter your name (no more than 10 chars): ";
 		getline(cin, name);
@@ -54,7 +54,7 @@ string new_game() {
 			valid = true;
 
 			// Story Introduction
-			ifstream file_in("../../data/scripts/ascii_images/script3.txt");
+			ifstream file_in("data/scripts/ascii_images/script3.txt");
 			vector<string> lines;
 			string line;
 			while (getline(file_in, line)) {
@@ -64,7 +64,7 @@ string new_game() {
 			lines[25] = "  \"" + name + ", my most unlikely servant. Your ";
 
 			// Store user name to file
-			ofstream file_out("../../data/scripts/ascii_images/script3.txt");
+			ofstream file_out("data/scripts/ascii_images/script3.txt");
 			if (file_out.fail()) {
 				cout << "error: file not found" << endl;
 				exit(1);
@@ -74,7 +74,7 @@ string new_game() {
 			}
 			file_out.close();
 
-			ifstream fin("../../data/scripts/ascii_images/luke_skywalker.txt");
+			ifstream fin("data/scripts/ascii_images/luke_skywalker.txt");
 			vector<string> sec_lines;
 			string sec_line;
 			while (getline(fin, sec_line)) {
@@ -87,7 +87,7 @@ string new_game() {
 							"⠀         ****  " +
 							name + "  ****";
 
-			ofstream fout("../../data/scripts/ascii_images/luke_skywalker.txt");
+			ofstream fout("data/scripts/ascii_images/luke_skywalker.txt");
 			if (fout.fail()) {
 				cout << "error: file not found" << endl;
 			}
@@ -97,14 +97,14 @@ string new_game() {
 			fout.close();
 		}
 	} while (!valid);
-	print_file("../../data/scripts/ascii_images/luke_skywalker.txt", 4, true);
-	print_file("../../data/scripts/ascii_images/script3.txt", 6, true);
+	print_file("data/scripts/ascii_images/luke_skywalker.txt", 4, true);
+	print_file("data/scripts/ascii_images/script3.txt", 6, true);
 	// main_game(choice);
 	return name;
 }
 
 void continue_game() {
-	print_file("../../data/scripts/ascii_images/save.txt", 0, true);
+	print_file("data/scripts/ascii_images/save.txt", 0, true);
 
 	int slot;
 	cin.ignore();
@@ -112,7 +112,7 @@ void continue_game() {
 	cin >> slot;
 
 	save_file s;
-	parse_file("../../data/savings/sav.txt", s, slot);
+	parse_file("data/savings/sav.txt", s, slot);
 	main_game(s);
 	return;
 }
@@ -192,7 +192,7 @@ int rename_slot() {
 	cin.ignore();
 	getline(cin, new_name);
 
-	ifstream file_in("../../data/scripts/ascii_images/save.txt");
+	ifstream file_in("data/scripts/ascii_images/save.txt");
 	vector<string> lines;
 	string line;
 	while (getline(file_in, line)) {
@@ -201,7 +201,7 @@ int rename_slot() {
 	file_in.close();
 	lines[2 * slot - 1] = lines[2 * slot - 1].substr(0, 11) + new_name;
 
-	ofstream file_out("../../data/scripts/ascii_images/save.txt");
+	ofstream file_out("data/scripts/ascii_images/save.txt");
 	if (file_out.fail()) {
 		cout << "error: file not found" << endl;
 	}
@@ -227,7 +227,7 @@ int delete_slot() {
 		}
 	}
 
-	ifstream file_in("../../data/scripts/ascii_images/save.txt");
+	ifstream file_in("data/scripts/ascii_images/save.txt");
 	vector<string> lines;
 	string line;
 	while (getline(file_in, line)) {
@@ -237,7 +237,7 @@ int delete_slot() {
 	lines[2 * slot - 1] =
 		lines[2 * slot - 1].substr(0, 11) + "Slot " + to_string(slot);
 
-	ofstream file_out("../../data/scripts/ascii_images/save.txt");
+	ofstream file_out("data/scripts/ascii_images/save.txt");
 	if (file_out.fail()) {
 		cout << "error: file not found" << endl;
 	}
@@ -254,11 +254,11 @@ void save(save_file s) {
 	int slot;
 	char command;
 	// init save_files
-	parse_file("../../data/savings/sav.txt", save_files[0], 1);
-	parse_file("../../data/savings/sav.txt", save_files[1], 2);
-	parse_file("../../data/savings/sav.txt", save_files[2], 3);
+	parse_file("data/savings/sav.txt", save_files[0], 1);
+	parse_file("data/savings/sav.txt", save_files[1], 2);
+	parse_file("data/savings/sav.txt", save_files[2], 3);
 	// waiting for user input
-	print_file("../../data/scripts/ascii_images/save.txt", 0, true);
+	print_file("data/scripts/ascii_images/save.txt", 0, true);
 	cin.ignore();
 	cout << "Enter \"s\" to save your game; enter \"d\" to erase existing "
 			"slot: ";
@@ -280,7 +280,7 @@ void save(save_file s) {
 
 	// input save file
 	ifstream fin;
-	fin.open("../../data/savings/sav.txt");
+	fin.open("data/savings/sav.txt");
 	if (fin.fail()) {
 		cout << "error: file not found" << endl;
 	}
@@ -331,7 +331,7 @@ void save(save_file s) {
 		}
 
 		// rewrite save file
-		ofstream fout("../../data/savings/sav.txt");
+		ofstream fout("data/savings/sav.txt");
 		if (fout.fail()) {
 			cout << "error: file not found" << endl;
 		}
@@ -367,7 +367,7 @@ void save(save_file s) {
 	}
 
 	// rewrite save file
-	ofstream fout("../../data/savings/sav.txt");
+	ofstream fout("data/savings/sav.txt");
 	if (fout.fail()) {
 		cout << "error: file not found" << endl;
 	}
@@ -388,7 +388,7 @@ void end() {
 	cout << "       Are you sure ?  Enter 1 (Yes) / 0 (No):    " << endl;
 	cin >> quit;
 	if (!quit) return;
-	print_file("../../data/scripts/ascii_images/end.txt", 3, true);
+	print_file("data/scripts/ascii_images/end.txt", 3, true);
 	exit(1);
 }
 
@@ -485,6 +485,6 @@ void main_game(save_file s) {
 // }
 // void main_game(int choice)
 int main() { // for test
-	print_start_page_helper();
+	start_page();
 	return 0;
 }
