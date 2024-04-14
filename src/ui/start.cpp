@@ -17,6 +17,12 @@ void clear_screen() {
 #endif
 }
 
+// Print a line with padding.
+void printPadded(const string &s, int padding) {
+	cout << string(padding, ' ') << s << endl;
+};
+
+// Non-interactive print screen.
 int print_file(const string filename, int wait_time, bool clean) {
 	ifstream file;
 	string line;
@@ -90,6 +96,7 @@ string new_game() {
 			ofstream fout("data/scripts/ascii_images/luke_skywalker.txt");
 			if (fout.fail()) {
 				cout << "error: file not found" << endl;
+				exit(1);
 			}
 			for (const string &sec_line : sec_lines) {
 				fout << sec_line << "\n";
@@ -103,13 +110,45 @@ string new_game() {
 	return name;
 }
 
+// Choose a slot and continue gaming.
 void continue_game() {
-	print_file("data/scripts/ascii_images/save.txt", 0, true);
+	// Show all options.
+	vector<string> options = {"Slot 1", "Slot 2", "Slot 3"};
 
-	int slot;
-	cin.ignore();
-	cout << "Choose your game to continue: ";
-	cin >> slot;
+	int slot = 0;
+	int padding = 3;
+	bool confirmed = false;
+
+	while (!confirmed) {
+		clear_screen();
+		// Show cursor movement help tips.
+		printPadded("Press [W] to move up, [S] to move down, [C] to confirm",
+					0);
+		// Upper padding
+		cout << "\n\n";
+		// Show options
+		for (int i = 0; i < (int)options.size(); i++) {
+			printPadded("+---+", padding);
+			string tmp;
+			if (slot == i) {
+				tmp = "| > |";
+			} else {
+				tmp = "|   |";
+			}
+			// TODO Add brief info (username)
+			printPadded(tmp + "   " + options[i], padding);
+			printPadded("+---+", padding);
+		}
+		// Read key
+		int key = readKeyboard();
+		if (key == 'W' || key == 'w') {
+			slot = (slot - 1 + options.size()) % options.size();
+		} else if (key == 'S' || key == 's') {
+			slot = (slot + 1) % options.size();
+		} else if (key == 'C' || key == 'c') {
+			confirmed = true;
+		}
+	}
 
 	save_file s;
 	parse_file("data/savings/sav.txt", s, slot);
@@ -249,6 +288,7 @@ int delete_slot() {
 	return slot;
 }
 
+//
 void save(save_file s) {
 	save_file save_files[3];
 	int slot;
@@ -383,11 +423,13 @@ void save(save_file s) {
 	return;
 }
 
+// Exit Game.
 void end() {
 	bool quit = true;
 	cout << "       Are you sure ?  Enter 1 (Yes) / 0 (No):    " << endl;
-	cin >> quit;
+	quit = readKeyboard() - '0';
 	if (!quit) return;
+	// Print ending animation.
 	print_file("data/scripts/ascii_images/end.txt", 3, true);
 	exit(1);
 }
@@ -399,10 +441,6 @@ int print_start_page_helper() {
 							  "Exit"};
 	int verdict = -1;
 	int cursor = 0; // Which entry is the cursor pointing.
-
-	auto printPadded = [](const string &s, int padding) {
-		cout << string(padding, ' ') << s << endl;
-	};
 
 	while (verdict == -1) {
 		clear_screen();

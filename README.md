@@ -1,6 +1,24 @@
 # 1340Group2
+## 测试模块：
+
+目前已包含的测试模块：
+- maze/maze
+  - `make maze`
+- character/monster
+  - `make monster`
+- character/character
+  - `make character`
+- utils/utils
+  - `make utils`
+- ui/start
+  - `make start`
+- ui/saving_ui
+  - `make saving_ui`
+- clean
+  - `make clean`
+
 # For Player
-## Team members 🧑‍💻 （ In alphabetical order )
+## Team members 🧑‍💻 ( In alphabetical order )
 [Liu Boyuan]()&ensp;&ensp;()
 
 [Lyu Wenzhuang]()&ensp;&ensp;&ensp;&ensp;(3036128004)
