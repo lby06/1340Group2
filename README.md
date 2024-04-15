@@ -27,7 +27,7 @@
 
 [Xu Qiyue]()&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp; (3036127359)
 
-[Zhang Shenru]()&ensp;&ensp;&ensp;&ensp;()
+[Zhang Shenru]()&ensp;&ensp;&ensp;&ensp;(3036128157)
 
 ## How to play 🤗
 ### Quick DEMO
