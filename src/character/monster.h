@@ -8,13 +8,14 @@
 //改动
 class Monster {
   public:
-	// Returns monsters' HP (Health point)
+	// Returns monsters' basic properties
 	int HP();
 	int MP();
 	int ATK();
 	// Returns monsters' position.
 	std::pair<int, int> getPosition();
 	bool isAlive();
+	// Common behaviours of monsters.
 	void recoverHP(int);
 	void recoverMP(int);
 	void reset(int, int);

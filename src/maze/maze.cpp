@@ -1,4 +1,5 @@
 #include "maze.hpp"
+#include "../utils/utils.hpp"
 
 #include <fstream>
 #include <iostream>
@@ -20,6 +21,78 @@ std::string constructPath(int i) {
 
 Maze::Maze() : main_character_(nullptr), monsters_(0, nullptr) {
 	// TODO for testing only, need delete it.
+}
+
+char Maze::whatIsThisCell(int x, int y) {
+	// is it main charac?
+	auto tmp = main_character_->getPosition();
+	if (x == tmp.first && y == tmp.second) {
+		return 1;
+	}
+
+	// is it a monster?
+	for (const auto &monster : monsters_) {
+		auto tmp = monster->getPosition();
+		if (x == tmp.first && y == tmp.second) {
+			return 2;
+		}
+	}
+
+	// is it a wall?
+	if (this->grid_[x][y] == '#') {
+		return 3;
+	}
+
+	// empty
+	return 0;
+}
+
+// Read a key from keyboard and move main character.
+void Maze::moveMainCharacter() {
+	char key = readKeyboard();
+	auto tmp = main_character_->getPosition();
+	int x = tmp.first, y = tmp.second;
+	switch (key) {
+	case 'w':
+	case 'W':
+		if (this->whatIsThisCell(x - 1, y) != 3) {
+			main_character_->setPosition(x - 1, y);
+		}
+		break;
+	case 's':
+	case 'S':
+		if (this->whatIsThisCell(x + 1, y) != 3) {
+			main_character_->setPosition(x + 1, y);
+		}
+		break;
+	case 'a':
+	case 'A':
+		if (this->whatIsThisCell(x, y - 1) != 3) {
+			main_character_->setPosition(x, y - 1);
+		}
+		break;
+	case 'd':
+	case 'D':
+		if (this->whatIsThisCell(x, y + 1) != 3) {
+			main_character_->setPosition(x, y + 1);
+		}
+		break;
+	default:
+		break;
+	}
+}
+
+// Check if the main character encounter a monster. (Then triggers a battle)
+bool Maze::isMainCharacterEncounterMonster() {
+	auto tmp = main_character_->getPosition();
+	int x = tmp.first, y = tmp.second;
+	for (const auto &monster : monsters_) {
+		auto tmp = monster->getPosition();
+		if (x == tmp.first && y == tmp.second) {
+			return true;
+		}
+	}
+	return false;
 }
 
 // Refresh screen. And print the maze to the terminal.

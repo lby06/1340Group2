@@ -1,4 +1,5 @@
 #include "character.h"
+#include "../maze/maze.hpp"
 #include <cmath>
 #include <iostream>
 #include <random>
@@ -24,6 +25,10 @@ int main_character::MP() { return mp; }
 int main_character::ATK() { return atk; }
 std::pair<int, int> main_character::getPosition() {
 	return std::make_pair(locate_x, locate_y);
+}
+void main_character::setPosition(int x, int y) {
+	locate_x = x;
+	locate_y = y;
 }
 bool main_character::is_alive() {
 	if (hp <= 0) {

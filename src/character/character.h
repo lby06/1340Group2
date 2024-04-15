@@ -4,10 +4,14 @@
 void cha_show_reset();
 class main_character {
   public:
+	// Basic properties.
 	int HP();
 	int MP();
 	int ATK();
+	// Position.
 	std::pair<int, int> getPosition();
+	void setPosition(int, int);
+	// Basic behaviours.
 	bool is_alive();
 	void reset();
 	void set(double a[]);

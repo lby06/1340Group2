@@ -41,4 +41,14 @@ class Maze {
 	void init_grid();
 	// Randomize a grid.
 	void randomGrid();
+	// What is this cell.
+	char whatIsThisCell(int, int);
+	// Read a key and move main character.
+	void moveMainCharacter();
+	// Check if the main character is at the exit.
+	bool isMainCharacterAtExit();
+	// Check if the main character is at the entrance.
+	bool isMainCharacterAtEntrance();
+	// Check if the main character encounters a monster.
+	bool isMainCharacterEncounterMonster();
 };
