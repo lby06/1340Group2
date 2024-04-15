@@ -33,7 +33,7 @@ SAVING_UI=$(SRC)/ui/saving_ui.cpp
 maze.o: $(MAZE) $(MAZE_HEADER) $(CHARACTER) $(MONSTER)
 	g++ $(FLAG) -c $< -o maze.o
 
-maze: maze.o
+maze: maze.o character.o monster.o
 	g++ $(FLAG) $^ -o maze.out
 
 # MONSTER
@@ -68,6 +68,10 @@ saving_ui.o: $(SAVING_UI)
 
 saving_ui: saving_ui.o utils.o maze.o
 	g++ $(FLAG) $^ -o saving_ui.out
+
+# GAME (Main entrance)
+game: start.o utils.o maze.o character.o
+	g++ $(FLAG) $^ -o game
 
 # MISC
 .PHONY: clean

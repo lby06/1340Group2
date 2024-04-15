@@ -8,13 +8,12 @@
 //改动
 class Monster {
   public:
-	Monster(){};
-	Monster(const Monster &monster){};
-	~Monster(){};
 	// Returns monsters' HP (Health point)
 	int HP();
 	int MP();
 	int ATK();
+	// Returns monsters' position.
+	std::pair<int, int> getPosition();
 	bool isAlive();
 	void recoverHP(int);
 	void recoverMP(int);
@@ -24,6 +23,7 @@ class Monster {
 	int damage();
 
   protected:
+	int locate_x, locate_y;
 	int hp_, hp_max_;
 	int atk_;
 	int def_;

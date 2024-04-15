@@ -6,8 +6,8 @@
 
 // Defines the size of a maze.
 
-int kMaxMazeSizeWidth = 50;
-int kMaxMazeSizeHeight = 50;
+int kMaxMazeSizeWidth = 20;
+int kMaxMazeSizeHeight = 20;
 
 // Define the max number of monsters in each maze.
 int kMaxNumberOfMonsters = 10;
@@ -18,16 +18,40 @@ std::string constructPath(int i) {
 	return kPathPrefix + std::to_string(i) + kPathSuffix;
 }
 
+Maze::Maze() : main_character_(nullptr), monsters_(0, nullptr) {
+	// TODO for testing only, need delete it.
+}
+
 // Refresh screen. And print the maze to the terminal.
 void Maze::showMaze() {
-	for (const auto &row : this->grid_) {
-		for (const auto &cell : row) {
-			std::cout << cell << " ";
+	for (int i = 0; i < kMaxMazeSizeWidth; i++) {
+		for (int j = 0; j < kMaxMazeSizeHeight; j++) {
+			bool isCharacter = false;
+			// If is the position of main character, print it.
+			auto tmp = main_character_->getPosition();
+			if (i == tmp.first && j == tmp.second) {
+				std::cout << "人"
+						  << " ";
+				isCharacter = 1;
+				continue;
+			}
+
+			// If is the position of a monster, print it.
+			for (const auto &monster : monsters_) {
+				auto tmp = monster->getPosition();
+				if (i == tmp.first && j == tmp.second) {
+					std::cout << "怪"
+							  << " ";
+					isCharacter = 1;
+					break;
+				}
+			}
+
+			if (!isCharacter) std::cout << this->grid_[i][j] << " ";
 		}
 		std::cout << std::endl;
 	}
 }
-
 // Read information from savings.
 void Maze::loadMaze(std::vector<std::string> &m) {
 	// Select a save.
@@ -81,17 +105,50 @@ std::vector<std::string> Maze::getExtendedGrid() {
 
 // Create a new maze.
 void Maze::newMaze() {
-	// TODO
+	// Fill border with walls. ('#')
+	for (int i = 0; i < kMaxMazeSizeHeight; i++) {
+		std::string row;
+		for (int j = 0; j < kMaxMazeSizeWidth; j++) {
+			if (i == 0 || i == kMaxMazeSizeHeight - 1 || j == 0 ||
+				j == kMaxMazeSizeWidth - 1) {
+				row.push_back('#');
+			} else {
+				row.push_back(' ');
+			}
+		}
+		this->grid_.push_back(row);
+	}
+
+	// Randomly generate walls inside grid.
+	this->randomGrid();
+}
+
+// Randomize some walls inside the grid.
+void Maze::randomGrid() {
+	// Randomly generate walls inside grid.
+	for (int i = 0; i < kMaxMazeSizeHeight; i++) {
+		for (int j = 0; j < kMaxMazeSizeWidth; j++) {
+			if (i == 0 || i == kMaxMazeSizeHeight - 1 || j == 0 ||
+				j == kMaxMazeSizeWidth - 1) {
+				continue;
+			}
+			if (rand() % 20 < 3) {
+				this->grid_[i][j] = '#';
+			}
+		}
+	}
 }
 
 // // FUNCTION TEST
-// int main() {
-// 	Maze maze;
-// 	auto p =
-// 		std::vector<std::string>{"#####", "#   #", "#   #", "#   #", "#####"};
-// 	maze.loadMaze(p);
-// 	for (const auto &line : maze.getExtendedGrid()) {
-// 		std::cout << line << std::endl;
-// 	}
-// 	return 0;
-// }
+int main() {
+	Maze maze;
+	// auto p =
+	// 	std::vector<std::string>{"#####", "#   #", "#   #", "#   #", "#####"};
+	// maze.loadMaze(p);
+	// for (const auto &line : maze.getExtendedGrid()) {
+	// 	std::cout << line << std::endl;
+	// }
+	maze.newMaze();
+	maze.showMaze();
+	return 0;
+}

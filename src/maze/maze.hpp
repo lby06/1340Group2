@@ -20,10 +20,11 @@ class Maze {
 	// By default, `#` represents walls.
 	std::vector<std::string> grid_;
 
-	std::vector<Monster> monsters_; // Store monsters' info
-	main_character main_character_; // Store main character's info
+	std::vector<Monster *> monsters_; // Store monsters' info
+	main_character *main_character_;  // Store main character's info
 
   public:
+	Maze();
 	// Get extended grid (i.e. filled with spaces), otherwise height is much
 	// larger than width. Not suitable for display.
 	std::vector<std::string> getExtendedGrid();
@@ -38,4 +39,6 @@ class Maze {
 	void newMaze();
 	// Fill the maze with monsters
 	void init_grid();
+	// Randomize a grid.
+	void randomGrid();
 };

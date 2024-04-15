@@ -7,6 +7,7 @@ class main_character {
 	int HP();
 	int MP();
 	int ATK();
+	std::pair<int, int> getPosition();
 	bool is_alive();
 	void reset();
 	void set(double a[]);

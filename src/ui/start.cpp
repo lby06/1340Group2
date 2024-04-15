@@ -523,7 +523,7 @@ void main_game(save_file s) {
 //     return;
 // }
 // void main_game(int choice)
-// int main() { // for test
-// 	start_page();
-// 	return 0;
-// }
+int main() { // for test
+	start_page();
+	return 0;
+}

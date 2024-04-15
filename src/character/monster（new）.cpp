@@ -32,6 +32,9 @@ void mon_show_reset() {
 int Monster::HP() { return hp_; }
 int Monster::MP() { return mp_; }
 int Monster::ATK() { return atk_; }
+std::pair<int, int> Monster::getPosition() {
+	return std::make_pair(locate_x, locate_y);
+}
 bool Monster::isAlive() {
 	if (hp_ <= 0) {
 		return false;

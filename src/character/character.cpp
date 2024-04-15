@@ -22,6 +22,9 @@ void cha_show_reset() {
 int main_character::HP() { return hp; }
 int main_character::MP() { return mp; }
 int main_character::ATK() { return atk; }
+std::pair<int, int> main_character::getPosition() {
+	return std::make_pair(locate_x, locate_y);
+}
 bool main_character::is_alive() {
 	if (hp <= 0) {
 		return false;
