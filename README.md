@@ -19,7 +19,7 @@
 
 # For Player
 ## Team members 🧑‍💻 ( In alphabetical order )
-[Liu Boyuan]()&ensp;&ensp;(3036128315)
+[Liu Boyuan]()&ensp;&ensp;&ensp;(3036128315)
 
 [Lyu Wenzhuang]()&ensp;&ensp;&ensp;&ensp;(3036128004)
 
