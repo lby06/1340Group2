@@ -17,7 +17,7 @@ struct save_file{
 
 void clear_screen();
 int print_file(const std::string filename, int wait_time, bool clean);
-save_file continue_game();
+std::pair<int, save_file> continue_game();
 
 // Read player info.
 void parse_file(const std::string filename, save_file &s, int slot);
@@ -26,4 +26,4 @@ void save();
 save_file start_page();
 int rename_slot();
 void end();
-void main_game(save_file s, Maze &);
+bool main_game(save_file s, Maze &, main_character &, std::vector<Monster> &);

@@ -111,7 +111,8 @@ string new_game() {
 }
 
 // Choose a slot and continue gaming.
-save_file continue_game() {
+// Returns verdict and `save_file`. -1 if user wants to exit. 1 if ok.
+pair<int, save_file> continue_game() {
 	// Show all options.
 	vector<string> options = {"Slot 1", "Slot 2", "Slot 3"};
 
@@ -122,7 +123,8 @@ save_file continue_game() {
 	while (!confirmed) {
 		clear_screen();
 		// Show cursor movement help tips.
-		printPadded("Press [W] to move up, [S] to move down, [C] to confirm",
+		printPadded("Press [W] to move up, [S] to move down, [C] to confirm, "
+					"[ESC] to get back.",
 					0);
 		// Upper padding
 		cout << "\n\n";
@@ -147,13 +149,16 @@ save_file continue_game() {
 			slot = (slot + 1) % options.size();
 		} else if (key == 'C' || key == 'c') {
 			confirmed = true;
+		} else if (key == 27) {
+			confirmed = true;
+			return {-1, {}};
 		}
 	}
 
 	// Load stored setting to main game
 	save_file s;
 	parse_file("data/savings/sav.txt", s, slot);
-	return s; // return stored settings
+	return {1, s}; // return stored settings
 }
 
 /// Read information from files.
@@ -485,22 +490,31 @@ int print_start_page_helper() {
 // Includes: New Game, Continue Game, Save, Start Tutorial, Exit.
 save_file start_page() {
 	int tmp_verdict = -1;
+	save_file ret;
 	while (tmp_verdict != 4) {
 		tmp_verdict = print_start_page_helper();
 		switch (tmp_verdict) {
-		case 0:
+		case 0: {
 			new_game();
 			break;
-		case 1:
-			return continue_game();
+		}
+		case 1: {
+			auto tmp = continue_game();
+			tmp_verdict = tmp.first;
+			ret = tmp.second;
+			// successfully read settings.
+			if (tmp_verdict == 1) {
+				return ret;
+			}
 			break;
+		}
 		case 2:
 			save(save_file());
 			break;
 		case 3:
 			// tutorial();
 			break;
-		case 4:
+		case 4: // Exit Game
 			end();
 			break;
 		default:
@@ -509,12 +523,15 @@ save_file start_page() {
 			break;
 		}
 	}
+	return {};
 }
 
 // Load stored settings to the game.
-void main_game(save_file s, Maze &maze) {
-	//
-	return;
+bool main_game(save_file s, Maze &mz, main_character &mc, vector<Monster> &ms) {
+	mz.addMainCharacter(mc);
+	mz.addMonsters(ms);
+	mz.loadMaze(s.maze);
+	return true; // successfully load settings
 }
 
 // void save(){

@@ -7,6 +7,8 @@
 #include <random>
 #include <termio.h>
 
+static std::mt19937 rng(std::random_device{}());
+
 int readKeyboard() {
 	int in;
 	struct termios new_settings, stored_settings;
@@ -27,7 +29,6 @@ int readKeyboard() {
 
 // Generate random position.
 std::pair<int, int> randomPosition() {
-	std::mt19937 rng(std::random_device{}());
 	return std::make_pair(rng() % kMaxMazeSizeWidth,
 						  rng() % kMaxMazeSizeHeight);
 }
