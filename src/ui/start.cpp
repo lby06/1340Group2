@@ -111,7 +111,7 @@ string new_game() {
 }
 
 // Choose a slot and continue gaming.
-void continue_game() {
+save_file continue_game() {
 	// Show all options.
 	vector<string> options = {"Slot 1", "Slot 2", "Slot 3"};
 
@@ -150,10 +150,10 @@ void continue_game() {
 		}
 	}
 
+	// Load stored setting to main game
 	save_file s;
 	parse_file("data/savings/sav.txt", s, slot);
-	main_game(s);
-	return;
+	return s; // return stored settings
 }
 
 /// Read information from files.
@@ -483,7 +483,7 @@ int print_start_page_helper() {
 }
 
 // Includes: New Game, Continue Game, Save, Start Tutorial, Exit.
-void start_page() {
+save_file start_page() {
 	int tmp_verdict = -1;
 	while (tmp_verdict != 4) {
 		tmp_verdict = print_start_page_helper();
@@ -492,7 +492,7 @@ void start_page() {
 			new_game();
 			break;
 		case 1:
-			continue_game();
+			return continue_game();
 			break;
 		case 2:
 			save(save_file());
@@ -511,7 +511,8 @@ void start_page() {
 	}
 }
 
-void main_game(save_file s) {
+// Load stored settings to the game.
+void main_game(save_file s, Maze &maze) {
 	//
 	return;
 }

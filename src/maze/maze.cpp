@@ -3,8 +3,6 @@
 
 #include <fstream>
 #include <iostream>
-#include <string>
-
 // Defines the size of a maze.
 
 int kMaxMazeSizeWidth = 20;
@@ -19,22 +17,30 @@ std::string constructPath(int i) {
 	return kPathPrefix + std::to_string(i) + kPathSuffix;
 }
 
-Maze::Maze() : main_character_(nullptr), monsters_(0, nullptr) {
+Maze::Maze() : main_character_(nullptr), monsters_(nullptr) {
 	// TODO for testing only, need delete it.
+}
+
+void Maze::addMainCharacter(main_character &main_character) {
+	this->main_character_ = &main_character;
 }
 
 char Maze::whatIsThisCell(int x, int y) {
 	// is it main charac?
-	auto tmp = main_character_->getPosition();
-	if (x == tmp.first && y == tmp.second) {
-		return 1;
+	if (main_character_ != nullptr) {
+		auto tmp = main_character_->getPosition();
+		if (x == tmp.first && y == tmp.second) {
+			return 1;
+		}
 	}
 
 	// is it a monster?
-	for (const auto &monster : monsters_) {
-		auto tmp = monster->getPosition();
-		if (x == tmp.first && y == tmp.second) {
-			return 2;
+	if (monsters_ != nullptr) {
+		for (auto &monster : *monsters_) {
+			auto tmp = monster.getPosition();
+			if (x == tmp.first && y == tmp.second) {
+				return 2;
+			}
 		}
 	}
 
@@ -86,8 +92,8 @@ void Maze::moveMainCharacter() {
 bool Maze::isMainCharacterEncounterMonster() {
 	auto tmp = main_character_->getPosition();
 	int x = tmp.first, y = tmp.second;
-	for (const auto &monster : monsters_) {
-		auto tmp = monster->getPosition();
+	for (auto &monster : *monsters_) {
+		auto tmp = monster.getPosition();
 		if (x == tmp.first && y == tmp.second) {
 			return true;
 		}
@@ -100,23 +106,28 @@ void Maze::showMaze() {
 	for (int i = 0; i < kMaxMazeSizeWidth; i++) {
 		for (int j = 0; j < kMaxMazeSizeHeight; j++) {
 			bool isCharacter = false;
+
 			// If is the position of main character, print it.
-			auto tmp = main_character_->getPosition();
-			if (i == tmp.first && j == tmp.second) {
-				std::cout << "人"
-						  << " ";
-				isCharacter = 1;
-				continue;
+			if (main_character_ != nullptr) {
+				auto tmp = main_character_->getPosition();
+				if (i == tmp.first && j == tmp.second) {
+					std::cout << "U"
+							  << " ";
+					isCharacter = 1;
+					continue;
+				}
 			}
 
 			// If is the position of a monster, print it.
-			for (const auto &monster : monsters_) {
-				auto tmp = monster->getPosition();
-				if (i == tmp.first && j == tmp.second) {
-					std::cout << "怪"
-							  << " ";
-					isCharacter = 1;
-					break;
+			if (monsters_ != nullptr) {
+				for (auto &monster : *monsters_) {
+					auto tmp = monster.getPosition();
+					if (i == tmp.first && j == tmp.second) {
+						std::cout << "M"
+								  << " ";
+						isCharacter = 1;
+						break;
+					}
 				}
 			}
 
@@ -215,13 +226,27 @@ void Maze::randomGrid() {
 // // FUNCTION TEST
 int main() {
 	Maze maze;
+	main_character tmp;
+
+	maze.newMaze();
+
+	bool successfullyCreated = false;
+	while (!successfullyCreated) {
+		std::cerr << "Creating main character..." << std::endl;
+		auto p = randomPosition();
+		if (maze.whatIsThisCell(p.first, p.second) == 0) {
+			successfullyCreated = true;
+			tmp.setPosition(p.first, p.second);
+		}
+	}
+	maze.addMainCharacter(tmp);
 	// auto p =
 	// 	std::vector<std::string>{"#####", "#   #", "#   #", "#   #", "#####"};
 	// maze.loadMaze(p);
 	// for (const auto &line : maze.getExtendedGrid()) {
 	// 	std::cout << line << std::endl;
 	// }
-	maze.newMaze();
 	maze.showMaze();
+
 	return 0;
 }

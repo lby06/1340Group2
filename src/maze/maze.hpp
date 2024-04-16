@@ -20,7 +20,7 @@ class Maze {
 	// By default, `#` represents walls.
 	std::vector<std::string> grid_;
 
-	std::vector<Monster *> monsters_; // Store monsters' info
+	std::vector<Monster> *monsters_;  // Store monsters' info
 	main_character *main_character_;  // Store main character's info
 
   public:
@@ -34,7 +34,8 @@ class Maze {
 	void loadMaze(std::vector<std::string> &);
 	// Save the maze to data file.
 	void saveMaze();
-
+	// Manage the main character pointer.
+	void addMainCharacter(main_character &);
 	// Create a new maze. (Entering a new level / New game)
 	void newMaze();
 	// Fill the maze with monsters

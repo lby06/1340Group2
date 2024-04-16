@@ -18,10 +18,10 @@ BATTLE_HEADER=$(SRC)/battle/battle_upgrade.h
 BATTLE=$(SRC)/battle/battle_upgrade.cpp
 
 MONSTER_HEADRER=$(CHARAC_DIR)/monster.h
-MONSTER=$(CHARAC_DIR)/monster（new）.cpp
+MONSTER=$(CHARAC_DIR)/monster.cpp
 
 BOSS_HEADER=$(CHARAC_DIR)/boss.h
-BOSS=$(CHARAC_DIR)/boss（new）.cpp
+BOSS=$(CHARAC_DIR)/boss.cpp
 
 CHARACTER_HEADER=$(CHARAC_DIR)/character.h
 CHARACTER=$(CHARAC_DIR)/character.cpp
@@ -33,7 +33,7 @@ SAVING_UI=$(SRC)/ui/saving_ui.cpp
 maze.o: $(MAZE) $(MAZE_HEADER) $(CHARACTER) $(MONSTER)
 	g++ $(FLAG) -c $< -o maze.o
 
-maze: maze.o character.o monster.o
+maze: maze.o character.o monster.o utils.o
 	g++ $(FLAG) $^ -o maze.out
 
 # MONSTER

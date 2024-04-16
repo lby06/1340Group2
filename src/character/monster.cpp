@@ -1,314 +1,231 @@
-#include <cmath>
+#include "monster.h"
 #include <iostream>
 #include <random>
 #include <sched.h>
 using namespace std;
 
-class clone {
-  public:
-	bool is_alive() {
-		if (hp <= 0) {
-			return false;
-		} else {
-			return true;
-		}
-	}
-	void reset(int level, int number) {
-		double rate = level + number * 0.2;
-		hp_max = 20 * rate + 8;
-		hp = hp_max;
-		mp = 0;
-		def = 0 + level * 1.5 + number / 4;
-		atk = 3 + level * 1.5 + number / 4;
-		evasion_rate = 0.10 + level * 0.04 + number * 0.008;
-		critical_rate = 0.2 + level * 0.05 + number * 0.01;
-		critical_damage = 1.6;
-	}
-	int damage() {
-		random_device rd;
-		mt19937 gen(rd());
-		uniform_real_distribution<> dis(0, 1);
-		if (dis(gen) <= critical_rate) {
-			cout << "Critical Strike!";
-			return atk * critical_damage;
-		} else {
-			return atk;
-		}
-	}
-	int normalattack() {
-		hp_recover((hp_max - hp) * 0.1);
-		return (damage());
-	}
-	void hp_recover(int x) {
-		if ((hp_max - hp) >= x) {
-			hp += x;
-		} else {
-			hp = hp_max;
-		}
-	}
-	void mp_recover(int x) { mp += x; }
-	void hurt(int x) {
-		random_device rd;
-		mt19937 gen(rd());
-		uniform_real_distribution<> dis(0, 1);
-		if (dis(gen) <= evasion_rate) {
-			cout << "Evasion successful.";
-		} else {
-			int y = x - def;
-			if ((hp - y) <= 0) {
-				hp = 0;
-			} else {
-				hp -= y;
-				cout << "hurt: HP-" << y;
-				mp_recover(1);
-			}
-		}
-	}
+/*
 
-  private:
-	int hp, hp_max, atk, def, mp;
-	double critical_rate, critical_damage;
-	double evasion_rate;
-};
+	Defines common behaviours of monsters.
 
-class robot {
-  public:
-	bool is_alive() {
-		if (hp <= 0) {
-			return false;
-		} else {
-			return true;
-		}
+ */
+//改动---------------
+string mon_show_crit = "";
+string mon_show_evasion = "";
+string mon_show = "";
+void mon_show_reset() {
+	mon_show_crit = "";
+	mon_show_evasion = "";
+	mon_show = "";
+}
+//改动----------------
+// Monster::Monster(const Monster &monster) {
+// 	hp_ = monster.hp_;
+// 	hp_max_ = monster.hp_max_;
+// 	mp_ = monster.mp_;
+// 	atk_ = monster.atk_;
+// 	def_ = monster.def_;
+// 	critical_rate_ = monster.critical_rate_;
+// 	critical_damage_ = monster.critical_damage_;
+// 	evasion_rate_ = monster.evasion_rate_;
+// }
+int Monster::HP() { return hp_; }
+int Monster::MP() { return mp_; }
+int Monster::ATK() { return atk_; }
+std::pair<int, int> Monster::getPosition() {
+	return std::make_pair(locate_x, locate_y);
+}
+bool Monster::isAlive() {
+	if (hp_ <= 0) {
+		return false;
+	} else {
+		return true;
 	}
-	void reset(int level, int number) {
-		double rate = level + number * 0.2;
-		hp_max = 30 * rate + 10;
-		hp = hp_max;
-		mp = 0;
-		def = 2 + level * 1.8 + number / 4;
-		atk = 2 + level * 1.2 + number / 4;
-		evasion_rate = 0.10 + level * 0.04 + number * 0.008;
-		critical_rate = 0.2 + level * 0.05 + number * 0.01;
-		critical_damage = 1.6;
+}
+void Monster::recoverHP(int x) {
+	if ((hp_max_ - hp_) >= x) {
+		hp_ += x;
+	} else {
+		hp_ = hp_max_;
 	}
-	int damage() {
-		random_device rd;
-		mt19937 gen(rd());
-		uniform_real_distribution<> dis(0, 1);
-		if (dis(gen) <= critical_rate) {
-			cout << "Critical Strike!";
-			return atk * critical_damage;
-		} else {
-			return atk;
-		}
+}
+void Monster::recoverMP(int x) { mp_ += x; }
+int Monster::damage() {
+	random_device rd;
+	mt19937 gen(rd());
+	uniform_real_distribution<> dis(0, 1);
+	if (dis(gen) <= critical_rate_) {
+		mon_show_crit = "Critical Strike!"; //改动----------------
+		return atk_ * critical_damage_;
+	} else {
+		return atk_;
 	}
-	int normalattack() { return (damage()); }
-	void hp_recover(int x) {
-		if ((hp_max - hp) >= x) {
-			hp += x;
-		} else {
-			hp = hp_max;
-		}
-	}
-	void mp_recover(int x) { mp += x; }
-	void hurt(int x) {
-		random_device rd;
-		mt19937 gen(rd());
-		uniform_real_distribution<> dis(0, 1);
-		if (dis(gen) <= evasion_rate) {
-			cout << "Evasion successful.";
-		} else {
-			int y = x - def;
-			if ((hp - y) <= 0) {
-				hp = 0;
-			} else {
-				hp -= y;
-				cout << "hurt: HP-" << y;
-				mp_recover(1);
-			}
-		}
-	}
-	int lasers() {
-		mp -= 3;
-		return (damage() * 2);
-	}
+}
 
-  private:
-	int hp, hp_max, atk, def, mp;
-	double critical_rate, critical_damage;
-	double evasion_rate;
-};
+void Monster::hurt(int x) {
+	random_device rd;
+	mt19937 gen(rd());
+	uniform_real_distribution<> dis(0, 1);
+	if (dis(gen) <= evasion_rate_) {
+		cout << "Evasion successful.";
+	} else {
+		int y = x - def_;
+		if ((hp_ - y) <= 0) {
+			hp_ = 0;
+		} else {
+			hp_ -= y;
+			cout << "hurt: HP-" << y;
+			recoverMP(1);
+		}
+	}
+}
 
-class cith {
-  public:
-	bool is_alive() {
-		if (hp <= 0) {
-			return false;
-		} else {
-			return true;
-		}
-	}
-	void reset(int level, int number) {
-		double rate = level + number * 0.2;
-		hp_max = 25 * rate + 9;
-		hp = hp_max;
-		mp = 0;
-		def = 1 + level + number / 4;
-		atk = 3 + level * 2 + number / 4;
-		evasion_rate = 0.12 + level * 0.06 + number * 0.012;
-		critical_rate = 0.25 + level * 0.07 + number * 0.014;
-		critical_damage = 1.6;
-		life = 0;
-	}
-	int damage() {
-		random_device rd;
-		mt19937 gen(rd());
-		uniform_real_distribution<> dis(0, 1);
-		if (dis(gen) <= critical_rate) {
-			cout << "Critical Strike!";
-			return atk * critical_damage;
-		} else {
-			return atk;
-		}
-	}
-	int normalattack() { return (damage()); }
-	void hp_recover(int x) {
-		if ((hp_max - hp) >= x) {
-			hp += x;
-		} else {
-			hp = hp_max;
-		}
-	}
-	void mp_recover(int x) { mp += x; }
-	//技能1
-	void returntodark() {
-		mp -= 5;
-		life = 4;
-		critical_rate *= 1.2;
-		critical_damage = 1.8;
-	}
-	void hurt(int x) {
-		if (life >= 2) {
-			life -= 1;
-			return;
-		}
-		if (life == 1) {
-			hp = 0;
-			return;
-		}
-		random_device rd;
-		mt19937 gen(rd());
-		uniform_real_distribution<> dis(0, 1);
-		if (dis(gen) <= evasion_rate) {
-			cout << "Evasion successful.";
-		} else {
-			int y = x - def;
-			if ((hp - y) <= 0) {
-				hp = 0;
-			} else {
-				hp -= y;
-				cout << "hurt: HP-" << y;
-				mp_recover(1);
-			}
-		}
-	}
-	int lasers() {
-		mp -= 3;
-		return (damage() * 2);
-	}
+void Clone::reset(int level, int number) {
+	int rate = level + number * 0.2;
+	hp_max_ = 20 * rate + 8;
+	hp_ = hp_max_;
+	mp_ = 0;
+	def_ = 0 + level * 1.5 + number * 1.0 / 4;
+	atk_ = 3 + level * 1.5 + number * 1.0 / 4;
+	evasion_rate_ = 0.10 + level * 0.04 + number * 0.008;
+	critical_rate_ = 0.2 + level * 0.05 + number * 0.01;
+	critical_damage_ = 1.6;
+}
+int Clone::normalAttack() {
+	recoverHP((hp_max_ - hp_) * 0.1);
+	return (damage());
+}
 
-  private:
-	int hp, hp_max, atk, def, mp;
-	double critical_rate, critical_damage;
-	double evasion_rate;
-	int life;
-};
-class mandalorians {
-  public:
-	bool is_alive() {
-		if (hp <= 0) {
-			return false;
+void Robot::reset(int level, int number) {
+	int rate = level + number * 0.2;
+	hp_max_ = 30 * rate + 10;
+	hp_ = hp_max_;
+	mp_ = 0;
+	def_ = 2 + level * 1.8 + number * 1.0 / 4;
+	atk_ = 2 + level * 1.2 + number * 1.0 / 4;
+	evasion_rate_ = 0.10 + level * 0.04 + number * 0.008;
+	critical_rate_ = 0.2 + level * 0.05 + number * 0.01;
+	critical_damage_ = 1.6;
+}
+
+int Robot::lasers() {
+	mp_ -= 3;
+	return (damage() * 2);
+}
+void Cith::reset(int level, int number) {
+	int rate = level + number * 0.2;
+	hp_max_ = 25 * rate + 9;
+	hp_ = hp_max_;
+	mp_ = 0;
+	def_ = 1 + level + number / 4;
+	atk_ = 3 + level * 2 + number * 1.0 / 4;
+	evasion_rate_ = 0.12 + level * 0.06 + number * 0.012;
+	critical_rate_ = 0.25 + level * 0.07 + number * 0.014;
+	critical_damage_ = 1.6;
+	life = 0;
+}
+//技能1
+void Cith::returntodark() {
+	mp_ -= 5;
+	life = 4;
+	critical_rate_ *= 1.2;
+	critical_damage_ = 1.8;
+}
+void Cith::hurt(int x) {
+	if (life >= 2) {
+		life -= 1;
+		return;
+	}
+	if (life == 1) {
+		hp_ = 0;
+		return;
+	}
+	random_device rd;
+	mt19937 gen(rd());
+	uniform_real_distribution<> dis(0, 1);
+	if (dis(gen) <= evasion_rate_) {
+		mon_show_evasion = "Evasion successful."; //改动--------------
+	} else {
+		int y = x - def_;
+		if ((hp_ - y) <= 0) {
+			hp_ = 0;
 		} else {
-			return true;
+			hp_ -= y;
+			cout << "hurt: hp_-" << y;
+			recoverMP(1);
 		}
 	}
-	void reset(int level, int number) {
-		double rate = level + number * 0.2;
-		hp_max = 20 * rate + 8;
-		hp = hp_max;
-		mp = 0;
-		def = 0 + level * 1.5 + number / 4;
-		atk = 3 + level * 1.5 + number / 4;
-		evasion_rate = 0.10 + level * 0.04 + number * 0.008;
-		critical_rate = 0.2 + level * 0.05 + number * 0.01;
-		critical_damage = 1.6;
-		beatback = level;
+}
+int Cith::lasers() {
+	mp_ -= 3;
+	return (damage() * 1.5);
+}
+
+void Mandalorians::reset(int level, int number) {
+	int rate = level + number * 0.2;
+	hp_max_ = 20 * rate + 8;
+	hp_ = hp_max_;
+	mp_ = 0;
+	def_ = 0 + level * 1.5 + number * 1.0 / 4;
+	atk_ = 3 + level * 1.5 + number * 1.0 / 4;
+	evasion_rate_ = 0.10 + level * 0.04 + number * 0.008;
+	critical_rate_ = 0.2 + level * 0.05 + number * 0.01;
+	critical_damage_ = 1.6;
+	beatback = level;
+	damreturn = 0;
+}
+void Mandalorians::rage() {
+	mp_ -= 3;
+	hp_max_ *= 1.1;
+	hp_ *= 1.1;
+	critical_rate_ *= 1.1;
+	atk_ *= 1.1;
+	beatback += 2;
+}
+int Mandalorians::damage() {
+	if (beatback >= 1) {
+		return (damreturn);
 		damreturn = 0;
+		beatback -= 1;
 	}
-	void rage() {
-		mp -= 3;
-		hp_max *= 1.1;
-		hp *= 1.1;
-		critical_rate *= 1.1;
-		atk *= 1.1;
-		beatback += 2;
+	random_device rd;
+	mt19937 gen(rd());
+	uniform_real_distribution<> dis(0, 1);
+	if (dis(gen) <= critical_rate_) {
+		mon_show_crit = "Critical Strike!"; //改动----------------
+		return atk_ * critical_damage_;
+	} else {
+		return atk_;
 	}
-	int damage() {
-		if (beatback >= 1) {
-			return (damreturn);
-			damreturn = 0;
-			beatback -= 1;
-		}
-		random_device rd;
-		mt19937 gen(rd());
-		uniform_real_distribution<> dis(0, 1);
-		if (dis(gen) <= critical_rate) {
-			cout << "Critical Strike!";
-			return atk * critical_damage;
+}
+int Mandalorians::normalAttack() {
+	recoverHP((hp_max_ - hp_) * 0.1);
+	return (damage());
+}
+void Mandalorians::hurt(int x) {
+	if (beatback >= 1) {
+		damreturn = x;
+		return;
+	}
+	random_device rd;
+	mt19937 gen(rd());
+	uniform_real_distribution<> dis(0, 1);
+	if (dis(gen) <= evasion_rate_) {
+		mon_show_evasion = "Evasion successful."; //改动--------------
+	} else {
+		int y = x - def_;
+		if ((hp_ - y) <= 0) {
+			hp_ = 0;
 		} else {
-			return atk;
+			hp_ -= y;
+			cout << "hurt: hp_-" << y;
+			recoverMP(1);
 		}
 	}
-	int normalattack() {
-		hp_recover((hp_max - hp) * 0.1);
-		return (damage());
-	}
-	void hp_recover(int x) {
-		if ((hp_max - hp) >= x) {
-			hp += x;
-		} else {
-			hp = hp_max;
-		}
-	}
-	void mp_recover(int x) { mp += x; }
-	void hurt(int x) {
-		if (beatback >= 1) {
-			damreturn = x;
-			return;
-		}
-		random_device rd;
-		mt19937 gen(rd());
-		uniform_real_distribution<> dis(0, 1);
-		if (dis(gen) <= evasion_rate) {
-			cout << "Evasion successful.";
-		} else {
-			int y = x - def;
-			if ((hp - y) <= 0) {
-				hp = 0;
-			} else {
-				hp -= y;
-				cout << "hurt: HP-" << y;
-				mp_recover(1);
-			}
-		}
-	}
-
-  private:
-	int hp, hp_max, atk, def, mp;
-	double critical_rate, critical_damage;
-	double evasion_rate;
-	int beatback;
-	int damreturn;
-};
-
-int main() { return 0; }
+}
+//改动----------------
+// Clone clo1;
+// Robot rob1;
+// Cith cit1;
+// Mandalorians man1;
+//改动----------------

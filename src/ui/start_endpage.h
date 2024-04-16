@@ -17,13 +17,13 @@ struct save_file{
 
 void clear_screen();
 int print_file(const std::string filename, int wait_time, bool clean);
-void continue_game();
+save_file continue_game();
 
 // Read player info.
 void parse_file(const std::string filename, save_file &s, int slot);
 std::string new_game();
 void save();
-void start_page();
+save_file start_page();
 int rename_slot();
 void end();
-void main_game(save_file s);
+void main_game(save_file s, Maze &);
