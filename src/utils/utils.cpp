@@ -1,9 +1,10 @@
 #include "utils.hpp"
 #include "../maze/maze.hpp"
 
-#include <cstdlib>
-#include <ctime>
+// #include <cstdlib>
+// #include <ctime>
 // #include <iostream>
+#include <random>
 #include <termio.h>
 
 int readKeyboard() {
@@ -26,9 +27,9 @@ int readKeyboard() {
 
 // Generate random position.
 std::pair<int, int> randomPosition() {
-	srand(time(NULL)); // Set seed
-	return std::make_pair(rand() % kMaxMazeSizeWidth,
-						  rand() % kMaxMazeSizeHeight);
+	std::mt19937 rng(std::random_device{}());
+	return std::make_pair(rng() % kMaxMazeSizeWidth,
+						  rng() % kMaxMazeSizeHeight);
 }
 
 // FUNCTION TEST

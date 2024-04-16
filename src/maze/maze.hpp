@@ -36,6 +36,8 @@ class Maze {
 	void saveMaze();
 	// Manage the main character pointer.
 	void addMainCharacter(main_character &);
+	// Manage the monsters pointer.
+	void addMonsters(std::vector<Monster> &);
 	// Create a new maze. (Entering a new level / New game)
 	void newMaze();
 	// Fill the maze with monsters

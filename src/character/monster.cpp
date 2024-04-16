@@ -35,6 +35,10 @@ int Monster::ATK() { return atk_; }
 std::pair<int, int> Monster::getPosition() {
 	return std::make_pair(locate_x, locate_y);
 }
+void Monster::setPosition(int x, int y) {
+	locate_x = x;
+	locate_y = y;
+}
 bool Monster::isAlive() {
 	if (hp_ <= 0) {
 		return false;

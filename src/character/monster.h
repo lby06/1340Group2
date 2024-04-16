@@ -14,6 +14,7 @@ class Monster {
 	int ATK();
 	// Returns monsters' position.
 	std::pair<int, int> getPosition();
+	void setPosition(int, int);
 	bool isAlive();
 	// Common behaviours of monsters.
 	void recoverHP(int);

@@ -24,6 +24,9 @@ Maze::Maze() : main_character_(nullptr), monsters_(nullptr) {
 void Maze::addMainCharacter(main_character &main_character) {
 	this->main_character_ = &main_character;
 }
+void Maze::addMonsters(std::vector<Monster> &monsters) {
+	this->monsters_ = &monsters;
+}
 
 char Maze::whatIsThisCell(int x, int y) {
 	// is it main charac?
@@ -230,6 +233,7 @@ int main() {
 
 	maze.newMaze();
 
+	// Create a main character for test.
 	bool successfullyCreated = false;
 	while (!successfullyCreated) {
 		std::cerr << "Creating main character..." << std::endl;
@@ -240,12 +244,23 @@ int main() {
 		}
 	}
 	maze.addMainCharacter(tmp);
-	// auto p =
-	// 	std::vector<std::string>{"#####", "#   #", "#   #", "#   #", "#####"};
-	// maze.loadMaze(p);
-	// for (const auto &line : maze.getExtendedGrid()) {
-	// 	std::cout << line << std::endl;
-	// }
+
+	// Create monsters for test.
+	std::vector<Monster> monsters;
+	for (int i = 0; i < 10; i++) {
+		Monster monster;
+		bool successfullyCreated = false;
+		while (!successfullyCreated) {
+			auto p = randomPosition();
+			if (maze.whatIsThisCell(p.first, p.second) == 0) {
+				successfullyCreated = true;
+				monster.setPosition(p.first, p.second);
+			}
+		}
+		monsters.push_back(monster);
+	}
+	maze.addMonsters(monsters);
+
 	maze.showMaze();
 
 	return 0;
