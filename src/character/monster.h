@@ -41,13 +41,13 @@ class Clone : public Monster {
 	int normalAttack();
 };
 
-class Robot : Monster {
+class Robot : public Monster {
   public:
 	int lasers();
 	void reset(int, int);
 };
 
-class Cith : Monster {
+class Cith : public Monster {
   public:
 	void returntodark();
 	int lasers();
@@ -58,7 +58,7 @@ class Cith : Monster {
 	int life;
 };
 
-class Mandalorians : Monster {
+class Mandalorians : public Monster {
   public:
 	void rage();
 	int normalAttack();
@@ -70,6 +70,9 @@ class Mandalorians : Monster {
 	int beatback;
 	int damreturn;
 };
+
+// Function call to create a list of new monsters.
+std::vector<Monster> createMonsters(int);
 
 //改动
 void mon_show_reset();

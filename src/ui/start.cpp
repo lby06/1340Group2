@@ -110,9 +110,47 @@ string new_game() {
 	return name;
 }
 
+// Delete a slot of saving.
+int delete_slot(int slot) {
+	// int slot;
+	// bool valid = false;
+
+	// while (!valid) {
+	// 	cout << "Enter the number of the slot you want to delete: ";
+	// 	cin >> slot;
+	// 	if (slot == 1 || slot == 2 || slot == 3) {
+	// 		valid = true;
+	// 	} else {
+	// 		cout << "Invalid slot number.\n";
+	// 	}
+	// }
+
+	ifstream file_in("data/scripts/ascii_images/save.txt");
+	vector<string> lines;
+	string line;
+	while (getline(file_in, line)) {
+		lines.push_back(line);
+	}
+	file_in.close();
+	lines[2 * slot - 1] =
+		lines[2 * slot - 1].substr(0, 11) + "Slot " + to_string(slot);
+
+	ofstream file_out("data/scripts/ascii_images/save.txt");
+	if (file_out.fail()) {
+		cout << "error: file not found" << endl;
+		return slot;
+	}
+	for (const string &line : lines) {
+		file_out << line << "\n";
+	}
+	file_out.close();
+
+	return slot;
+}
+
 // Choose a slot and continue gaming.
 // Returns verdict and `save_file`. -1 if user wants to exit. 1 if ok.
-pair<int, save_file> continue_game() {
+pair<int, save_file> continue_or_modify_saving() {
 	// Show all options.
 	vector<string> options = {"Slot 1", "Slot 2", "Slot 3"};
 
@@ -123,9 +161,10 @@ pair<int, save_file> continue_game() {
 	while (!confirmed) {
 		clear_screen();
 		// Show cursor movement help tips.
-		printPadded("Press [W] to move up, [S] to move down, [C] to confirm, "
-					"[ESC] to get back.",
-					0);
+		printPadded(
+			"Press [W] to move up, [S] to move down, [C] to confirm, "
+			"[ESC] to get back, [D] to delete saving, [R] to rename saving.",
+			0);
 		// Upper padding
 		cout << "\n\n";
 		// Show options
@@ -152,6 +191,8 @@ pair<int, save_file> continue_game() {
 		} else if (key == 27) {
 			confirmed = true;
 			return {-1, {}};
+		} else if (key == 'D' || key == 'd') {
+			delete_slot(slot + 1);
 		}
 	}
 
@@ -257,42 +298,6 @@ int rename_slot() {
 	return slot;
 }
 
-int delete_slot() {
-	int slot;
-	bool valid = false;
-
-	while (!valid) {
-		cout << "Enter the number of the slot you want to delete: ";
-		cin >> slot;
-		if (slot == 1 || slot == 2 || slot == 3) {
-			valid = true;
-		} else {
-			cout << "Invalid slot number.\n";
-		}
-	}
-
-	ifstream file_in("data/scripts/ascii_images/save.txt");
-	vector<string> lines;
-	string line;
-	while (getline(file_in, line)) {
-		lines.push_back(line);
-	}
-	file_in.close();
-	lines[2 * slot - 1] =
-		lines[2 * slot - 1].substr(0, 11) + "Slot " + to_string(slot);
-
-	ofstream file_out("data/scripts/ascii_images/save.txt");
-	if (file_out.fail()) {
-		cout << "error: file not found" << endl;
-	}
-	for (const string &line : lines) {
-		file_out << line << "\n";
-	}
-	file_out.close();
-
-	return slot;
-}
-
 //
 void save(save_file s) {
 	save_file save_files[3];
@@ -312,7 +317,7 @@ void save(save_file s) {
 		slot = rename_slot();
 		save_files[slot - 1] = s;
 	} else if (command == 'd') {
-		slot = delete_slot();
+		slot = delete_slot(-1); // TODO a modification here
 	}
 
 	double *save_parameters;
@@ -499,7 +504,7 @@ save_file start_page() {
 			break;
 		}
 		case 1: {
-			auto tmp = continue_game();
+			auto tmp = continue_or_modify_saving();
 			tmp_verdict = tmp.first;
 			ret = tmp.second;
 			// successfully read settings.

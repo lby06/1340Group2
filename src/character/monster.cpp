@@ -1,4 +1,5 @@
 #include "monster.h"
+#include "../utils/utils.hpp"
 #include <iostream>
 #include <random>
 #include <sched.h>
@@ -19,16 +20,40 @@ void mon_show_reset() {
 	mon_show = "";
 }
 //改动----------------
-// Monster::Monster(const Monster &monster) {
-// 	hp_ = monster.hp_;
-// 	hp_max_ = monster.hp_max_;
-// 	mp_ = monster.mp_;
-// 	atk_ = monster.atk_;
-// 	def_ = monster.def_;
-// 	critical_rate_ = monster.critical_rate_;
-// 	critical_damage_ = monster.critical_damage_;
-// 	evasion_rate_ = monster.evasion_rate_;
-// }
+
+// NOTE -  Modify the percentage distribution here.
+const int kNormalMonsterPercentage = 20; // 20
+const int kClonePercentage = 40;		 // 20+20
+const int kCithPercentage = 60;			 // 20+20+20
+const int kMandaloriansPercentage = 80;	 // 20+20+20+20
+const int kRobotPercentage = 100;		 // 20+20+20+20+20
+// Function call to create a new monster.
+Monster createMonster() {
+	uniform_int_distribution<int> dis(0, 100);
+	int tmp = dis(rng);
+	// Create a monster based on the percentage distribution.
+	if (tmp < kNormalMonsterPercentage) {
+		return Monster();
+	} else if (tmp < kClonePercentage) {
+		return Clone();
+	} else if (tmp < kCithPercentage) {
+		return Cith();
+	} else if (tmp < kMandaloriansPercentage) {
+		return Mandalorians();
+	} else {
+		return Robot();
+	}
+}
+
+// Create a list of monsters.
+std::vector<Monster> createMonsters(int n) {
+	std::vector<Monster> monsters;
+	for (int i = 0; i < n; i++) {
+		monsters.push_back(createMonster());
+	}
+	return monsters;
+}
+
 int Monster::HP() { return hp_; }
 int Monster::MP() { return mp_; }
 int Monster::ATK() { return atk_; }

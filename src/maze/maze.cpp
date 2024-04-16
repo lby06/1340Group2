@@ -208,6 +208,10 @@ void Maze::newMaze() {
 
 	// Randomly generate walls inside grid.
 	this->randomGrid();
+
+	// Generate entrance and exit.
+
+	// Generate new monsters
 }
 
 // Randomize some walls inside the grid.

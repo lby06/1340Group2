@@ -17,7 +17,7 @@ struct save_file{
 
 void clear_screen();
 int print_file(const std::string filename, int wait_time, bool clean);
-std::pair<int, save_file> continue_game();
+std::pair<int, save_file> continue_or_modify_saving();
 
 // Read player info.
 void parse_file(const std::string filename, save_file &s, int slot);
