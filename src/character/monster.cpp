@@ -31,17 +31,28 @@ const int kRobotPercentage = 100;		 // 20+20+20+20+20
 Monster createMonster() {
 	uniform_int_distribution<int> dis(0, 100);
 	int tmp = dis(rng);
+	auto pos = randomPosition();
 	// Create a monster based on the percentage distribution.
 	if (tmp < kNormalMonsterPercentage) {
-		return Monster();
+		auto f = Monster();
+		f.setPosition(pos.first, pos.second);
+		return f;
 	} else if (tmp < kClonePercentage) {
-		return Clone();
+		auto f = Clone();
+		f.setPosition(pos.first, pos.second);
+		return f;
 	} else if (tmp < kCithPercentage) {
-		return Cith();
+		auto f = Cith();
+		f.setPosition(pos.first, pos.second);
+		return f;
 	} else if (tmp < kMandaloriansPercentage) {
-		return Mandalorians();
+		auto f = Mandalorians();
+		f.setPosition(pos.first, pos.second);
+		return f;
 	} else {
-		return Robot();
+		auto f = Robot();
+		f.setPosition(pos.first, pos.second);
+		return f;
 	}
 }
 

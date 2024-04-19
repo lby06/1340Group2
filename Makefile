@@ -31,26 +31,26 @@ SAVING_UI=$(SRC)/ui/saving_ui.cpp
 
 # MAZE
 maze.o: $(MAZE) $(MAZE_HEADER) $(CHARACTER) $(MONSTER)
-	g++ $(FLAG) -c $< -o maze.o
+	g++ $(FLAG) -c $<
 
 maze: maze.o character.o monster.o utils.o
 	g++ $(FLAG) $^ -o maze.out
 
 # MONSTER
 monster.o: $(MONSTER) $(MONSTER_HEADRER)
-	g++ $(FLAG) -c $< -o monster.o
+	g++ $(FLAG) -c $<
 monster: monster.o
 	g++ $(FLAG) $^ -o monster.out
 
 # CHARACTER
 character.o: $(CHARACTER) $(CHARACTER_HEADER)
-	g++ $(FLAG) -c $< -o character.o
+	g++ $(FLAG) -c $<
 character: character.o
 	g++ $(FLAG) $^ -o character.out
 
 # UTILS
 utils.o: $(UTILS) ${UTILS_HEADER} $(MAZE)
-	g++ $(FLAG) -c $< -o utils.o
+	g++ $(FLAG) -c $<
 
 utils: utils.o maze.o
 	g++ $(FLAG) utils.o maze.o -o utils.out
@@ -70,7 +70,7 @@ saving_ui: saving_ui.o utils.o maze.o
 	g++ $(FLAG) $^ -o saving_ui.out
 
 # GAME (Main entrance)
-game: start.o utils.o maze.o character.o
+game: game.cpp start.o utils.o maze.o character.o monster.o
 	g++ $(FLAG) $^ -o game
 
 # MISC

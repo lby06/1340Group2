@@ -47,7 +47,7 @@ class Maze {
 	// What is this cell.
 	char whatIsThisCell(int, int);
 	// Read a key and move main character.
-	void moveMainCharacter();
+	void moveMainCharacter(int);
 	// Check if the main character is at the exit.
 	bool isMainCharacterAtExit();
 	// Check if the main character is at the entrance.

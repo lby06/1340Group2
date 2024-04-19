@@ -546,7 +546,7 @@ bool main_game(save_file s, Maze &mz, main_character &mc, vector<Monster> &ms) {
 //     return;
 // }
 // void main_game(int choice)
-int main() { // for test
-	start_page();
-	return 0;
-}
+// int main() { // for test
+// 	start_page();
+// 	return 0;
+// }

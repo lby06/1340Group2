@@ -1,6 +1,8 @@
 #include "maze.hpp"
+#include "../ui/start_endpage.h"
 #include "../utils/utils.hpp"
 
+#include <cstdlib>
 #include <fstream>
 #include <iostream>
 // Defines the size of a maze.
@@ -52,13 +54,17 @@ char Maze::whatIsThisCell(int x, int y) {
 		return 3;
 	}
 
+	// Is it an exit?
+	if (this->grid_[x][y] == '@') {
+		return 4;
+	}
+
 	// empty
 	return 0;
 }
 
 // Read a key from keyboard and move main character.
-void Maze::moveMainCharacter() {
-	char key = readKeyboard();
+void Maze::moveMainCharacter(int key) {
 	auto tmp = main_character_->getPosition();
 	int x = tmp.first, y = tmp.second;
 	switch (key) {
@@ -104,8 +110,20 @@ bool Maze::isMainCharacterEncounterMonster() {
 	return false;
 }
 
+bool Maze::isMainCharacterAtExit() {
+	auto tmp = main_character_->getPosition();
+	int x = tmp.first, y = tmp.second;
+	return this->grid_[x][y] == '@';
+}
+
 // Refresh screen. And print the maze to the terminal.
 void Maze::showMaze() {
+
+	/* Print Helper */
+	std::cout << "Press [w] to move up, [s] to move down, [a] to move left, "
+				 "[d] to move right, [q] to quit, [e] to show menu."
+			  << std::endl;
+
 	for (int i = 0; i < kMaxMazeSizeWidth; i++) {
 		for (int j = 0; j < kMaxMazeSizeHeight; j++) {
 			bool isCharacter = false;
@@ -114,8 +132,8 @@ void Maze::showMaze() {
 			if (main_character_ != nullptr) {
 				auto tmp = main_character_->getPosition();
 				if (i == tmp.first && j == tmp.second) {
-					std::cout << "U"
-							  << " ";
+					std::cout << "U";
+					// std::cout << " ";
 					isCharacter = 1;
 					continue;
 				}
@@ -126,15 +144,18 @@ void Maze::showMaze() {
 				for (auto &monster : *monsters_) {
 					auto tmp = monster.getPosition();
 					if (i == tmp.first && j == tmp.second) {
-						std::cout << "M"
-								  << " ";
+						std::cout << "M";
+						// std::cout << " ";
 						isCharacter = 1;
 						break;
 					}
 				}
 			}
 
-			if (!isCharacter) std::cout << this->grid_[i][j] << " ";
+			if (!isCharacter) {
+				std::cout << this->grid_[i][j];
+				// std::cout << " ";
+			}
 		}
 		std::cout << std::endl;
 	}
@@ -192,6 +213,9 @@ std::vector<std::string> Maze::getExtendedGrid() {
 
 // Create a new maze.
 void Maze::newMaze() {
+	// Clear.
+	this->grid_.clear();
+
 	// Fill border with walls. ('#')
 	for (int i = 0; i < kMaxMazeSizeHeight; i++) {
 		std::string row;
@@ -210,6 +234,14 @@ void Maze::newMaze() {
 	this->randomGrid();
 
 	// Generate entrance and exit.
+	while (1) {
+		auto tmp = randomPosition();
+		// Not wall or main character or monster.
+		if (this->whatIsThisCell(tmp.first, tmp.second) == 0) {
+			this->grid_[tmp.first][tmp.second] = '@';
+			break;
+		}
+	}
 
 	// Generate new monsters
 }
@@ -231,41 +263,58 @@ void Maze::randomGrid() {
 }
 
 // // FUNCTION TEST
-int main() {
-	Maze maze;
-	main_character tmp;
+// int main() {
+// 	Maze maze;
+// 	main_character tmp;
 
-	maze.newMaze();
+// 	maze.newMaze();
 
-	// Create a main character for test.
-	bool successfullyCreated = false;
-	while (!successfullyCreated) {
-		std::cerr << "Creating main character..." << std::endl;
-		auto p = randomPosition();
-		if (maze.whatIsThisCell(p.first, p.second) == 0) {
-			successfullyCreated = true;
-			tmp.setPosition(p.first, p.second);
-		}
-	}
-	maze.addMainCharacter(tmp);
+// 	// Create a main character for test.
+// 	bool successfullyCreated = false;
+// 	while (!successfullyCreated) {
+// 		std::cerr << "Creating main character..." << std::endl;
+// 		auto p = randomPosition();
+// 		if (maze.whatIsThisCell(p.first, p.second) == 0) {
+// 			successfullyCreated = true;
+// 			tmp.setPosition(p.first, p.second);
+// 		}
+// 	}
+// 	maze.addMainCharacter(tmp);
 
-	// Create monsters for test.
-	std::vector<Monster> monsters;
-	for (int i = 0; i < 10; i++) {
-		Monster monster;
-		bool successfullyCreated = false;
-		while (!successfullyCreated) {
-			auto p = randomPosition();
-			if (maze.whatIsThisCell(p.first, p.second) == 0) {
-				successfullyCreated = true;
-				monster.setPosition(p.first, p.second);
-			}
-		}
-		monsters.push_back(monster);
-	}
-	maze.addMonsters(monsters);
+// 	// Create monsters for test.
+// 	std::vector<Monster> monsters;
+// 	for (int i = 0; i < 10; i++) {
+// 		Monster monster;
+// 		bool successfullyCreated = false;
+// 		while (!successfullyCreated) {
+// 			auto p = randomPosition();
+// 			if (maze.whatIsThisCell(p.first, p.second) == 0) {
+// 				successfullyCreated = true;
+// 				monster.setPosition(p.first, p.second);
+// 			}
+// 		}
+// 		monsters.push_back(monster);
+// 	}
+// 	maze.addMonsters(monsters);
 
-	maze.showMaze();
+// 	while (1) {
+// 		system("clear");
+// 		maze.showMaze();
+// 		int key = readKeyboard();
+// 		if (key == 'q') {
+// 			exit(0);
+// 		} else if (key == 'e') {
+// 		}
+// 		maze.moveMainCharacter(key);
 
-	return 0;
-}
+// 		if (maze.isMainCharacterAtExit()) {
+// 			maze.newMaze();
+// 			// continue;
+// 			// system("clear");
+// 			// std::cout << "You have reached the exit!" << std::endl;
+// 			// break;
+// 		}
+// 	}
+
+// 	return 0;
+// }
