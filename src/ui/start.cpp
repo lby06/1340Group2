@@ -255,6 +255,8 @@ void parse_file(const string filename, save_file &s, int slot) {
 	//     cnt++;
 	// }
 	s.save_character.set(parameters);
+	std::cerr << parameters[1] << " " << parameters[2] << std::endl;
+	getchar();
 	s.maze = maze;
 	// s.username = username;
 	fin.close();
@@ -304,13 +306,13 @@ int rename_slot() {
 
 //
 void save(save_file &s, int slot) {
-	save_file save_files[3];
+	// save_file save_files[3];
 	// int slot;
-	char command;
+	// char command;
 	// init save_files
-	parse_file("data/savings/sav.txt", save_files[0], 1);
-	parse_file("data/savings/sav.txt", save_files[1], 2);
-	parse_file("data/savings/sav.txt", save_files[2], 3);
+	// parse_file("data/savings/sav.txt", save_files[0], 1);
+	// parse_file("data/savings/sav.txt", save_files[1], 2);
+	// parse_file("data/savings/sav.txt", save_files[2], 3);
 	// waiting for user input
 	// print_file("data/scripts/ascii_images/save.txt", 0, true);
 	// cin.ignore();
@@ -320,32 +322,36 @@ void save(save_file &s, int slot) {
 	// if (command == 's') {
 	// 	slot = rename_slot();
 
-	save_files[slot - 1] = s;
+	// save_files[slot - 1] = s;
 
 	// } else if (command == 'd') {
 	// 	slot = delete_slot(-1); // TODO a modification here
 	// }
 
-	double *save_parameters;
-	vector<string> savemap;
-	string username;
-	save_parameters = s.save_character.save();
-	savemap = s.maze;
+	// double *save_parameters;
+	// vector<string> savemap;
+	// string username;
+	auto save_parameters = s.save_character.save();
+	// auto &savemap = s.maze;
 	// slot = slot;
-	username = s.username;
+	// auto &username = s.username;
+	// std::cerr << s.username << "\n";
 
 	// input save file
 	ifstream fin;
 	fin.open("data/savings/sav.txt");
 	if (fin.fail()) {
 		cout << "error: file not found" << endl;
+		exit(1);
 	}
+
 	vector<string> lines;
 	string line;
 	while (getline(fin, line)) {
 		lines.push_back(line);
 	}
 	fin.close();
+
 	// calculate the part that needs to change
 	int init_pos, end_pos;
 	if (slot == 1) {
@@ -358,6 +364,7 @@ void save(save_file &s, int slot) {
 		init_pos = 150;
 		end_pos = 224;
 	}
+	// cerr << lines.size() << endl;
 	// change content of the save file
 	//      delete
 	// if (command == 'd') {
@@ -384,28 +391,55 @@ void save(save_file &s, int slot) {
 	// 	return;
 	// }
 	//      save
-	for (int i = init_pos + 2; i <= end_pos; i++) {
-		if (i > init_pos + 1 && i < init_pos + 22) {
-			lines[i] = to_string(save_parameters[i - init_pos - 2]);
-		} else if (i >= init_pos + 23 && i <= init_pos + 72) {
-			lines[i] = savemap[i - init_pos - 23];
-		} else if (i == init_pos + 74) {
-			lines[i] = username;
-		}
-	}
+	// for (int i = init_pos + 2; i <= end_pos; i++) {
+	// 	if (i > init_pos + 1 && i < init_pos + 22) {
+	// 		auto t = to_string(save_parameters[i - init_pos - 2]);
+	// 		lines[i].swap(t);
+	// 	} else if (i >= init_pos + 23 && i <= init_pos + 72) {
+	// 		auto t = s.maze[i - init_pos - 23];
+	// 		lines[i].swap(t);
+	// 	} else if (i == init_pos + 74) {
+	// 		// lines[i] = username;
+	// 		auto t = s.username;
+	// 		lines[i].swap(t);
+	// 	}
+	// }
 
 	// rewrite save file
 	ofstream fout("data/savings/sav.txt");
 	if (fout.fail()) {
 		cout << "error: file not found" << endl;
+		exit(1);
 	}
 	for (int i = 0; i < lines.size(); i++) {
-		if (i == lines.size() - 1) {
-			fout << lines[i];
-			break;
+		if (i < init_pos || i > end_pos) {
+			fout << lines[i] << "\n";
+			continue;
 		}
-		fout << lines[i] << "\n";
+		if (i == init_pos)
+			fout << "@slot " << slot << "\n";
+		else if (i == init_pos + 1)
+			fout << "@character\n";
+		else if (i == init_pos + 22)
+			fout << "@maze\n";
+		else if (i == init_pos + 73)
+			fout << "@username\n";
+		else if (i > init_pos + 1 && i < init_pos + 22) {
+			fout << to_string(save_parameters[i - init_pos - 2]) << "\n";
+		} else if (i >= init_pos + 23 && i <= init_pos + 72) {
+			fout << s.maze[i - init_pos - 23] << "\n";
+		} else if (i == init_pos + 74) {
+			fout << "s.username"
+				 << "\n";
+		}
 	}
+	// for (int i = 0; i < lines.size(); i++) {
+	// 	if (i == lines.size() - 1) {
+	// 		fout << lines[i];
+	// 		break;
+	// 	}
+	// 	fout << lines[i] << "\n";
+	// }
 	fout.close();
 
 	return;
@@ -482,8 +516,6 @@ int start_page(save_file &ret) {
 			// std::cerr << "OK5\n";
 			// save_file ret;
 			auto tmp = continue_or_modify_saving(ret);
-			// std::cerr << "OK6\n";
-
 			// successfully read settings.
 			if (tmp == 1) {
 				// return ret;

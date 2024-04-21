@@ -5,10 +5,12 @@
 #include "src/ui/saving_ui.hpp"
 #include "src/ui/start_endpage.h"
 #include "src/utils/utils.hpp"
+#include <iostream>
 // #include <iostream>
 
 int main() {
 	save_file tmp;
+	tmp.save_character = cha1;
 	Maze maze;
 
 	auto new_game_verdict = start_page(tmp);
@@ -51,6 +53,8 @@ int main() {
 	while (1) {
 		// Show board.
 		system("clear");
+		std::cout << cha1.getPosition().first << ", "
+				  << cha1.getPosition().second << std::endl;
 		maze.showMaze();
 
 		// Game process.
@@ -61,8 +65,15 @@ int main() {
 		// 0. Make a move
 		int key = readKeyboard();
 		if (key == 'Q' || key == 'q') { // quit game
+			// std::cout << cha1.getPosition().first << ", "
+			// 		  << cha1.getPosition().second << std::endl;
+			// save_file a;
+			// parse_file("data/savings/sav.txt", a, 1);
+			// std::cout << a.save_character.getPosition().first << ", "
+			// 		  << a.save_character.getPosition().second << std::endl;
 			exit(0);
 		} else if (key == 'e' || key == 'E') { // show menu (save)
+			tmp.save_character = cha1;
 			SavingsUI ui;
 			ui.loadEntries();
 			ui.loadSavingfile(tmp);

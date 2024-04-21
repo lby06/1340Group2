@@ -1,4 +1,5 @@
-FLAG=-std=c++11 -fsanitize=address
+FLAG=-std=c++11
+compiler=g++
 
 SRC=./src
 CHARAC_DIR=$(SRC)/character
@@ -36,53 +37,53 @@ SAVING_UI=$(SRC)/ui/saving_ui.cpp
 
 # MAZE
 maze.o: $(MAZE) $(MAZE_HEADER) $(CHARACTER) $(MONSTER)
-	g++ $(FLAG) -c $<
+	$(compiler) $(FLAG) -c $<
 
 maze: maze.o character.o monster.o utils.o
-	g++ $(FLAG) $^ -o maze.out
+	$(compiler) $(FLAG) $^ -o maze.out
 
 # MONSTER
 monster.o: $(MONSTER) $(MONSTER_HEADRER)
-	g++ $(FLAG) -c $<
+	$(compiler) $(FLAG) -c $<
 monster: monster.o
-	g++ $(FLAG) $^ -o monster.out
+	$(compiler) $(FLAG) $^ -o monster.out
 
 # CHARACTER
 character.o: $(CHARACTER) $(CHARACTER_HEADER)
-	g++ $(FLAG) -c $<
+	$(compiler) $(FLAG) -c $<
 character: character.o
-	g++ $(FLAG) $^ -o character.out
+	$(compiler) $(FLAG) $^ -o character.out
 
 # UTILS
 utils.o: $(UTILS) ${UTILS_HEADER} $(MAZE)
-	g++ $(FLAG) -c $<
+	$(compiler) $(FLAG) -c $<
 
 utils: utils.o maze.o
-	g++ $(FLAG) utils.o maze.o -o utils.out
+	$(compiler) $(FLAG) utils.o maze.o -o utils.out
 
 # START
 start.o: $(START) $(START_HEADER)
-	g++ $(FLAG) -c $< -o start.o
+	$(compiler) $(FLAG) -c $< -o start.o
 start: start.o utils.o maze.o character.o
-	g++ $(FLAG) $^ -o start.out
+	$(compiler) $(FLAG) $^ -o start.out
 
 
 # SAVING_UI
 saving_ui.o: $(SAVING_UI)
-	g++ $(FLAG) -c $^ -o saving_ui.o
+	$(compiler) $(FLAG) -c $^ -o saving_ui.o
 
 saving_ui: saving_ui.o utils.o maze.o start.o character.o monster.o
-	g++ $(FLAG) $^ -o saving_ui.out
+	$(compiler) $(FLAG) $^ -o saving_ui.out
 
 # BATTLE
 battle.o: $(BATTLE_MAIN) $(BATTLE_MAIN_HEADER)
-	g++ $(FLAG) -c $< -o battle.o
+	$(compiler) $(FLAG) -c $< -o battle.o
 battle: battle.o character.o monster.o utils.o
-	g++ $(FLAG) $^ -o battle.out
+	$(compiler) $(FLAG) $^ -o battle.out
 
 # GAME (Main entrance)
 game: game.cpp start.o utils.o maze.o character.o monster.o saving_ui.o
-	g++ $(FLAG) $^ -o game
+	$(compiler) $(FLAG) $^ -o game
 
 # MISC
 .PHONY: clean

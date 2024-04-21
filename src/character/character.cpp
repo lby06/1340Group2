@@ -94,8 +94,7 @@ void main_character::reset() {
 }
 void main_character::set(double a[]) {
 	level = a[0];
-	locate_x = a[1];
-	locate_y = a[2];
+	setPosition(int(a[1]), int(a[2]));
 	atk = a[3];
 	def = a[4];
 	hp = a[5];
@@ -107,10 +106,10 @@ void main_character::set(double a[]) {
 	evasion_rate = a[11];
 	rageattack = a[12];
 	for (int i = 13; i < 17; ++i) {
-		skill_status[i] = a[i];
+		skill_status[i - 13] = a[i];
 	}
 	for (int i = 17; i < 20; ++i) {
-		status[i] = a[i];
+		status[i - 17] = a[i];
 	}
 }
 double *main_character::save() {
@@ -129,10 +128,12 @@ double *main_character::save() {
 	a[11] = evasion_rate;
 	a[12] = rageattack;
 	for (int i = 13; i < 17; ++i) {
-		a[i] = skill_status[i];
+		a[i] = skill_status[i - 13];
+		// a[i] = 0;
 	}
 	for (int i = 17; i < 20; ++i) {
-		a[i] = status[i];
+		a[i] = status[i - 17];
+		// a[i] = 0;
 	}
 	return a;
 }
