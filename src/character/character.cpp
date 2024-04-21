@@ -287,7 +287,7 @@ int main_character::act_recoverhit() {
 //主动技能1.2：光剑风暴 Storm of lightsaber
 // 对指定敌方造成3-5段伤害
 //可暴击，且释放技能期间暴击伤害提升（40%）
-void main_character::activate_bladestorm() { skill_status[0] = 1; }
+void main_character::activate_bladestorm() { skill_status[0] = 2; }
 int main_character::act_bladestorm() {
 	if (skill_status[0] == 2) {
 		if (mp >= 4) {
