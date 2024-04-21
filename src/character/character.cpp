@@ -23,6 +23,18 @@ void cha_show_reset() {
 int main_character::HP() { return hp; }
 int main_character::MP() { return mp; }
 int main_character::ATK() { return atk; }
+
+void main_character::newSkill() {
+	skills.push_back(std::bind(&main_character::activate_recoverhit, this));
+	skills.push_back(std::bind(&main_character::activate_bladestorm, this));
+	skills.push_back(std::bind(&main_character::activate_vengeance, this));
+	skills.push_back(std::bind(&main_character::activate_magicdraw, this));
+	skills.push_back(std::bind(&main_character::activate_hellfire, this));
+	skills.push_back(std::bind(&main_character::activate_rage, this));
+	skills.push_back(std::bind(&main_character::activate_doublecrit, this));
+	skills.push_back(std::bind(&main_character::activate_ultimatedef, this));
+}
+
 std::pair<int, int> main_character::getPosition() {
 	return std::make_pair(locate_x, locate_y);
 }

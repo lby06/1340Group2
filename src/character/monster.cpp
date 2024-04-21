@@ -33,11 +33,7 @@ Monster createMonster() {
 	int tmp = dis(rng);
 	auto pos = randomPosition();
 	// Create a monster based on the percentage distribution.
-	if (tmp < kNormalMonsterPercentage) {
-		auto f = Monster();
-		f.setPosition(pos.first, pos.second);
-		return f;
-	} else if (tmp < kClonePercentage) {
+	if (tmp < kClonePercentage) {
 		auto f = Clone();
 		f.setPosition(pos.first, pos.second);
 		return f;

@@ -1,10 +1,14 @@
 #ifndef CHARACTER_H
 #define CHARACTER_H
 
+#include <functional>
 #include <string>
+#include <vector>
+
 void cha_show_reset();
 class main_character {
   public:
+	void newSkill();
 	// Basic properties.
 	int HP();
 	int MP();
@@ -50,6 +54,8 @@ class main_character {
 	int skill_status[4], equipment_status[4];
 	int rageattack;
 	int status[3];
+
+	std::vector<std::function<void()>> skills;
 };
 
 extern main_character cha1;

@@ -8,7 +8,6 @@
 int main() {
 	/* INITIALIZATION HERE */
 	Maze maze;
-	main_character tmp;
 
 	maze.newMaze();
 
@@ -19,10 +18,10 @@ int main() {
 		auto p = randomPosition();
 		if (maze.whatIsThisCell(p.first, p.second) == 0) {
 			successfullyCreated = true;
-			tmp.setPosition(p.first, p.second);
+			cha1.setPosition(p.first, p.second);
 		}
 	}
-	maze.addMainCharacter(tmp);
+	maze.addMainCharacter(cha1);
 
 	// Create monsters for test.
 	std::vector<Monster> monsters;
@@ -72,7 +71,7 @@ int main() {
 
 		// End game check.
 		// 1. HP <= 0 (After fight)
-		if (!tmp.is_alive()) {
+		if (!cha1.is_alive()) {
 			return 0;
 		}
 		// 2. Reach exit
