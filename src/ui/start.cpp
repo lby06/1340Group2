@@ -447,8 +447,7 @@ void end() {
 // Prints the start page and returns verdict of operation.
 int print_start_page_helper() {
 	// Show formatted options;
-	vector<string> options = {"New Game", "Continue", "Edit Saves", "Tutorial",
-							  "Exit"};
+	vector<string> options = {"New Game", "Continue", "Tutorial", "Exit"};
 	int verdict = -1;
 	int cursor = 0; // Which entry is the cursor pointing.
 

@@ -21,8 +21,6 @@
 3
 3
 @maze
-@slotnumber
-1
 @username
 john
 @slot 2

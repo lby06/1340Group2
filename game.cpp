@@ -6,7 +6,7 @@
 // #include <iostream>
 
 int main() {
-	// start_page();
+	start_page();
 	/* INITIALIZATION HERE */
 	Maze maze;
 
