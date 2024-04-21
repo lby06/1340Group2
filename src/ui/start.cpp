@@ -235,14 +235,10 @@ void parse_file(const string filename, save_file &s, int slot) {
 	for (int i = 0; i < lines.size(); i++) {
 		if (i > 1 && i < 22) {
 			parameters[i - 2] = stod(lines[i]);
-		} else if (lines[i].substr(0, 5) == "@maze") {
-			temp_m = i;
-		} else if (i > temp_m && lines[i].substr(0, 9) != "@username" &&
-				   lines[i] != "") {
+		} else if (i >= 23 && i <= 72){
 			maze.push_back(lines[i]);
-		} else if (lines[i].substr(0, 9) == "@username") {
-			username = lines[i + 1];
-			break;
+		} else if (i == 74){
+			username = lines[i];
 		}
 	}
 	// while(getline(fin, line)){
@@ -326,7 +322,7 @@ void save(save_file s) {
 	vector<string> savemap;
 	string username;
 	save_parameters = s.save_character.save();
-	// savemap =
+	savemap = s.maze;
 	slot = slot;
 	username = s.username;
 
@@ -342,41 +338,22 @@ void save(save_file s) {
 		lines.push_back(line);
 	}
 	fin.close();
-
+	// calculate the part that needs to change
 	int init_pos, end_pos;
 	if (slot == 1) {
-		for (int i = 25; i < lines.size(); i++) {
-			if (lines[i].substr(0, 7) == "@slot" + to_string(slot)) {
-				init_pos = i;
-			}
-			if (lines[i].substr(0, 7) == "@slot" + to_string(slot + 1)) {
-				end_pos = i;
-				break;
-			}
-		}
+		init_pos = 0;
+		end_pos = 74;
 	} else if (slot == 2) {
-		for (int i = 25; i < lines.size(); i++) {
-			if (lines[i].substr(0, 7) == "@slot" + to_string(slot)) {
-				init_pos = i;
-			}
-			if (lines[i].substr(0, 7) == "@slot" + to_string(slot + 1)) {
-				end_pos = i;
-				break;
-			}
-		}
+		init_pos = 75;
+		end_pos = 149;
 	} else if (slot == 3) {
-		for (int i = 50; i < lines.size(); i++) {
-			if (lines[i].substr(0, 7) == "@slot" + to_string(slot)) {
-				init_pos = i;
-				end_pos = lines.size();
-				break;
-			}
-		}
+		init_pos = 150;
+		end_pose = 224;
 	}
 	// change content of the save file
 	//      delete
 	if (command == 'd') {
-		for (int i = init_pos; i < end_pos; i++) {
+		for (int i = init_pos; i <= end_pos; i++) {
 			if (lines[i].substr(0, 1) != "@") {
 				lines[i] = "";
 			}
@@ -399,22 +376,13 @@ void save(save_file s) {
 		return;
 	}
 	//      save
-	for (int i = init_pos + 2; i < end_pos; i++) {
+	for (int i = init_pos + 2; i <= end_pos; i++) {
 		if (i > init_pos + 1 && i < init_pos + 22) {
 			lines[i] = to_string(save_parameters[i - init_pos - 2]);
-		} else if (lines[i].substr(0, 5) == "@maze") {
-			for (int j = 0; j < savemap.size(); j++) {
-				if (lines[i + 1 + j].substr(0, 9) != "@username") {
-					lines[i + 1 + j] = savemap[j];
-				} else {
-					lines.insert(lines.begin() + i + 1 + j, savemap[j]);
-					end_pos++;
-				}
-			}
-			i += savemap.size();
-		} else if (lines[i].substr(0, 9) == "@username") {
-			lines[i + 1] = username;
-			i++;
+		} else if (i >= init_pos + 23 && i <= init_pos + 72) {
+			lines[i] = savemap[i - init_pos - 23];
+		} else if (i == init_pos + 74) {
+			lines[i] = username;
 		}
 	}
 
