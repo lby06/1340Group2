@@ -18,7 +18,7 @@ vector<pair<int, int>> state_mc = {{1, 8}};
 vector<pair<int, int>> state_ms = {{1, 59}};
 //postion of texts
 vector<pair<int, int>> name_mc_p = {{3, 22},{3,32}};
-vector<pair<int, int>> name_ms_p = {{3, 35},{3,45}};
+vector<pair<int, int>> name_ms_p = {{3, 34},{3,50}};
 vector<pair<int, int>> skill1_1 = {{18, 1},{18, 12}};
 vector<pair<int, int>> skill1_2 = {{19, 1},{19, 12}};
 vector<pair<int, int>> skill2_1 = {{18, 14},{18, 25}};
@@ -41,7 +41,7 @@ vector<string> fight_map = {
 "-------------------------------Round    ---------------------------",
 "| HP:  [   ]                     |                   HP:  [   ]   |", 
 "| MP:  [   ]                     |                   MP:  [   ]   |",             
-"| ATK: [   ]          Name:[    ]|Name:[    ]        ATK: [   ]   |", 
+"| ATK: [   ]          Name:      |Name:              ATK: [   ]   |", 
 "|--------------------------------|--------------------------------|",
 "|                                |                                |",
 "|                                |                                |",
@@ -54,7 +54,7 @@ vector<string> fight_map = {
 "|                                |                                |",
 "|                                |                                |",
 "* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *",
-"|     01     *            *             *     02     *            |",
+"|     01     *            *             *            *            |",
 "* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *",
 "*            *            *            *             * Strike(S)  *",
 "*            *            *            *             * Info(I)    *",
