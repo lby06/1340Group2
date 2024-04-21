@@ -1,7 +1,7 @@
 #include "battle.h"
 #include <termio.h>
 #include <utility>
-
+#include <string>
 
 int readKeyboard() {
 	int in;
@@ -151,7 +151,7 @@ void battle_monster(int level,std::string name_ms){
             //refresh status and round number
         NewRound(fight_map, roundNumber);
         StateInsert(fight_map, convertNumber(cha1.HP(), cha1.MP(), cha1.ATK()), state_mc);
-        StateInsert(fight_map, convertNumber(rob1.HP(), rob1.MP(), rob1.ATK()), state_ms);
+        StateInsert(fight_map, convertNumber(clo1.HP(), clo1.MP(), clo1.ATK()), state_ms);
         }
     }
     if (name_ms =="Robot"){
@@ -311,6 +311,9 @@ void battle_monster(int level,std::string name_ms){
         }
     }
 }
-int main(){
-    battle_monster(3,"clone");
-}
+// //test
+// int main(){
+//     clo1.reset(1,3);
+//     cha1.skill_status[0]=1;
+//     battle_monster(3,"clone");
+// }
