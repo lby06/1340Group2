@@ -53,7 +53,7 @@ string new_game() {
 	do {
 		// Starting page
 		print_file("data/scripts/ascii_images/computer.txt", 0, true);
-		cin.ignore();
+		// cin.ignore();
 		cout << "Enter your name (no more than 10 chars): ";
 		getline(cin, name);
 
@@ -255,10 +255,10 @@ void parse_file(const string filename, save_file &s, int slot) {
 	//     cnt++;
 	// }
 	s.save_character.set(parameters);
-	std::cerr << parameters[1] << " " << parameters[2] << std::endl;
-	getchar();
+	// std::cerr << parameters[1] << " " << parameters[2] << std::endl;
+	// getchar();
 	s.maze = maze;
-	// s.username = username;
+	s.username = username;
 	fin.close();
 	// std::cerr << "OK2\n";
 	return;
@@ -414,9 +414,7 @@ void save(save_file &s, int slot) {
 	for (int i = 0; i < lines.size(); i++) {
 		if (i < init_pos || i > end_pos) {
 			fout << lines[i] << "\n";
-			continue;
-		}
-		if (i == init_pos)
+		} else if (i == init_pos)
 			fout << "@slot " << slot << "\n";
 		else if (i == init_pos + 1)
 			fout << "@character\n";
@@ -429,8 +427,7 @@ void save(save_file &s, int slot) {
 		} else if (i >= init_pos + 23 && i <= init_pos + 72) {
 			fout << s.maze[i - init_pos - 23] << "\n";
 		} else if (i == init_pos + 74) {
-			fout << "s.username"
-				 << "\n";
+			fout << s.username << "\n";
 		}
 	}
 	// for (int i = 0; i < lines.size(); i++) {
@@ -441,6 +438,7 @@ void save(save_file &s, int slot) {
 	// 	fout << lines[i] << "\n";
 	// }
 	fout.close();
+	delete[] save_parameters;
 
 	return;
 }

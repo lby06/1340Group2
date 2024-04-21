@@ -10,7 +10,6 @@
 
 int main() {
 	save_file tmp;
-	tmp.save_character = cha1;
 	Maze maze;
 
 	auto new_game_verdict = start_page(tmp);
@@ -29,6 +28,7 @@ int main() {
 				cha1.setPosition(p.first, p.second);
 			}
 		}
+		tmp.maze = maze.getExtendedGrid();
 		maze.addMainCharacter(cha1);
 
 		// Create monsters for test.
@@ -53,8 +53,8 @@ int main() {
 	while (1) {
 		// Show board.
 		system("clear");
-		std::cout << cha1.getPosition().first << ", "
-				  << cha1.getPosition().second << std::endl;
+		// std::cout << cha1.getPosition().first << ", "
+		// 		  << cha1.getPosition().second << std::endl;
 		maze.showMaze();
 
 		// Game process.
@@ -74,6 +74,10 @@ int main() {
 			exit(0);
 		} else if (key == 'e' || key == 'E') { // show menu (save)
 			tmp.save_character = cha1;
+
+			// std::cout << tmp.username << std::endl;
+			// getchar();
+
 			SavingsUI ui;
 			ui.loadEntries();
 			ui.loadSavingfile(tmp);

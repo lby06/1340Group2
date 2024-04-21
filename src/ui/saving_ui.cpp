@@ -79,6 +79,7 @@ void SavingsUI::display() {
 			cursorAt = (cursorAt - 1 + kMaxSavings) % (kMaxSavings);
 		} else if (key == 'c' || key == 'C') { // Confirm.
 			confirmed = true;
+			entries[cursorAt].brief_info_ = sf->username;
 			save(*sf, cursorAt + 1);
 		} else if (key == 'q' || key == 'Q') { // Quit saving mode.
 			// exit(0);
