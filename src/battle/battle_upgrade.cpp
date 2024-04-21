@@ -35,6 +35,8 @@ using namespace std;
 //     make_pair(main_character::activate_doublecrit,main_character::activate_ultimatedef)
 // }
 
+
+
 // clear screen
 void clearScreen() { system("printf \"\\033c\""); }
 
@@ -94,6 +96,7 @@ vector<string> merge(vector<vector<string>> vectors, int line_number,
 	return output;
 }
 
+// inserting the skills' name/ description into the interface
 void insert(vector<string> &frame, string name, pair<int, int> position) {
 	int x = position.first;
 	int y = position.second;
@@ -181,8 +184,8 @@ int printmatrix(vector<vector<string>> matrix, string color, bool trigger) {
 	// cout << "finishing" <<endl;
 }
 
-vector<vector<string>> fromtoto(vector<vector<string>> generater,
-								vector<string> toframe) {
+// change the interface ,adding a "continue" sentence
+vector<vector<string>> fromtoto(vector<vector<string>> generater,vector<string> toframe) {
 	vector<vector<string>> togenerater = generater;
 	togenerater[generater.size() - 1] = toframe;
 	return togenerater;
@@ -207,6 +210,8 @@ int make(vector<vector<vector<string>>> generaters, vector<string> Upgraded,
 	int choice = printmatrix(matrix, BLUE_COLOR, trigger);
 	return choice;
 }
+
+// upgrade animation if need to choose skill
 int upgrade(string name1, string name2, string des1, string des2, int level) {
 	// string target;
 	// cin >> target;
@@ -348,7 +353,7 @@ int upgrade(string name1, string name2, string des1, string des2, int level) {
 	// printmatrix(matrix,BLUE_COLOR);
 	return choice;
 }
-
+// upgrading animation if no need to choose skill
 void upgrade() {
 	string filename = "./../../data/animations/paint.txt";
 	string filename2 = "./../../data/animations/text.txt";
@@ -391,7 +396,7 @@ void upgrade() {
 	int choice = printmatrix(matrix, BLUE_COLOR, false);
 	return;
 }
-
+// combine to two animation into one function
 int UPGRADE(int level) {
 	int choice;
 	if (level <= 9) {
@@ -417,6 +422,8 @@ int UPGRADE(int level) {
 //     cout << "success with "<< level <<endl;
 //     return;
 // }
+
+//
 void activate(int level) {
 
 	int choice = UPGRADE(level);
