@@ -24,6 +24,28 @@ int main_character::HP() { return hp; }
 int main_character::MP() { return mp; }
 int main_character::ATK() { return atk; }
 
+main_character::main_character() {
+	level = 0;
+	locate_x = 0;
+	locate_y = 0;
+	atk = 3;
+	def = 1;
+	hp = 100;
+	hp_max = 100;
+	mp = 5;
+	exp = 0;
+	critical_rate = 0.15;
+	critical_damage = 1.5;
+	evasion_rate = 0.1;
+	rageattack = 0;
+	for (int i = 0; i < 4; ++i) {
+		skill_status[i] = 0;
+	}
+	for (int i = 0; i < 3; ++i) {
+		status[i] = 0;
+	}
+}
+
 void main_character::newSkill() {
 	skills.push_back(std::bind(&main_character::activate_recoverhit, this));
 	skills.push_back(std::bind(&main_character::activate_bladestorm, this));

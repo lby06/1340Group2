@@ -265,7 +265,7 @@ void Maze::randomGrid() {
 // // FUNCTION TEST
 // int main() {
 // 	Maze maze;
-// 	main_character tmp;
+// 	// main_character tmp;
 
 // 	maze.newMaze();
 
@@ -276,10 +276,10 @@ void Maze::randomGrid() {
 // 		auto p = randomPosition();
 // 		if (maze.whatIsThisCell(p.first, p.second) == 0) {
 // 			successfullyCreated = true;
-// 			tmp.setPosition(p.first, p.second);
+// 			cha1.setPosition(p.first, p.second);
 // 		}
 // 	}
-// 	maze.addMainCharacter(tmp);
+// 	maze.addMainCharacter(cha1);
 
 // 	// Create monsters for test.
 // 	std::vector<Monster> monsters;

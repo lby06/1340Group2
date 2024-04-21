@@ -8,6 +8,7 @@
 void cha_show_reset();
 class main_character {
   public:
+	main_character();
 	void newSkill();
 	// Basic properties.
 	int HP();

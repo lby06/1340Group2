@@ -6,6 +6,7 @@
 // #include <iostream>
 
 int main() {
+	// start_page();
 	/* INITIALIZATION HERE */
 	Maze maze;
 
@@ -24,19 +25,7 @@ int main() {
 	maze.addMainCharacter(cha1);
 
 	// Create monsters for test.
-	std::vector<Monster> monsters;
-	for (int i = 0; i < 10; i++) {
-		Monster monster;
-		bool successfullyCreated = false;
-		while (!successfullyCreated) {
-			auto p = randomPosition();
-			if (maze.whatIsThisCell(p.first, p.second) == 0) {
-				successfullyCreated = true;
-				monster.setPosition(p.first, p.second);
-			}
-		}
-		monsters.push_back(monster);
-	}
+	std::vector<Monster> monsters = createMonsters(kMaxNumberOfMonsters);
 	maze.addMonsters(monsters);
 
 	// Before entering game, user may have many operations (switching
@@ -45,7 +34,7 @@ int main() {
 	// Main game.
 	while (1) {
 		// Show board.
-		clear_screen();
+		system("clear");
 		maze.showMaze();
 
 		// Game process.
