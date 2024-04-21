@@ -1,8 +1,8 @@
 #ifndef BATTLE_H
 #define BATTLE_H
 
-#include "character.h"
-#include "monster.h"
+#include "../character/character.h"
+#include "../character/monster.h"
 #include "print_features.h"
 #include <string>
 
