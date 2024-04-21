@@ -207,7 +207,8 @@ int make(vector<vector<vector<string>>> generaters, vector<string> Upgraded,
 		merge(fromtoto(after_generater, afterframe), line_num, col_num);
 	vector<vector<string>> matrix =
 		makematrix(from, Upgrading, Upgraded, to, col_num, line__);
-	int choice = printmatrix(matrix, BLUE_COLOR, trigger);
+	string colors[4] = {BLUE_COLOR, RED_COLOR, YELLOW_COLOR, GREEN_COLOR};
+	int choice = printmatrix(matrix, colors[level%4], trigger);
 	return choice;
 }
 
@@ -393,6 +394,7 @@ void upgrade() {
 
 	vector<vector<string>> matrix =
 		makematrix(level4, Upgrading, Upgraded, tolevel4, col_number, line__);
+	
 	int choice = printmatrix(matrix, BLUE_COLOR, false);
 	return;
 }
@@ -469,8 +471,4 @@ void activate(int level) {
 	return;
 }
 
-int main() {
-	int level;
-	cin >> level;
-	activate(level);
-}
+
