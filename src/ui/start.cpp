@@ -198,7 +198,9 @@ pair<int, save_file> continue_or_modify_saving() {
 
 	// Load stored setting to main game
 	save_file s;
-	parse_file("data/savings/sav.txt", s, slot);
+	std::cerr << "OK1\n";
+	parse_file("data/savings/sav.txt", s, slot + 1);
+	std::cerr << "OK2\n";
 	return {1, s}; // return stored settings
 }
 
@@ -209,7 +211,7 @@ void parse_file(const string filename, save_file &s, int slot) {
 
 	// Check if saving file is opened succussfully
 	if (fin.fail()) {
-		cout << "error: file not found" << endl;
+		cerr << "error: file not found" << endl;
 		return;
 	}
 
@@ -238,7 +240,7 @@ void parse_file(const string filename, save_file &s, int slot) {
 		} else if (i > temp_m && lines[i].substr(0, 9) != "@username" &&
 				   lines[i] != "") {
 			maze.push_back(lines[i]);
-		} else if (lines[i].substr(0, 11) == "@username") {
+		} else if (lines[i].substr(0, 9) == "@username") {
 			username = lines[i + 1];
 			break;
 		}
@@ -447,7 +449,7 @@ void end() {
 // Prints the start page and returns verdict of operation.
 int print_start_page_helper() {
 	// Show formatted options;
-	vector<string> options = {"New Game", "Continue", "Tutorial", "Exit"};
+	vector<string> options = {"New Game", "Continue", "Exit"};
 	int verdict = -1;
 	int cursor = 0; // Which entry is the cursor pointing.
 

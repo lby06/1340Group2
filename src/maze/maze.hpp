@@ -50,8 +50,7 @@ class Maze {
 	void moveMainCharacter(int);
 	// Check if the main character is at the exit.
 	bool isMainCharacterAtExit();
-	// Check if the main character is at the entrance.
-	bool isMainCharacterAtEntrance();
+
 	// Check if the main character encounters a monster.
-	bool isMainCharacterEncounterMonster();
+	std::pair<bool, std::string> isMainCharacterEncounterMonster();
 };

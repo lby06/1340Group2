@@ -24,6 +24,8 @@ class Monster {
 	void hurt(int);
 	int damage();
 
+	std::string genre_;
+
   protected:
 	int locate_x, locate_y;
 	int hp_, hp_max_;
@@ -36,19 +38,21 @@ class Monster {
 
 class Clone : public Monster {
   public:
-	Clone(){};
+	Clone() { genre_ = "Clone"; };
 	void reset(int, int);
 	int normalAttack();
 };
 
 class Robot : public Monster {
   public:
+	Robot() { genre_ = "Robot"; };
 	int lasers();
 	void reset(int, int);
 };
 
 class Cith : public Monster {
   public:
+	Cith() { genre_ = "Cith"; };
 	void returntodark();
 	int lasers();
 	void hurt(int);
@@ -60,6 +64,7 @@ class Cith : public Monster {
 
 class Mandalorians : public Monster {
   public:
+	Mandalorians() { genre_ = "Mandalorians"; };
 	void rage();
 	int normalAttack();
 	void hurt(int);

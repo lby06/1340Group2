@@ -98,16 +98,16 @@ void Maze::moveMainCharacter(int key) {
 }
 
 // Check if the main character encounter a monster. (Then triggers a battle)
-bool Maze::isMainCharacterEncounterMonster() {
+std::pair<bool, std::string> Maze::isMainCharacterEncounterMonster() {
 	auto tmp = main_character_->getPosition();
 	int x = tmp.first, y = tmp.second;
 	for (auto &monster : *monsters_) {
 		auto tmp = monster.getPosition();
 		if (x == tmp.first && y == tmp.second) {
-			return true;
+			return {true, monster.genre_};
 		}
 	}
-	return false;
+	return {false, ""};
 }
 
 bool Maze::isMainCharacterAtExit() {

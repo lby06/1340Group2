@@ -1,3 +1,4 @@
+#include "src/battle/battle.h"
 #include "src/character/character.h"
 #include "src/character/monster.h"
 #include "src/maze/maze.hpp"
@@ -6,7 +7,7 @@
 // #include <iostream>
 
 int main() {
-	start_page();
+	// start_page();
 	/* INITIALIZATION HERE */
 	Maze maze;
 
@@ -49,8 +50,9 @@ int main() {
 
 		// Invoke corresponding functions to perform interactions.
 		// 1. Meet a monster
-		if (maze.isMainCharacterEncounterMonster()) {
-			// TODO
+		auto tmp = maze.isMainCharacterEncounterMonster();
+		if (tmp.first) {
+			battle_monster(std::to_string(cha1.level), tmp.second);
 		}
 		// 1.1 Fighs
 		// (If we have) 2. Buffs/Traps/Treasure Chests/...
@@ -65,6 +67,7 @@ int main() {
 		}
 		// 2. Reach exit
 		if (maze.isMainCharacterAtExit()) {
+			cha1.upgrade();
 			// Create new maze.
 			maze.newMaze();
 			continue;

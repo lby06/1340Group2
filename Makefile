@@ -17,6 +17,11 @@ MAIN=$(SRC)/main/main.cpp
 BATTLE_HEADER=$(SRC)/battle/battle_upgrade.h
 BATTLE=$(SRC)/battle/battle_upgrade.cpp
 
+BATTLE_MAIN=$(SRC)/battle/battle.cpp
+BATTLE_MAIN_HEADER=$(SRC)/battle/battle.h
+
+PRINT_FEATURES=$(SRC)/battle/printFeatures.cpp
+
 MONSTER_HEADRER=$(CHARAC_DIR)/monster.h
 MONSTER=$(CHARAC_DIR)/monster.cpp
 
@@ -69,8 +74,14 @@ saving_ui.o: $(SAVING_UI)
 saving_ui: saving_ui.o utils.o maze.o
 	g++ $(FLAG) $^ -o saving_ui.out
 
+# BATTLE
+battle.o: $(BATTLE_MAIN) $(BATTLE_MAIN_HEADER)
+	g++ $(FLAG) -c $< -o battle.o
+battle: battle.o character.o monster.o utils.o
+	g++ $(FLAG) $^ -o battle.out
+
 # GAME (Main entrance)
-game: game.cpp start.o utils.o maze.o character.o monster.o
+game: game.cpp start.o utils.o maze.o character.o monster.o battle.o
 	g++ $(FLAG) $^ -o game
 
 # MISC

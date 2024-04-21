@@ -48,7 +48,7 @@ class main_character {
 	void activate_doublecrit();
 	void activate_ultimatedef();
 
-  private:
+  public:
 	int locate_x, locate_y;
 	int hp, mp, exp, atk, level, hp_max, def;
 	double critical_rate, critical_damage, evasion_rate;
