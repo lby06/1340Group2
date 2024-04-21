@@ -13,17 +13,25 @@ struct save_file{
 	// Needed if the maze will be generated from the beginning
     int slot_number;
 	std::string username;
+
+	save_file(const save_file &sf) {
+		save_character = sf.save_character;
+		maze = sf.maze;
+		slot_number = sf.slot_number;
+		username = sf.username;
+	}
+	save_file() {}
 };
 
 void clear_screen();
 int print_file(const std::string filename, int wait_time, bool clean);
-std::pair<int, save_file> continue_or_modify_saving();
+int continue_or_modify_saving(save_file &s);
 
 // Read player info.
 void parse_file(const std::string filename, save_file &s, int slot);
 std::string new_game();
-void save();
-save_file start_page();
+void save(save_file &s, int slot);
+int start_page(save_file &s);
 int rename_slot();
 void end();
 bool main_game(save_file s, Maze &, main_character &, std::vector<Monster> &);

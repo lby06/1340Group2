@@ -6,6 +6,7 @@
 #include <iostream>
 #include <string>
 #include <thread>
+#include <utility>
 #include <vector>
 using namespace std;
 
@@ -150,7 +151,7 @@ int delete_slot(int slot) {
 
 // Choose a slot and continue gaming.
 // Returns verdict and `save_file`. -1 if user wants to exit. 1 if ok.
-pair<int, save_file> continue_or_modify_saving() {
+int continue_or_modify_saving(save_file &s) {
 	// Show all options.
 	vector<string> options = {"Slot 1", "Slot 2", "Slot 3"};
 
@@ -190,18 +191,22 @@ pair<int, save_file> continue_or_modify_saving() {
 			confirmed = true;
 		} else if (key == 27) {
 			confirmed = true;
-			return {-1, {}};
+			return -1;
 		} else if (key == 'D' || key == 'd') {
 			delete_slot(slot + 1);
 		}
 	}
 
 	// Load stored setting to main game
-	save_file s;
-	std::cerr << "OK1\n";
+	// std::cerr << "OK1\n";
 	parse_file("data/savings/sav.txt", s, slot + 1);
-	std::cerr << "OK2\n";
-	return {1, s}; // return stored settings
+	// std::cerr << "OK7\n";
+	// debug save file s
+	// cout << s.save_character.level << endl;
+	// for (auto &x : s.maze) {
+	// 	cout << x << endl;
+	// }
+	return 1; // return stored settings
 }
 
 /// Read information from files.
@@ -224,7 +229,7 @@ void parse_file(const string filename, save_file &s, int slot) {
 	while (getline(fin, line)) {
 		if (line.substr(0, 7) == "@slot " + to_string(slot)) {
 			valid = true;
-		} else if (line.substr(0, 7) == "@slot" + to_string(slot + 1)) {
+		} else if (line.substr(0, 7) == "@slot " + to_string(slot + 1)) {
 			break;
 		}
 		if (valid) {
@@ -235,9 +240,9 @@ void parse_file(const string filename, save_file &s, int slot) {
 	for (int i = 0; i < lines.size(); i++) {
 		if (i > 1 && i < 22) {
 			parameters[i - 2] = stod(lines[i]);
-		} else if (i >= 23 && i <= 72){
+		} else if (i >= 23 && i <= 72) {
 			maze.push_back(lines[i]);
-		} else if (i == 74){
+		} else if (i == 74) {
 			username = lines[i];
 		}
 	}
@@ -251,8 +256,9 @@ void parse_file(const string filename, save_file &s, int slot) {
 	// }
 	s.save_character.set(parameters);
 	s.maze = maze;
-	s.username = username;
+	// s.username = username;
 	fin.close();
+	// std::cerr << "OK2\n";
 	return;
 }
 
@@ -297,33 +303,35 @@ int rename_slot() {
 }
 
 //
-void save(save_file s) {
+void save(save_file &s, int slot) {
 	save_file save_files[3];
-	int slot;
+	// int slot;
 	char command;
 	// init save_files
 	parse_file("data/savings/sav.txt", save_files[0], 1);
 	parse_file("data/savings/sav.txt", save_files[1], 2);
 	parse_file("data/savings/sav.txt", save_files[2], 3);
 	// waiting for user input
-	print_file("data/scripts/ascii_images/save.txt", 0, true);
-	cin.ignore();
-	cout << "Enter [S] to save your game, [D] to erase existing "
-			"slot: ";
-	cin >> command;
-	if (command == 's') {
-		slot = rename_slot();
-		save_files[slot - 1] = s;
-	} else if (command == 'd') {
-		slot = delete_slot(-1); // TODO a modification here
-	}
+	// print_file("data/scripts/ascii_images/save.txt", 0, true);
+	// cin.ignore();
+	// cout << "Enter [S] to save your game, [D] to erase existing "
+	// 		"slot: ";
+	// cin >> command;
+	// if (command == 's') {
+	// 	slot = rename_slot();
+
+	save_files[slot - 1] = s;
+
+	// } else if (command == 'd') {
+	// 	slot = delete_slot(-1); // TODO a modification here
+	// }
 
 	double *save_parameters;
 	vector<string> savemap;
 	string username;
 	save_parameters = s.save_character.save();
 	savemap = s.maze;
-	slot = slot;
+	// slot = slot;
 	username = s.username;
 
 	// input save file
@@ -348,33 +356,33 @@ void save(save_file s) {
 		end_pos = 149;
 	} else if (slot == 3) {
 		init_pos = 150;
-		end_pose = 224;
+		end_pos = 224;
 	}
 	// change content of the save file
 	//      delete
-	if (command == 'd') {
-		for (int i = init_pos; i <= end_pos; i++) {
-			if (lines[i].substr(0, 1) != "@") {
-				lines[i] = "";
-			}
-		}
+	// if (command == 'd') {
+	// 	for (int i = init_pos; i <= end_pos; i++) {
+	// 		if (lines[i].substr(0, 1) != "@") {
+	// 			lines[i] = "";
+	// 		}
+	// 	}
 
-		// rewrite save file
-		ofstream fout("data/savings/sav.txt");
-		if (fout.fail()) {
-			cout << "error: file not found" << endl;
-		}
-		for (int i = 0; i < lines.size(); i++) {
-			if (i == lines.size() - 1) {
-				fout << lines[i];
-				break;
-			}
-			fout << lines[i] << "\n";
-		}
-		fout.close();
+	// 	// rewrite save file
+	// 	ofstream fout("data/savings/sav.txt");
+	// 	if (fout.fail()) {
+	// 		cout << "error: file not found" << endl;
+	// 	}
+	// 	for (int i = 0; i < lines.size(); i++) {
+	// 		if (i == lines.size() - 1) {
+	// 			fout << lines[i];
+	// 			break;
+	// 		}
+	// 		fout << lines[i] << "\n";
+	// 	}
+	// 	fout.close();
 
-		return;
-	}
+	// 	return;
+	// }
 	//      save
 	for (int i = init_pos + 2; i <= end_pos; i++) {
 		if (i > init_pos + 1 && i < init_pos + 22) {
@@ -455,56 +463,46 @@ int print_start_page_helper() {
 			cursor = (cursor + 1) % options.size();
 		} else if (key == 'C' || key == 'c') {
 			verdict = cursor;
+			break;
 		}
 	}
-
 	return verdict;
 }
 
 // Includes: New Game, Continue Game, Save, Start Tutorial, Exit.
-save_file start_page() {
+int start_page(save_file &ret) {
 	int tmp_verdict = -1;
-	save_file ret;
-	while (tmp_verdict != 4) {
+	while (tmp_verdict != 2) {
 		tmp_verdict = print_start_page_helper();
-		switch (tmp_verdict) {
-		case 0: {
-			new_game();
-			break;
-		}
-		case 1: {
-			auto tmp = continue_or_modify_saving();
-			tmp_verdict = tmp.first;
-			ret = tmp.second;
+		// std::cerr << tmp_verdict << "\n";
+		if (tmp_verdict == 0) {
+			ret.username = new_game();
+			return 1;
+		} else if (tmp_verdict == 1) {
+			// std::cerr << "OK5\n";
+			// save_file ret;
+			auto tmp = continue_or_modify_saving(ret);
+			// std::cerr << "OK6\n";
+
 			// successfully read settings.
-			if (tmp_verdict == 1) {
-				return ret;
+			if (tmp == 1) {
+				// return ret;
+				return 2;
 			}
-			break;
-		}
-		case 2:
-			save(save_file());
-			break;
-		case 3:
-			// tutorial();
-			break;
-		case 4: // Exit Game
+			// break;
+		} else if (tmp_verdict == 2) {
 			end();
-			break;
-		default:
-			// Never reach here. LOL
-			cout << "invalid choice, please try again" << endl;
 			break;
 		}
 	}
-	return {};
+	// return {};
 }
 
 // Load stored settings to the game.
 bool main_game(save_file s, Maze &mz, main_character &mc, vector<Monster> &ms) {
-	mz.addMainCharacter(mc);
-	mz.addMonsters(ms);
-	mz.loadMaze(s.maze);
+	// mz.addMainCharacter(mc);
+	// mz.addMonsters(ms);
+	// mz.loadMaze(s.maze);
 	return true; // successfully load settings
 }
 

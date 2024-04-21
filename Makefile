@@ -1,4 +1,4 @@
-FLAG=-std=c++11
+FLAG=-std=c++11 -fsanitize=address
 
 SRC=./src
 CHARAC_DIR=$(SRC)/character
@@ -71,7 +71,7 @@ start: start.o utils.o maze.o character.o
 saving_ui.o: $(SAVING_UI)
 	g++ $(FLAG) -c $^ -o saving_ui.o
 
-saving_ui: saving_ui.o utils.o maze.o
+saving_ui: saving_ui.o utils.o maze.o start.o character.o monster.o
 	g++ $(FLAG) $^ -o saving_ui.out
 
 # BATTLE
@@ -81,7 +81,7 @@ battle: battle.o character.o monster.o utils.o
 	g++ $(FLAG) $^ -o battle.out
 
 # GAME (Main entrance)
-game: game.cpp start.o utils.o maze.o character.o monster.o battle.o
+game: game.cpp start.o utils.o maze.o character.o monster.o saving_ui.o
 	g++ $(FLAG) $^ -o game
 
 # MISC

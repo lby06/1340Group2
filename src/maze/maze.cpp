@@ -7,11 +7,11 @@
 #include <iostream>
 // Defines the size of a maze.
 
-int kMaxMazeSizeWidth = 20;
-int kMaxMazeSizeHeight = 20;
+int kMaxMazeSizeWidth = 50;
+int kMaxMazeSizeHeight = 50;
 
 // Define the max number of monsters in each maze.
-int kMaxNumberOfMonsters = 10;
+int kMaxNumberOfMonsters = 75;
 
 const std::string kPathPrefix = "./data/savings/sav";
 const std::string kPathSuffix = ".dat";
@@ -28,6 +28,23 @@ void Maze::addMainCharacter(main_character &main_character) {
 }
 void Maze::addMonsters(std::vector<Monster> &monsters) {
 	this->monsters_ = &monsters;
+
+	// Check validity
+	for (auto &monster : monsters) {
+		while (1) {
+			auto tmp = monster.getPosition();
+			std::cerr << tmp.first << " " << tmp.second << ": "
+					  << grid_[tmp.first][tmp.second] << std::endl;
+			if (grid_[tmp.first][tmp.second] == '#' ||
+				grid_[tmp.first][tmp.second] == '@' ||
+				tmp == main_character_->getPosition()) {
+				auto new_pos = randomPosition();
+				monster.setPosition(new_pos.first, new_pos.second);
+			} else {
+				break;
+			}
+		}
+	}
 }
 
 char Maze::whatIsThisCell(int x, int y) {
@@ -107,7 +124,7 @@ std::pair<bool, std::string> Maze::isMainCharacterEncounterMonster() {
 			return {true, monster.genre_};
 		}
 	}
-	return {false, ""};
+	return {false, "-1"};
 }
 
 bool Maze::isMainCharacterAtExit() {
@@ -124,27 +141,32 @@ void Maze::showMaze() {
 				 "[d] to move right, [q] to quit, [e] to show menu."
 			  << std::endl;
 
-	for (int i = 0; i < kMaxMazeSizeWidth; i++) {
-		for (int j = 0; j < kMaxMazeSizeHeight; j++) {
+	for (int i = 0; i < 50; i++) {
+		for (int j = 0; j < 50; j++) {
 			bool isCharacter = false;
 
 			// If is the position of main character, print it.
 			if (main_character_ != nullptr) {
 				auto tmp = main_character_->getPosition();
 				if (i == tmp.first && j == tmp.second) {
-					std::cout << "U";
+					std::cout << "\033[5;32m"
+							  << "U"
+							  << "\033[0m";
 					// std::cout << " ";
 					isCharacter = 1;
 					continue;
 				}
 			}
+			// std::cerr << "test\n";
 
 			// If is the position of a monster, print it.
 			if (monsters_ != nullptr) {
 				for (auto &monster : *monsters_) {
 					auto tmp = monster.getPosition();
 					if (i == tmp.first && j == tmp.second) {
-						std::cout << "M";
+						std::cout << "\033[31m"
+								  << "M"
+								  << "\033[0m";
 						// std::cout << " ";
 						isCharacter = 1;
 						break;
@@ -153,7 +175,10 @@ void Maze::showMaze() {
 			}
 
 			if (!isCharacter) {
-				std::cout << this->grid_[i][j];
+				if (this->grid_[i][j] == '@')
+					std::cout << "\033[5;33m" << this->grid_[i][j] << "\033[0m";
+				else
+					std::cout << this->grid_[i][j];
 				// std::cout << " ";
 			}
 		}
@@ -204,7 +229,7 @@ std::vector<std::string> Maze::getExtendedGrid() {
 		for (const auto &ch : row) {
 			// extended_row.push_back(' ');
 			extended_row.push_back(ch);
-			extended_row.push_back(' ');
+			// extended_row.push_back(' ');
 		}
 		extended_grid.push_back(extended_row);
 	}
@@ -242,8 +267,6 @@ void Maze::newMaze() {
 			break;
 		}
 	}
-
-	// Generate new monsters
 }
 
 // Randomize some walls inside the grid.
@@ -255,7 +278,7 @@ void Maze::randomGrid() {
 				j == kMaxMazeSizeWidth - 1) {
 				continue;
 			}
-			if (rand() % 20 < 3) {
+			if (rng() % 20 < 2) {
 				this->grid_[i][j] = '#';
 			}
 		}
