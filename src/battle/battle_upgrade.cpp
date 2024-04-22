@@ -217,12 +217,12 @@ int upgrade(string name1, string name2, string des1, string des2, int level) {
 	// string target;
 	// cin >> target;
 
-	string filename = "./../../data/animations/paint.txt";
-	string filename2 = "./../../data/animations/text.txt";
-	string filename3 = "./../../data/animations/main_character.txt";
-	// string filename = "./upgrade/paint.txt";
-	// string filename2 = "./upgrade/text.txt";
-	// string filename3 = "./upgrade/main_character.txt";
+	// string filename = "./../../data/animations/paint.txt";
+	// string filename2 = "./../../data/animations/text.txt";
+	// string filename3 = "./../../data/animations/main_character.txt";
+	string filename = "data/animations/paint.txt";
+	string filename2 = "data/animations/text.txt";
+	string filename3 = "data/animations/main_character.txt";
 	int line_number = 23;
 	int col_number = 77;
 	int line__ = 16;
@@ -356,12 +356,12 @@ int upgrade(string name1, string name2, string des1, string des2, int level) {
 }
 // upgrading animation if no need to choose skill
 void upgrade() {
-	string filename = "./../../data/animations/paint.txt";
-	string filename2 = "./../../data/animations/text.txt";
-	string filename3 = "./../../data/animations/main_character.txt";
-	// string filename = "./upgrade/paint.txt";
-	// string filename2 = "./upgrade/text.txt";
-	// string filename3 = "./upgrade/main_character.txt";
+	// string filename = "./../../data/animations/paint.txt";
+	// string filename2 = "./../../data/animations/text.txt";
+	// string filename3 = "./../../data/animations/main_character.txt";
+	string filename = "data/animations/paint.txt";
+	string filename2 = "data/animations/text.txt";
+	string filename3 = "data/animations/main_character.txt";
 	int line_number = 23;
 	int col_number = 77;
 	int line__ = 16;
