@@ -393,9 +393,8 @@ void main_character::activate_doublecrit() { skill_status[3] = 2; }
 //被动2.2 最终防御 Ultimate shield
 // 血量越低，减伤越高，且血量低于40%时，受击回能额外加1
 void main_character::activate_ultimatedef() { skill_status[3] = 1; }
-
+main_character cha1;
 // a test
-// main_character cha1;
 // string heroname = "";
 // string monstername = "";
 // string boardcast_word1 = "";
