@@ -260,8 +260,8 @@ void Mandalorians::hurt(int x) {
 	}
 }
 //改动----------------
-// Clone clo1;
-// Robot rob1;
-// Cith cit1;
-// Mandalorians man1;
+Clone clo1;
+Robot rob1;
+Cith cit1;
+Mandalorians man1;
 //改动----------------
