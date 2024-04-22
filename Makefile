@@ -17,6 +17,7 @@ MAIN=$(SRC)/main/main.cpp
 
 BATTLE_HEADER=$(SRC)/battle/battle_upgrade.h
 BATTLE=$(SRC)/battle/battle_upgrade.cpp
+UPGRADE=$(SRC)/battle/upgrade.cpp
 
 BATTLE_MAIN=$(SRC)/battle/battle.cpp
 BATTLE_MAIN_HEADER=$(SRC)/battle/battle.h
@@ -89,7 +90,15 @@ battle.o: $(BATTLE_MAIN) $(PRINT_FEATURES) $(CHARACTER) $(MONSTER) $(BATTLE_MAIN
 
 battle: battle.o character.o monster.o print_features.o utils.o
 	$(compiler) $(FLAG) $^ -o battle.out
+# BATTLE_UPGRADE
 
+battle_upgrade.o: $(BATTLE)  $(CHARACTER) 
+	$(compiler) $(FLAG) -c $< -o battle_upgrade.o
+upgrade.o:  $(UPGRADE)
+	$(compiler) $(FLAG) -c $< -o upgrade.o
+
+battle_upgrade: battle_upgrade.o character.o upgrade.o
+	$(compiler) $(FLAG) $^ -o battle_upgrade.out
 
 
 # GAME (Main entrance)
