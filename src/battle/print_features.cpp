@@ -31,8 +31,8 @@ vector<pair<int, int>> skill4_2 = {{19, 40},{19, 51}};
 //a test for features
 int roundNumber = 0;
 //a test
-string filepath_ms="./1340Group2/data/animations/monsters_ASCii.txt";
-string filepath_mc="./1340Group2/data/animations/main_character_ASCii.txt";
+string filepath_ms="data/animations/monsters_ASCii.txt";
+string filepath_mc="data/animations/main_character_ASCii.txt";
 
 
 //basic background for battle
