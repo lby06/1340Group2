@@ -100,16 +100,17 @@ int main() {
 		// (If we have) 2. Buffs/Traps/Treasure Chests/...
 		// 3. Calculate new main character status
 
-		// 3.1 Level up (and corresponding properties).
+
 
 		// End game check.
 		// 1. HP <= 0 (After fight)
 		if (!cha1.is_alive()) {
+//should implement a end page 
 			return 0;
 		}
 		// 2. Reach exit
 		if (maze.isMainCharacterAtExit()) {
-			cha1.upgrade();
+			cha1.upgrade();		// 3.1 Level up (and corresponding properties). implemente here
 			// Create new maze.
 			maze.newMaze();
 
