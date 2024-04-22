@@ -1,32 +1,13 @@
 #include "battle.h"
+#include "../utils/utils.hpp"
 #include <termio.h>
 #include <utility>
 #include <string>
 
-int readKeyboard() {
-	int in;
-	struct termios new_settings, stored_settings;
-
-	tcgetattr(0, &stored_settings);
-	new_settings = stored_settings;
-	new_settings.c_lflag &= (~ICANON);
-	new_settings.c_lflag &= (~ECHO); // Disable output
-	new_settings.c_cc[VTIME] = 0;
-	new_settings.c_cc[VMIN] = 1;
-	tcsetattr(0, TCSANOW, &new_settings);
-
-	in = getchar();
-
-	tcsetattr(0, TCSANOW, &stored_settings);
-
-	if (in == 27) { // [esc] is pressed
-	}
-
-	return in;
-}
 
 
 void battle_monster(int level,std::string name_ms){
+    clearScreen();
     string name_mc;
 //check the status
     //character name_mc or the image
@@ -137,12 +118,12 @@ void battle_monster(int level,std::string name_ms){
                     break;
                 }
             }
-            cha1.hurt(clo1.normalattack());
+            cha1.hurt(clo1.normalAttack());
             clearScreen();
             WaitSecond(1);
             //one round finish
             //implement win or lose
-            if (clo1.is_alive() == false){
+            if (clo1.isAlive() == false){
                 break;
             }
             if (cha1.is_alive() == false){
@@ -189,15 +170,15 @@ void battle_monster(int level,std::string name_ms){
                     break;
                 }
             }
-            cha1.hurt(rob1.normalattack());
+            cha1.hurt(rob1.normalAttack());
             clearScreen();
             WaitSecond(1);
             //one round finish
             //implement win or lose
-            if (rob1.is_alive() == false){
+            if (rob1.isAlive() == false){
                 break;
             }
-            if (rob1.is_alive() == false){
+            if (cha1.is_alive() == false){
                 break;
             }
             //refresh status and round number
@@ -241,12 +222,12 @@ void battle_monster(int level,std::string name_ms){
                     break;
                 }
             }
-            cha1.hurt(cit1.normalattack());
+            cha1.hurt(cit1.normalAttack());
             clearScreen();
             WaitSecond(1);
             //one round finish
             //implement win or lose
-            if (cit1.is_alive() == false){
+            if (cit1.isAlive() == false){
                 break;
             }
             if (cha1.is_alive() == false){
@@ -293,12 +274,12 @@ void battle_monster(int level,std::string name_ms){
                     break;
                 }
             }
-            cha1.hurt(man1.normalattack());
+            cha1.hurt(man1.normalAttack());
             clearScreen();
             WaitSecond(1);
             //one round finish
             //implement win or lose
-            if (man1.is_alive() == false){
+            if (man1.isAlive() == false){
                 break;
             }
             if (cha1.is_alive() == false){
@@ -312,8 +293,3 @@ void battle_monster(int level,std::string name_ms){
     }
 }
 // //test
-// int main(){
-//     clo1.reset(1,3);
-//     cha1.skill_status[0]=1;
-//     battle_monster(3,"clone");
-// }
