@@ -71,6 +71,10 @@ void Monster::setPosition(int x, int y) {
 	locate_x = x;
 	locate_y = y;
 }
+int Monster::normalAttack() {
+	recoverHP((hp_max_ - hp_) * 0.1);
+	return (damage());
+}
 bool Monster::isAlive() {
 	if (hp_ <= 0) {
 		return false;
