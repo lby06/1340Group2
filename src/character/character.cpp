@@ -395,16 +395,16 @@ void main_character::activate_doublecrit() { skill_status[3] = 2; }
 void main_character::activate_ultimatedef() { skill_status[3] = 1; }
 
 // a test
-main_character cha1;
-string heroname = "";
-string monstername = "";
-string boardcast_word1 = "";
-string boardcast_word2 = "";
-string skillname1 = "";
-string skillmp1 = "";
-string skillname2 = "";
-string skillmp2 = "";
-string skillname3 = "";
-string skillmp3 = "";
-string skillname4 = "";
-string skillmp4 = "";
+// main_character cha1;
+// string heroname = "";
+// string monstername = "";
+// string boardcast_word1 = "";
+// string boardcast_word2 = "";
+// string skillname1 = "";
+// string skillmp1 = "";
+// string skillname2 = "";
+// string skillmp2 = "";
+// string skillname3 = "";
+// string skillmp3 = "";
+// string skillname4 = "";
+// string skillmp4 = "";
