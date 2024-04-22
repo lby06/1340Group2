@@ -93,7 +93,8 @@ int main() {
 		// 1. Meet a monster
 		auto tmp1 = maze.isMainCharacterEncounterMonster();
 		if (tmp1.first) {
-			// battle_monster(std::to_string(cha1.level), tmp.second);
+			battle_monster(cha1.level, tmp.second);
+			//tmp.second doesn't work
 		}
 		// 1.1 Fighs
 		// (If we have) 2. Buffs/Traps/Treasure Chests/...
