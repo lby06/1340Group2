@@ -1,5 +1,6 @@
 #include "../character/character.h"
 #include "../utils/utils.hpp"
+#include "saving_ui.hpp"
 #include "start_endpage.h"
 #include <chrono>
 #include <fstream>
@@ -153,7 +154,14 @@ int delete_slot(int slot) {
 // Returns verdict and `save_file`. -1 if user wants to exit. 1 if ok.
 int continue_or_modify_saving(save_file &s) {
 	// Show all options.
-	vector<string> options = {"Slot 1", "Slot 2", "Slot 3"};
+	vector<string> options; // = {"Slot 1", "Slot 2", "Slot 3"};
+
+	SavingsUI ui;
+	ui.loadEntries();
+	ui.loadSavingfile(s);
+	for (auto &x : ui.entries) {
+		options.push_back(x.getBriefInfo());
+	}
 
 	int slot = 0;
 	int padding = 3;
@@ -200,6 +208,7 @@ int continue_or_modify_saving(save_file &s) {
 	// Load stored setting to main game
 	// std::cerr << "OK1\n";
 	parse_file("data/savings/sav.txt", s, slot + 1);
+	s.level = ui.entries[slot].getLevel();
 	// std::cerr << "OK7\n";
 	// debug save file s
 	// cout << s.save_character.level << endl;

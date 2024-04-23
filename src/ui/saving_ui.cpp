@@ -23,23 +23,24 @@ void SavingsUI::loadEntries() {
 	// Read entries from file.
 	int tmp_id;
 	std::string tmp_info;
-	while (fin >> tmp_id >> tmp_info) {
+	int tmp_lv;
+	while (fin >> tmp_id >> tmp_info >> tmp_lv) {
 		// std::cin.ignore();
 		// std::getline(std::cin, tmp_info);
-		this->addEntry(tmp_id, tmp_info);
+		this->addEntry(tmp_id, tmp_info, tmp_lv);
 	}
 
 	fin.close();
 }
 
 // Add a new saving entry.
-void SavingsUI::addEntry(int id, std::string info) {
+void SavingsUI::addEntry(int id, std::string info, int lv) {
 	// Add a new saving entry.
 	if (entries.size() >= kMaxSavings) {
 		std::cerr << "Error: Exceeding maximum number of savings." << std::endl;
 		return;
 	}
-	entries.emplace_back(id, info);
+	entries.emplace_back(id, info, lv);
 }
 
 void SavingsUI::loadSavingfile(save_file &sf) {
@@ -107,7 +108,9 @@ void SavingsUI::saveEntries() {
 	// Save all entries to file.
 	std::ofstream fout(sav_info_path);
 	for (auto &entry : entries) {
-		fout << entry.getId() << std::endl << entry.getBriefInfo() << std::endl;
+		fout << entry.getId() << std::endl
+			 << entry.getBriefInfo() << std::endl
+			 << entry.getLevel() << std::endl;
 	}
 	fout.close();
 }

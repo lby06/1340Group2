@@ -23,9 +23,9 @@ void mon_show_reset() {
 
 // NOTE -  Modify the percentage distribution here.
 const int kNormalMonsterPercentage = 20; // 20
-const int kClonePercentage = 40;		 // 20+20
-const int kCithPercentage = 60;			 // 20+20+20
-const int kMandaloriansPercentage = 80;	 // 20+20+20+20
+const int kClonePercentage = 25;		 // 20+20
+const int kCithPercentage = 50;			 // 20+20+20
+const int kMandaloriansPercentage = 75;	 // 20+20+20+20
 const int kRobotPercentage = 100;		 // 20+20+20+20+20
 // Function call to create a new monster.
 Monster createMonster() {

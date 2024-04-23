@@ -1,4 +1,5 @@
 // #include "src/battle/battle.h"
+#include "src/battle/battle.h"
 #include "src/character/character.h"
 #include "src/character/monster.h"
 #include "src/maze/maze.hpp"
@@ -11,6 +12,7 @@
 int main() {
 	save_file tmp;
 	Maze maze;
+	int level;
 
 	auto new_game_verdict = start_page(tmp);
 	std::vector<Monster> monsters = createMonsters(kMaxNumberOfMonsters);
@@ -29,23 +31,22 @@ int main() {
 			}
 		}
 		tmp.maze = maze.getExtendedGrid();
-		maze.addMainCharacter(cha1);
 
-		// Create monsters for test.
-		maze.addMonsters(monsters);
+		level = 0;
 	} else {
 		// Load game.
 		// Load character.
 		cha1 = tmp.save_character;
+		level = tmp.level;
 		// Load maze.
 		maze.loadMaze(tmp.maze);
-		maze.addMainCharacter(cha1);
 		// Load monsters.
-		maze.addMonsters(monsters);
 	}
-	// std::cout << "Hello, world!" << std::endl;
-	/* INITIALIZATION HERE */
 
+	/* INITIALIZATION HERE */
+	maze.addMainCharacter(cha1);
+
+	maze.addMonsters(monsters);
 	// Before entering game, user may have many operations (switching
 	// between continue, saves, new game, etc.) auto saving = start_page();
 
@@ -93,8 +94,14 @@ int main() {
 		// 1. Meet a monster
 		auto tmp1 = maze.isMainCharacterEncounterMonster();
 		if (tmp1.first) {
-			battle_monster(cha1.level, tmp.second);
-			//tmp.second doesn't work
+			// init monster before battle
+			clo1.reset(level, 0);
+			rob1.reset(level, 0);
+			man1.reset(level, 0);
+			cit1.reset(level, 0);
+
+			battle_monster(cha1.level, tmp1.second);
+			maze.winning();
 		}
 		// 1.1 Fighs
 		// (If we have) 2. Buffs/Traps/Treasure Chests/...
@@ -110,6 +117,7 @@ int main() {
 		}
 		// 2. Reach exit
 		if (maze.isMainCharacterAtExit()) {
+			level++;
 			cha1.upgrade();		// 3.1 Level up (and corresponding properties). implemente here
 			// Create new maze.
 			maze.newMaze();

@@ -127,6 +127,17 @@ std::pair<bool, std::string> Maze::isMainCharacterEncounterMonster() {
 	return {false, "-1"};
 }
 
+void Maze::winning() {
+	for (auto it = monsters_->begin(); it != monsters_->end();) {
+		if (it->getPosition().first == main_character_->getPosition().first &&
+			it->getPosition().second == main_character_->getPosition().second) {
+			it = monsters_->erase(it);
+		} else {
+			++it;
+		}
+	}
+}
+
 bool Maze::isMainCharacterAtExit() {
 	auto tmp = main_character_->getPosition();
 	int x = tmp.first, y = tmp.second;

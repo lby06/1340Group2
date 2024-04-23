@@ -5,7 +5,8 @@
 #include "../character/character.h"
 #include "../maze/maze.hpp"
 struct save_file{
-    // struct of character
+	int level;
+	// struct of character
     main_character save_character;
     // struct of maze
 	std::vector<std::string> maze;

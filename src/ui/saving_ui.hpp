@@ -7,22 +7,26 @@
 class Savingentry {
   private:
 	int id_;
+	int level_;
 
   public:
 	std::string brief_info_;
-	Savingentry(int id, std::string briefInfo)
-		: id_(id), brief_info_(briefInfo) {}
+	Savingentry(int id, std::string briefInfo, int lv)
+		: id_(id), brief_info_(briefInfo), level_(lv) {}
 	int getId() const { return id_; }
-	std::string getBriefInfo() const { return brief_info_; }
+	std::string getBriefInfo() const {
+		return brief_info_ + "(level: " + std::to_string(level_) + ")";
+	}
+	int getLevel() const { return level_; }
 };
 
 class SavingsUI {
   private:
-	std::vector<Savingentry> entries;
 	std::vector<std::string> ui_grid_;
 	save_file *sf;
 
   public:
+	std::vector<Savingentry> entries;
 	// Show all existing savings within TUI
 	void showAllEntries();
 	// Confirmation before deleting a saving.
@@ -31,7 +35,7 @@ class SavingsUI {
 	void loadEntries();
 	void loadSavingfile(save_file &);
 	void saveEntries();
-	void addEntry(int, std::string);
+	void addEntry(int, std::string, int);
 
 	// Display UI.
 	void display();

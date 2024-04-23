@@ -76,7 +76,7 @@ saving_ui.o: $(SAVING_UI)
 saving_ui: saving_ui.o utils.o maze.o start.o character.o monster.o
 	$(compiler) $(FLAG) $^ -o saving_ui.out
 
-# BATTLE
+
 # PRINT_FEATURES
 print_features.o: $(PRINT_FEATURES)
 	$(compiler) $(FLAG) -c $< -o print_features.o
@@ -94,6 +94,7 @@ battle: battle.o character.o monster.o print_features.o utils.o
 
 battle_upgrade.o: $(BATTLE)  $(CHARACTER) 
 	$(compiler) $(FLAG) -c $< -o battle_upgrade.o
+	
 upgrade.o:  $(UPGRADE)
 	$(compiler) $(FLAG) -c $< -o upgrade.o
 
