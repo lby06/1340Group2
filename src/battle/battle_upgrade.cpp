@@ -1,12 +1,14 @@
 #include "battle_upgrade.h"
 #include "./../character/character.h"
+#include "./../utils/utils.hpp"
 #include "string"
 #include <chrono>
 #include <fstream>
 #include <iostream>
 #include <thread>
 #include <vector>
-
+// #include <termios.h>
+// #include <unistd.h>
 //#include "./../utils/utils.hpp"
 using namespace std;
 
@@ -34,11 +36,30 @@ using namespace std;
 //     make_pair(main_character::activate_hellfire,main_character::activate_rage),
 //     make_pair(main_character::activate_doublecrit,main_character::activate_ultimatedef)
 // }
+// void clearTerminalBuffer() {
+//     char c;
+//     while ((c = getchar()) != '\n' && c != EOF) {
+//     }
+// }
+
+// void setRawMode() {
+//     struct termios rawMode;
+//     tcgetattr(STDIN_FILENO, &rawMode);
+//     rawMode.c_lflag &= ~(ICANON | ECHO);
+//     tcsetattr(STDIN_FILENO, TCSANOW, &rawMode);
+// }
+
+// void restoreDefaultMode() {
+//     struct termios defaultMode;
+//     tcgetattr(STDIN_FILENO, &defaultMode);
+//     defaultMode.c_lflag |= (ICANON | ECHO);
+//     tcsetattr(STDIN_FILENO, TCSANOW, &defaultMode);
+// }
 
 
 
 // clear screen
-void clearScreen() { system("printf \"\\033c\""); }
+void clearScreen1() { system("printf \"\\033c\""); }
 
 // append white spaces to complement a string to a target length
 string appendspace(string line, int length) {
@@ -150,7 +171,7 @@ void printvectorwithcolor(vector<string> vector, string color, string reset) {
 // certain speed
 int printmatrix(vector<vector<string>> matrix, string color, bool trigger) {
 	for (int i = 0; i < matrix.size() - 1; i++) {
-		clearScreen();
+		clearScreen1();
 		printvector(matrix[i]);
 		if (i == 0 || i == (matrix.size() - 1) || i == (matrix.size() - 2)) {
 
@@ -160,26 +181,32 @@ int printmatrix(vector<vector<string>> matrix, string color, bool trigger) {
 			this_thread::sleep_for(chrono::milliseconds(50));
 		}
 	}
-	clearScreen();
+	clearScreen1();
 	printvectorwithcolor(matrix[matrix.size() - 1], color, RESET_COLOR);
 	this_thread::sleep_for(chrono::seconds(1));
-	cin.ignore();
+	//cin.ignore();
 	if (trigger == false) {
-		cin.get();
+		int choice = readKeyoard();
 		return 0;
 	} else {
-		string choice;
+		//clearTerminalBuffer();
+		int choice;
 		while (1) {
-			getline(cin, choice);
-			if (choice == "1" || choice == "2") {
-				break;
+			//
+			//cin.ignore();
+			//system("clear");
+			choice = readKeyboard();//getline(cin, choice);
+			if (choice == 49 || choice == 50)
+			{
+			break;
 			}
-			cout << "invalid input" << endl;
-			this_thread::sleep_for(chrono::seconds(1));
-			cout << "\033[1A\033[2K";
-			cout << "\033[1A\033[2K";
+			
+			// cout << "invalid input" << endl;
+			// this_thread::sleep_for(chrono::seconds(1));
+			// cout << "\033[1A\033[2K";
+			// cout << "\033[1A\033[2K";
 		}
-		return choice == "1" ? 1 : 2;
+		return choice == 49 ? 1 : 2;
 	}
 	// cout << "finishing" <<endl;
 }
@@ -343,7 +370,7 @@ int upgrade(string name1, string name2, string des1, string des2, int level) {
 	// printmatrix(matrix1,BLUE_COLOR);
 	// printmatrix(matrix2,RED_COLOR);
 	// printmatrix(matrix3,GREEN_COLOR);
-	clearScreen();
+	clearScreen1();
 	cout << "you are in the " << level << " level now;" << endl;
 	this_thread::sleep_for(chrono::seconds(1));
 	cout << "now you will upgrade to " << level + 1 << " level" << endl;
@@ -431,6 +458,8 @@ void activate(int level) {
 	int choice = UPGRADE(level);
 	if (choice != 0) {
 		if (choice == 1) {
+			cout << "you have learn: [" << names[level/3].first <<"]"<<endl;
+			this_thread::sleep_for(chrono::seconds(2));
 			switch (level) {
 			case 0:
 				cha1.activate_recoverhit();
@@ -449,6 +478,8 @@ void activate(int level) {
 				break;
 			}
 		} else {
+			cout << "you have learn: [" << names[level/3].second <<"]"<<endl;
+			this_thread::sleep_for(chrono::seconds(2));
 			switch (level) {
 			case 0:
 				cha1.activate_bladestorm();
