@@ -76,7 +76,7 @@ saving_ui.o: $(SAVING_UI)
 saving_ui: saving_ui.o utils.o maze.o start.o character.o monster.o
 	$(compiler) $(FLAG) $^ -o saving_ui.out
 
-
+# BATTLE
 # PRINT_FEATURES
 print_features.o: $(PRINT_FEATURES)
 	$(compiler) $(FLAG) -c $< -o print_features.o
@@ -92,9 +92,8 @@ battle: battle.o character.o monster.o print_features.o utils.o
 	$(compiler) $(FLAG) $^ -o battle.out
 # BATTLE_UPGRADE
 
-battle_upgrade.o: $(BATTLE)  $(CHARACTER) 
+battle_upgrade.o: $(BATTLE)  $(CHARACTER) $(UTILS)
 	$(compiler) $(FLAG) -c $< -o battle_upgrade.o
-	
 upgrade.o:  $(UPGRADE)
 	$(compiler) $(FLAG) -c $< -o upgrade.o
 
@@ -103,7 +102,7 @@ battle_upgrade: battle_upgrade.o character.o upgrade.o
 
 
 # GAME (Main entrance)
-game: game.cpp start.o utils.o maze.o character.o monster.o saving_ui.o battle.o print_features.o
+game: game.cpp start.o utils.o maze.o character.o monster.o saving_ui.o battle.o print_features.o battle_upgrade.o upgrade.o
 	$(compiler) $(FLAG) $^ -o game
 
 # MISC
