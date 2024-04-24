@@ -175,8 +175,7 @@ void Maze::showMaze() {
 				for (auto &monster : *monsters_) {
 					auto tmp = monster.getPosition();
 					if (i == tmp.first && j == tmp.second) {
-						std::cout << "\033[31m"
-								  << "M"
+						std::cout << "\033[31m" << monster.genre_[0]
 								  << "\033[0m";
 						// std::cout << " ";
 						isCharacter = 1;
