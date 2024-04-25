@@ -28,10 +28,10 @@ main_character::main_character() {
 	level = 0;
 	locate_x = 0;
 	locate_y = 0;
-	atk = 3;
+	atk = 5;
 	def = 1;
-	hp = 100;
-	hp_max = 100;
+	hp = 110;
+	hp_max = 110;
 	mp = 5;
 	exp = 0;
 	critical_rate = 0.15;
@@ -75,10 +75,10 @@ void main_character::reset() {
 	level = 0;
 	locate_x = 0;
 	locate_y = 0;
-	atk = 3;
+	atk = 5;
 	def = 1;
-	hp = 15;
-	hp_max = 15;
+	hp = 110;
+	hp_max = 110;
 	mp = 5;
 	exp = 0;
 	critical_rate = 0.15;
@@ -173,7 +173,7 @@ void main_character::upgrade() {
 	exp = 0;
 	atk += level / 2;
 	def += level / 3;
-	hp_max = 20 * level + 15;
+	hp_max += 15 * level;
 	hp = hp_max;
 	mp = 1.4 * level + 4;
 	critical_rate += level * 0.006 + 0.008;
