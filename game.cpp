@@ -6,6 +6,7 @@
 #include "src/ui/saving_ui.hpp"
 #include "src/ui/start_endpage.h"
 #include "src/utils/utils.hpp"
+#include "src/battle/battle_upgrade.h"
 #include <iostream>
 // #include <iostream>
 
@@ -117,8 +118,9 @@ int main() {
 		}
 		// 2. Reach exit
 		if (maze.isMainCharacterAtExit()) {
+			
+			activate(level);		// 3.1 Level up (and corresponding properties). implemente here finish
 			level++;
-			cha1.upgrade();		// 3.1 Level up (and corresponding properties). implemente here
 			// Create new maze.
 			maze.newMaze();
 
