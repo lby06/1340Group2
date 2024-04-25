@@ -7,8 +7,8 @@
 #include <iostream>
 // Defines the size of a maze.
 
-int kMaxMazeSizeWidth = 50;
-int kMaxMazeSizeHeight = 50;
+int kMaxMazeSizeWidth = 30;
+int kMaxMazeSizeHeight = 30;
 
 // Define the max number of monsters in each maze.
 int kMaxNumberOfMonsters = 10;
