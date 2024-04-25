@@ -458,7 +458,7 @@ void activate(int level) {
 	int choice = UPGRADE(level);
 	if (choice != 0) {
 		if (choice == 1) {
-			cout << "you have learn: [" << names[level/3].first <<"]"<<endl;
+			cout << "you have learned: [" << names[level/3].first <<"]"<<endl;
 			this_thread::sleep_for(chrono::seconds(2));
 			switch (level) {
 			case 0:
@@ -478,7 +478,7 @@ void activate(int level) {
 				break;
 			}
 		} else {
-			cout << "you have learn: [" << names[level/3].second <<"]"<<endl;
+			cout << "you have learned: [" << names[level/3].second <<"]"<<endl;
 			this_thread::sleep_for(chrono::seconds(2));
 			switch (level) {
 			case 0:
