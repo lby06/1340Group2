@@ -46,9 +46,13 @@ int print_file(const string filename, int wait_time, bool clean) {
 /// Starts a new game, including animation, starting page.
 string new_game() {
 	// Loading Animation
-	print_file("data/scripts/ascii_images/sith_code.txt", 8, true);
-	print_file("data/scripts/ascii_images/script1.txt", 10, true);
-
+	print_file("data/scripts/ascii_images/sith_code.txt", 0, true);
+	cout << "\n  press 'enter' to continue...";
+	cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+	print_file("data/scripts/ascii_images/script1.txt", 0, true);
+	cout << "\n                                          *** press 'enter' to continue... ***";
+	cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+	
 	string name;
 	bool valid = false;
 	do {
@@ -106,8 +110,12 @@ string new_game() {
 			fout.close();
 		}
 	} while (!valid);
-	print_file("data/scripts/ascii_images/luke_skywalker.txt", 4, true);
-	print_file("data/scripts/ascii_images/script3.txt", 6, true);
+	print_file("data/scripts/ascii_images/luke_skywalker.txt", 0, true);
+	cout << "\n                                          *** press 'enter' to continue... ***";
+	cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+	print_file("data/scripts/ascii_images/script3.txt", 0, true);
+	cout << "\n    *** press 'enter' to continue... ***";
+	cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 	// main_game(choice);
 	return name;
 }
