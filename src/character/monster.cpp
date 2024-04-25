@@ -221,7 +221,7 @@ void Mandalorians::rage() {
 	hp_ *= 1.1;
 	critical_rate_ *= 1.1;
 	atk_ *= 1.1;
-	beatback += 2;
+	beatback += 1;
 }
 int Mandalorians::damage() {
 	if (beatback >= 1) {
