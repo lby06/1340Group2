@@ -11,8 +11,7 @@ struct save_file{
 	std::vector<std::string> maze;
 	// int seed;
 	// Needed if the maze will be generated from the beginning
-    int slot_number;
-	std::string username;
+    std::string username;
 };
 
 void clear_screen();
