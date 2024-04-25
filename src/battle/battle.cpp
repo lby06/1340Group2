@@ -79,11 +79,16 @@ void battle_monster(int level,std::string name_ms){
     WordInsert(fight_map, skillmp3, skill3_2);
     WordInsert(fight_map, skillname4, skill4_1);
     WordInsert(fight_map, skillmp4, skill4_2);
+    
+    WordInsert(fight_map, "placeforbd1", boardcast_p1);
+    WordInsert(fight_map, "bd2", boardcast_p2);
+
+    
     roundNumber = 0;
     NewRound(fight_map, roundNumber);
     StateInsert(fight_map, convertNumber(cha1.HP(), cha1.MP(), cha1.ATK()), state_mc);
     //monster added later
-    if (name_ms =="clone"){
+    if (name_ms =="Clone"){
         StateInsert(fight_map, convertNumber(clo1.HP(), clo1.MP(), clo1.ATK()), state_ms);
         while (true){
 
@@ -170,7 +175,11 @@ void battle_monster(int level,std::string name_ms){
                     break;
                 }
             }
-            cha1.hurt(rob1.normalAttack());
+            if (roundNumber % 3 == 0 && rob1.MP() >=3) {
+                cha1.hurt(rob1.lasers());
+                } else {
+                cha1.hurt(rob1.normalAttack());
+                }
             clearScreen();
             WaitSecond(1);
             //one round finish
@@ -222,7 +231,11 @@ void battle_monster(int level,std::string name_ms){
                     break;
                 }
             }
-            cha1.hurt(cit1.normalAttack());
+            if (roundNumber % 3 == 0 && cit1.MP() >=3) {
+                cha1.hurt(cit1.lasers());
+                } else {
+                cha1.hurt(cit1.normalAttack());
+                }
             clearScreen();
             WaitSecond(1);
             //one round finish
@@ -274,7 +287,11 @@ void battle_monster(int level,std::string name_ms){
                     break;
                 }
             }
-            cha1.hurt(man1.normalAttack());
+            if (roundNumber % 3 == 0 && man1.MP() >=3) {
+                cha1.hurt(man1.damage());
+                } else {
+                cha1.hurt(man1.normalAttack());
+                }
             clearScreen();
             WaitSecond(1);
             //one round finish
