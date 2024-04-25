@@ -167,8 +167,8 @@ void Cith::reset(int level, int number) {
 }
 //技能1
 void Cith::returntodark() {
-	mp_ -= 5;
-	life = 4;
+	mp_ -= 99;
+	life = 3;
 	critical_rate_ *= 1.2;
 	critical_damage_ = 1.8;
 }
