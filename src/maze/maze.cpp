@@ -33,8 +33,6 @@ void Maze::addMonsters(std::vector<Monster> &monsters) {
 	for (auto &monster : monsters) {
 		while (1) {
 			auto tmp = monster.getPosition();
-			std::cerr << tmp.first << " " << tmp.second << ": "
-					  << grid_[tmp.first][tmp.second] << std::endl;
 			if (grid_[tmp.first][tmp.second] == '#' ||
 				grid_[tmp.first][tmp.second] == '@' ||
 				tmp == main_character_->getPosition()) {
@@ -141,7 +139,7 @@ void Maze::winning() {
 bool Maze::isMainCharacterAtExit() {
 	auto tmp = main_character_->getPosition();
 	int x = tmp.first, y = tmp.second;
-	return this->grid_[x][y] == '@';
+	return this->grid_[x][y] == '@' && this->monsters_->size() == 0;
 }
 
 // Refresh screen. And print the maze to the terminal.
