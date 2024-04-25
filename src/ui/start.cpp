@@ -224,7 +224,7 @@ void parse_file(const string filename, save_file &s, int slot) {
 	while (getline(fin, line)) {
 		if (line.substr(0, 7) == "@slot " + to_string(slot)) {
 			valid = true;
-		} else if (line.substr(0, 7) == "@slot" + to_string(slot + 1)) {
+		} else if (line.substr(0, 7) == "@slot " + to_string(slot + 1)) {
 			break;
 		}
 		if (valid) {
@@ -348,7 +348,7 @@ void save(save_file s) {
 		end_pos = 149;
 	} else if (slot == 3) {
 		init_pos = 150;
-		end_pose = 224;
+		end_pos = 224;
 	}
 	// change content of the save file
 	//      delete
