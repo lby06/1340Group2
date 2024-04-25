@@ -8,7 +8,6 @@
 #include "src/utils/utils.hpp"
 #include "src/battle/battle_upgrade.h"
 #include <iostream>
-// #include <iostream>
 
 int main() {
 	save_file tmp;
@@ -116,7 +115,12 @@ int main() {
 		// End game check.
 		// 1. HP <= 0 (After fight)
 		if (!cha1.is_alive()) {
-//should implement a end page 
+			print_file("data/scripts/ascii_images/lose.txt");
+			print_file("data/scripts/ascii_images/script1.txt", 0, true);
+			cout << "\n                                          *** press 'enter' to continue... ***";
+			cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			new_game_verdict = start_page(tmp);
+			//should implement a end page 
 			return 0;
 		}
 		// 2. Reach exit
