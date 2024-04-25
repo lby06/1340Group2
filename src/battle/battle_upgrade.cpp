@@ -186,7 +186,7 @@ int printmatrix(vector<vector<string>> matrix, string color, bool trigger) {
 	this_thread::sleep_for(chrono::seconds(1));
 	//cin.ignore();
 	if (trigger == false) {
-		int choice = readKeyoard();
+		int choice = readKeyboard();
 		return 0;
 	} else {
 		//clearTerminalBuffer();
