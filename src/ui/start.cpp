@@ -249,7 +249,7 @@ void parse_file(const string filename, save_file &s, int slot) {
 	for (int i = 0; i < lines.size(); i++) {
 		if (i > 1 && i < 22) {
 			parameters[i - 2] = stod(lines[i]);
-		} else if (i >= 23 && i <= 72) {
+		} else if (i >= 23 && i <= 52) {
 			maze.push_back(lines[i]);
 		} else if (i == 74) {
 			username = lines[i];
@@ -365,13 +365,13 @@ void save(save_file &s, int slot) {
 	int init_pos, end_pos;
 	if (slot == 1) {
 		init_pos = 0;
-		end_pos = 74;
+		end_pos = 54;
 	} else if (slot == 2) {
-		init_pos = 75;
-		end_pos = 149;
+		init_pos = 55;
+		end_pos = 109;
 	} else if (slot == 3) {
-		init_pos = 150;
-		end_pos = 224;
+		init_pos = 110;
+		end_pos = 164;
 	}
 	// cerr << lines.size() << endl;
 	// change content of the save file
@@ -429,13 +429,13 @@ void save(save_file &s, int slot) {
 			fout << "@character\n";
 		else if (i == init_pos + 22)
 			fout << "@maze\n";
-		else if (i == init_pos + 73)
+		else if (i == init_pos + 53)
 			fout << "@username\n";
 		else if (i > init_pos + 1 && i < init_pos + 22) {
 			fout << to_string(save_parameters[i - init_pos - 2]) << "\n";
-		} else if (i >= init_pos + 23 && i <= init_pos + 72) {
+		} else if (i >= init_pos + 23 && i <= init_pos + 52) {
 			fout << s.maze[i - init_pos - 23] << "\n";
-		} else if (i == init_pos + 74) {
+		} else if (i == init_pos + 54) {
 			fout << s.username << "\n";
 		}
 	}

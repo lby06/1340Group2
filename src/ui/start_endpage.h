@@ -12,9 +12,6 @@ struct save_file{
 	std::vector<std::string> maze;
 	// int seed;
 	// Needed if the maze will be generated from the beginning
-<<<<<<< HEAD
-    std::string username;
-=======
     int slot_number;
 	std::string username;
 
@@ -25,7 +22,6 @@ struct save_file{
 		username = sf.username;
 	}
 	save_file() {}
->>>>>>> ba71826818436289355f48a83fff2551e1e7b6e4
 };
 
 void clear_screen();
