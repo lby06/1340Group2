@@ -1,4 +1,4 @@
-FLAG=-std=c++11
+FLAG=-std=c++11 -fsanitize=address -g
 compiler=g++
 
 SRC=./src

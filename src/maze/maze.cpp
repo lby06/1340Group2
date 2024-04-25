@@ -33,8 +33,8 @@ void Maze::addMonsters(std::vector<Monster> &monsters) {
 	for (auto &monster : monsters) {
 		while (1) {
 			auto tmp = monster.getPosition();
-			if (grid_[tmp.first][tmp.second] == '#' ||
-				grid_[tmp.first][tmp.second] == '@' ||
+			if (whatIsThisCell(tmp.first, tmp.second) == 3 ||
+				whatIsThisCell(tmp.first, tmp.second) == 4 ||
 				tmp == main_character_->getPosition()) {
 				auto new_pos = randomPosition();
 				monster.setPosition(new_pos.first, new_pos.second);
@@ -129,6 +129,8 @@ void Maze::winning() {
 	for (auto it = monsters_->begin(); it != monsters_->end();) {
 		if (it->getPosition().first == main_character_->getPosition().first &&
 			it->getPosition().second == main_character_->getPosition().second) {
+			std::cerr << it->genre_ << std::endl;
+			getchar();
 			it = monsters_->erase(it);
 		} else {
 			++it;
@@ -139,7 +141,7 @@ void Maze::winning() {
 bool Maze::isMainCharacterAtExit() {
 	auto tmp = main_character_->getPosition();
 	int x = tmp.first, y = tmp.second;
-	return this->grid_[x][y] == '@' && this->monsters_->size() == 0;
+	return this->grid_[x][y] == '@' && this->monsters_->size() <= 3;
 }
 
 // Refresh screen. And print the maze to the terminal.
@@ -150,8 +152,8 @@ void Maze::showMaze() {
 				 "[d] to move right, [q] to quit, [e] to show menu."
 			  << std::endl;
 
-	for (int i = 0; i < 50; i++) {
-		for (int j = 0; j < 50; j++) {
+	for (int i = 0; i < kMaxMazeSizeWidth; i++) {
+		for (int j = 0; j < kMaxMazeSizeHeight; j++) {
 			bool isCharacter = false;
 
 			// If is the position of main character, print it.

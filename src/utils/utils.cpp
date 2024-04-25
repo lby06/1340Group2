@@ -31,7 +31,7 @@ int readKeyboard() {
 
 // Generate random position.
 std::pair<int, int> randomPosition() {
-	return std::make_pair(rng() % 48 + 1, rng() % 48 + 1);
+	return std::make_pair(rng() % 28 + 1, rng() % 28 + 1);
 }
 
 // FUNCTION TEST

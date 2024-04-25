@@ -24,13 +24,16 @@ int main() {
 		// Create a main character for test.
 		bool successfullyCreated = false;
 		while (!successfullyCreated) {
-			std::cerr << "Creating main character..." << std::endl;
+			// std::cerr << "Creating main character..." << std::endl;
 			auto p = randomPosition();
 			if (maze.whatIsThisCell(p.first, p.second) == 0) {
 				successfullyCreated = true;
 				cha1.setPosition(p.first, p.second);
 			}
 		}
+
+		maze.addMainCharacter(cha1);
+		maze.addMonsters(monsters);
 		tmp.maze = maze.getExtendedGrid();
 
 		level = 0;
@@ -41,13 +44,13 @@ int main() {
 		level = tmp.level;
 		// Load maze.
 		maze.loadMaze(tmp.maze);
+		maze.addMainCharacter(cha1);
+		maze.addMonsters(monsters);
 		// Load monsters.
 	}
 
 	/* INITIALIZATION HERE */
-	maze.addMainCharacter(cha1);
 
-	maze.addMonsters(monsters);
 	// Before entering game, user may have many operations (switching
 	// between continue, saves, new game, etc.) auto saving = start_page();
 
