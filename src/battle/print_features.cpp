@@ -7,9 +7,7 @@
 #include <cstdlib>
 #include <unistd.h>
 #include"print_features.h"
-#include"../character/character.h"
-#include"../character/monster.h"
-#include"../character/boss.h"
+
 using namespace std;
 //postion of the Character
 vector<pair<int, int>> position_mc = {{5, 1}, {5, 27}, {15, 1}, {15, 27}};
@@ -20,27 +18,22 @@ vector<pair<int, int>> state_mc = {{1, 8}};
 vector<pair<int, int>> state_ms = {{1, 59}};
 //postion of texts
 vector<pair<int, int>> name_mc_p = {{3, 22},{3,32}};
-vector<pair<int, int>> name_ms_p = {{3, 35},{3,45}};
-vector<pair<int, int>> boardcast_p1 = {{15, 2},{15,32}};
-vector<pair<int, int>> boardcast_p2 = {{15, 34},{15,65}};
-
-vector<pair<int, int>> skill1_1 = {{17, 1},{17, 12}};
-vector<pair<int, int>> skill1_2 = {{18, 1},{18, 12}};
-vector<pair<int, int>> skill2_1 = {{17, 14},{17, 25}};
-vector<pair<int, int>> skill2_2 = {{18, 14},{18, 25}};
-vector<pair<int, int>> skill3_1 = {{17, 27},{17, 38}};
-vector<pair<int, int>> skill3_2 = {{18, 27},{18, 38}};
-vector<pair<int, int>> skill4_1 = {{17, 40},{17, 51}};
-vector<pair<int, int>> skill4_2 = {{18, 40},{18, 51}};
+vector<pair<int, int>> name_ms_p = {{3, 34},{3,50}};
+vector<pair<int, int>> skill1_1 = {{18, 1},{18, 12}};
+vector<pair<int, int>> skill1_2 = {{19, 1},{19, 12}};
+vector<pair<int, int>> skill2_1 = {{18, 14},{18, 25}};
+vector<pair<int, int>> skill2_2 = {{19, 14},{19, 25}};
+vector<pair<int, int>> skill3_1 = {{18, 27},{18, 38}};
+vector<pair<int, int>> skill3_2 = {{19, 27},{19, 38}};
+vector<pair<int, int>> skill4_1 = {{18, 40},{18, 51}};
+vector<pair<int, int>> skill4_2 = {{19, 40},{19, 51}};
 
 //a test for features
-int Round =1,HP1=2,HP2=500,MP1=232,MP2=32,ATK1=321,ATK2=52;
 int roundNumber = 0;
 //a test
-string filepath_ms="./1340Group2/data/animations/monsters_ASCii.txt";
-string filepath_mc="./1340Group2/data/animations/main_character_ASCii.txt";
-int line_number = 23;
-int col_number = 77;
+string filepath_ms="data/animations/monsters_ASCii.txt";
+string filepath_mc="data/animations/main_character_ASCii.txt";
+
 
 //basic background for battle
 vector<string> fight_map = {
@@ -48,7 +41,7 @@ vector<string> fight_map = {
 "-------------------------------Round    ---------------------------",
 "| HP:  [   ]                     |                   HP:  [   ]   |", 
 "| MP:  [   ]                     |                   MP:  [   ]   |",             
-"| ATK: [   ]          Name:[    ]|Name:[    ]        ATK: [   ]   |", 
+"| ATK: [   ]          Name:      |Name:              ATK: [   ]   |", 
 "|--------------------------------|--------------------------------|",
 "|                                |                                |",
 "|                                |                                |",
@@ -60,20 +53,39 @@ vector<string> fight_map = {
 "|                                |                                |",
 "|                                |                                |",
 "|                                |                                |",
-"|[                              ][                               ]|",
+"* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *",
+"|     01     *            *             *     02     *            |",
 "* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *",
 "*            *            *            *             * Strike(S)  *",
 "*            *            *            *             * Info(I)    *",
-"*******************************************************************"
+"*******************************************************************",
+"Press 1 or 2 to use the skills",
+"Press s for normal strike(in each round only one input allowed)"
 };
 
-//read in names
-string readName() {
-    string name;
-    cout << "The name of character(test) ";
-    cin >> name;
-    return name;
-}
+// //read in names
+// string readName() {
+//     string name;
+//     cout << "The name of character(test) ";
+//     cin >> name;
+//     return name;
+// }
+//testing how long the string is
+// void printLineLengths(const vector<string>& lines) {
+//     for (const auto& line : lines) {
+//         cout << line << " " << line.length() << endl;
+//     }
+// }
+// //measure postion of x,y to find the place to insert string
+// void printPositions(const vector<string>& fight_map) {
+//     for (int i = 0; i < fight_map.size(); ++i) {
+//         for (int j = 0; j < fight_map[i].length(); ++j) {
+//             if (fight_map[i][j] == 'x' || fight_map[i][j] == 'y') {
+//                 cout << "Character '" << fight_map[i][j] << "' found at position (" << i << ", " << j << ")" << endl;
+//             }
+//         }
+//     }
+// }
 
 //Store the ASCii art of the character
 vector<string> ReadCharacters(const string& filePath, string name) {
@@ -107,22 +119,6 @@ vector<string> ReadCharacters(const string& filePath, string name) {
     return lines;
 }
 
-//testing how long the string is
-void printLineLengths(const vector<string>& lines) {
-    for (const auto& line : lines) {
-        cout << line << " " << line.length() << endl;
-    }
-}
-//measure postion of x,y to find the place to insert string
-void printPositions(const vector<string>& fight_map) {
-    for (int i = 0; i < fight_map.size(); ++i) {
-        for (int j = 0; j < fight_map[i].length(); ++j) {
-            if (fight_map[i][j] == 'x' || fight_map[i][j] == 'y') {
-                cout << "Character '" << fight_map[i][j] << "' found at position (" << i << ", " << j << ")" << endl;
-            }
-        }
-    }
-}
 //printing everything out
 void printMap(const vector<string>& lines) {
     for (const auto& line : lines) {
@@ -190,24 +186,9 @@ void WordInsert_front(vector<string>& fight_map, const string& word, vector<pair
 
     fight_map[start_row].replace(start_col, spaceLength, ExpendWord);
 }
-//include all words in, simplify calling
-void Includeword() {
-    WordInsert_front(fight_map, heroname, name_mc_p);
-    WordInsert(fight_map, monstername, name_ms_p);
-    WordInsert(fight_map, boardcast_word1, boardcast_p1);
-    WordInsert(fight_map, boardcast_word2, boardcast_p2);
-    WordInsert(fight_map, skillname1, skill1_1);
-    WordInsert(fight_map, skillmp1, skill1_2);
-    WordInsert(fight_map, skillname2, skill2_1);
-    WordInsert(fight_map, skillmp2, skill2_2);
-    WordInsert(fight_map, skillname3, skill3_1);
-    WordInsert(fight_map, skillmp3, skill3_2);
-    WordInsert(fight_map, skillname4, skill4_1);
-    WordInsert(fight_map, skillmp4, skill4_2);
-}
+
 //add roundnumer
 void NewRound(vector<string>& fight_map,int& roundNumber) {//need implement
-    Includeword();
     string& roundLine = fight_map[0]; 
     roundNumber++; 
     ostringstream newRoundNumberStr;

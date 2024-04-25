@@ -94,8 +94,7 @@ void main_character::reset() {
 }
 void main_character::set(double a[]) {
 	level = a[0];
-	locate_x = a[1];
-	locate_y = a[2];
+	setPosition(int(a[1]), int(a[2]));
 	atk = a[3];
 	def = a[4];
 	hp = a[5];
@@ -107,10 +106,10 @@ void main_character::set(double a[]) {
 	evasion_rate = a[11];
 	rageattack = a[12];
 	for (int i = 13; i < 17; ++i) {
-		skill_status[i] = a[i];
+		skill_status[i - 13] = a[i];
 	}
 	for (int i = 17; i < 20; ++i) {
-		status[i] = a[i];
+		status[i - 17] = a[i];
 	}
 }
 double *main_character::save() {
@@ -129,10 +128,12 @@ double *main_character::save() {
 	a[11] = evasion_rate;
 	a[12] = rageattack;
 	for (int i = 13; i < 17; ++i) {
-		a[i] = skill_status[i];
+		a[i] = skill_status[i - 13];
+		// a[i] = 0;
 	}
 	for (int i = 17; i < 20; ++i) {
-		a[i] = status[i];
+		a[i] = status[i - 17];
+		// a[i] = 0;
 	}
 	return a;
 }
@@ -287,7 +288,7 @@ int main_character::act_recoverhit() {
 //主动技能1.2：光剑风暴 Storm of lightsaber
 // 对指定敌方造成3-5段伤害
 //可暴击，且释放技能期间暴击伤害提升（40%）
-void main_character::activate_bladestorm() { skill_status[0] = 1; }
+void main_character::activate_bladestorm() { skill_status[0] = 2; }
 int main_character::act_bladestorm() {
 	if (skill_status[0] == 2) {
 		if (mp >= 4) {
@@ -392,18 +393,17 @@ void main_character::activate_doublecrit() { skill_status[3] = 2; }
 //被动2.2 最终防御 Ultimate shield
 // 血量越低，减伤越高，且血量低于40%时，受击回能额外加1
 void main_character::activate_ultimatedef() { skill_status[3] = 1; }
-
-// a test
 main_character cha1;
-string heroname = "";
-string monstername = "";
-string boardcast_word1 = "";
-string boardcast_word2 = "";
-string skillname1 = "";
-string skillmp1 = "";
-string skillname2 = "";
-string skillmp2 = "";
-string skillname3 = "";
-string skillmp3 = "";
-string skillname4 = "";
-string skillmp4 = "";
+// a test
+// string heroname = "";
+// string monstername = "";
+// string boardcast_word1 = "";
+// string boardcast_word2 = "";
+// string skillname1 = "";
+// string skillmp1 = "";
+// string skillname2 = "";
+// string skillmp2 = "";
+// string skillname3 = "";
+// string skillmp3 = "";
+// string skillname4 = "";
+// string skillmp4 = "";

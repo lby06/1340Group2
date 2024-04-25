@@ -1,11 +1,13 @@
 #include "../character/character.h"
 #include "../utils/utils.hpp"
+#include "saving_ui.hpp"
 #include "start_endpage.h"
 #include <chrono>
 #include <fstream>
 #include <iostream>
 #include <string>
 #include <thread>
+#include <utility>
 #include <vector>
 using namespace std;
 
@@ -52,7 +54,7 @@ string new_game() {
 	do {
 		// Starting page
 		print_file("data/scripts/ascii_images/computer.txt", 0, true);
-		cin.ignore();
+		// cin.ignore();
 		cout << "Enter your name (no more than 10 chars): ";
 		getline(cin, name);
 
@@ -150,9 +152,16 @@ int delete_slot(int slot) {
 
 // Choose a slot and continue gaming.
 // Returns verdict and `save_file`. -1 if user wants to exit. 1 if ok.
-pair<int, save_file> continue_or_modify_saving() {
+int continue_or_modify_saving(save_file &s) {
 	// Show all options.
-	vector<string> options = {"Slot 1", "Slot 2", "Slot 3"};
+	vector<string> options; // = {"Slot 1", "Slot 2", "Slot 3"};
+
+	SavingsUI ui;
+	ui.loadEntries();
+	ui.loadSavingfile(s);
+	for (auto &x : ui.entries) {
+		options.push_back(x.getBriefInfo());
+	}
 
 	int slot = 0;
 	int padding = 3;
@@ -190,18 +199,23 @@ pair<int, save_file> continue_or_modify_saving() {
 			confirmed = true;
 		} else if (key == 27) {
 			confirmed = true;
-			return {-1, {}};
+			return -1;
 		} else if (key == 'D' || key == 'd') {
 			delete_slot(slot + 1);
 		}
 	}
 
 	// Load stored setting to main game
-	save_file s;
-	std::cerr << "OK1\n";
+	// std::cerr << "OK1\n";
 	parse_file("data/savings/sav.txt", s, slot + 1);
-	std::cerr << "OK2\n";
-	return {1, s}; // return stored settings
+	s.level = ui.entries[slot].getLevel();
+	// std::cerr << "OK7\n";
+	// debug save file s
+	// cout << s.save_character.level << endl;
+	// for (auto &x : s.maze) {
+	// 	cout << x << endl;
+	// }
+	return 1; // return stored settings
 }
 
 /// Read information from files.
@@ -235,9 +249,9 @@ void parse_file(const string filename, save_file &s, int slot) {
 	for (int i = 0; i < lines.size(); i++) {
 		if (i > 1 && i < 22) {
 			parameters[i - 2] = stod(lines[i]);
-		} else if (i >= 23 && i <= 72){
+		} else if (i >= 23 && i <= 72) {
 			maze.push_back(lines[i]);
-		} else if (i == 74){
+		} else if (i == 74) {
 			username = lines[i];
 		}
 	}
@@ -250,9 +264,12 @@ void parse_file(const string filename, save_file &s, int slot) {
 	//     cnt++;
 	// }
 	s.save_character.set(parameters);
+	// std::cerr << parameters[1] << " " << parameters[2] << std::endl;
+	// getchar();
 	s.maze = maze;
 	s.username = username;
 	fin.close();
+	// std::cerr << "OK2\n";
 	return;
 }
 
@@ -297,47 +314,53 @@ int rename_slot() {
 }
 
 //
-void save(save_file s) {
-	save_file save_files[3];
-	int slot;
-	char command;
+void save(save_file &s, int slot) {
+	// save_file save_files[3];
+	// int slot;
+	// char command;
 	// init save_files
-	parse_file("data/savings/sav.txt", save_files[0], 1);
-	parse_file("data/savings/sav.txt", save_files[1], 2);
-	parse_file("data/savings/sav.txt", save_files[2], 3);
+	// parse_file("data/savings/sav.txt", save_files[0], 1);
+	// parse_file("data/savings/sav.txt", save_files[1], 2);
+	// parse_file("data/savings/sav.txt", save_files[2], 3);
 	// waiting for user input
-	print_file("data/scripts/ascii_images/save.txt", 0, true);
-	cin.ignore();
-	cout << "Enter [S] to save your game, [D] to erase existing "
-			"slot: ";
-	cin >> command;
-	if (command == 's') {
-		slot = rename_slot();
-		save_files[slot - 1] = s;
-	} else if (command == 'd') {
-		slot = delete_slot(-1); // TODO a modification here
-	}
+	// print_file("data/scripts/ascii_images/save.txt", 0, true);
+	// cin.ignore();
+	// cout << "Enter [S] to save your game, [D] to erase existing "
+	// 		"slot: ";
+	// cin >> command;
+	// if (command == 's') {
+	// 	slot = rename_slot();
 
-	double *save_parameters;
-	vector<string> savemap;
-	string username;
-	save_parameters = s.save_character.save();
-	savemap = s.maze;
-	slot = slot;
-	username = s.username;
+	// save_files[slot - 1] = s;
+
+	// } else if (command == 'd') {
+	// 	slot = delete_slot(-1); // TODO a modification here
+	// }
+
+	// double *save_parameters;
+	// vector<string> savemap;
+	// string username;
+	auto save_parameters = s.save_character.save();
+	// auto &savemap = s.maze;
+	// slot = slot;
+	// auto &username = s.username;
+	// std::cerr << s.username << "\n";
 
 	// input save file
 	ifstream fin;
 	fin.open("data/savings/sav.txt");
 	if (fin.fail()) {
 		cout << "error: file not found" << endl;
+		exit(1);
 	}
+
 	vector<string> lines;
 	string line;
 	while (getline(fin, line)) {
 		lines.push_back(line);
 	}
 	fin.close();
+
 	// calculate the part that needs to change
 	int init_pos, end_pos;
 	if (slot == 1) {
@@ -350,55 +373,81 @@ void save(save_file s) {
 		init_pos = 150;
 		end_pos = 224;
 	}
+	// cerr << lines.size() << endl;
 	// change content of the save file
 	//      delete
-	if (command == 'd') {
-		for (int i = init_pos; i <= end_pos; i++) {
-			if (lines[i].substr(0, 1) != "@") {
-				lines[i] = "";
-			}
-		}
+	// if (command == 'd') {
+	// 	for (int i = init_pos; i <= end_pos; i++) {
+	// 		if (lines[i].substr(0, 1) != "@") {
+	// 			lines[i] = "";
+	// 		}
+	// 	}
 
-		// rewrite save file
-		ofstream fout("data/savings/sav.txt");
-		if (fout.fail()) {
-			cout << "error: file not found" << endl;
-		}
-		for (int i = 0; i < lines.size(); i++) {
-			if (i == lines.size() - 1) {
-				fout << lines[i];
-				break;
-			}
-			fout << lines[i] << "\n";
-		}
-		fout.close();
+	// 	// rewrite save file
+	// 	ofstream fout("data/savings/sav.txt");
+	// 	if (fout.fail()) {
+	// 		cout << "error: file not found" << endl;
+	// 	}
+	// 	for (int i = 0; i < lines.size(); i++) {
+	// 		if (i == lines.size() - 1) {
+	// 			fout << lines[i];
+	// 			break;
+	// 		}
+	// 		fout << lines[i] << "\n";
+	// 	}
+	// 	fout.close();
 
-		return;
-	}
+	// 	return;
+	// }
 	//      save
-	for (int i = init_pos + 2; i <= end_pos; i++) {
-		if (i > init_pos + 1 && i < init_pos + 22) {
-			lines[i] = to_string(save_parameters[i - init_pos - 2]);
-		} else if (i >= init_pos + 23 && i <= init_pos + 72) {
-			lines[i] = savemap[i - init_pos - 23];
-		} else if (i == init_pos + 74) {
-			lines[i] = username;
-		}
-	}
+	// for (int i = init_pos + 2; i <= end_pos; i++) {
+	// 	if (i > init_pos + 1 && i < init_pos + 22) {
+	// 		auto t = to_string(save_parameters[i - init_pos - 2]);
+	// 		lines[i].swap(t);
+	// 	} else if (i >= init_pos + 23 && i <= init_pos + 72) {
+	// 		auto t = s.maze[i - init_pos - 23];
+	// 		lines[i].swap(t);
+	// 	} else if (i == init_pos + 74) {
+	// 		// lines[i] = username;
+	// 		auto t = s.username;
+	// 		lines[i].swap(t);
+	// 	}
+	// }
 
 	// rewrite save file
 	ofstream fout("data/savings/sav.txt");
 	if (fout.fail()) {
 		cout << "error: file not found" << endl;
+		exit(1);
 	}
 	for (int i = 0; i < lines.size(); i++) {
-		if (i == lines.size() - 1) {
-			fout << lines[i];
-			break;
+		if (i < init_pos || i > end_pos) {
+			fout << lines[i] << "\n";
+		} else if (i == init_pos)
+			fout << "@slot " << slot << "\n";
+		else if (i == init_pos + 1)
+			fout << "@character\n";
+		else if (i == init_pos + 22)
+			fout << "@maze\n";
+		else if (i == init_pos + 73)
+			fout << "@username\n";
+		else if (i > init_pos + 1 && i < init_pos + 22) {
+			fout << to_string(save_parameters[i - init_pos - 2]) << "\n";
+		} else if (i >= init_pos + 23 && i <= init_pos + 72) {
+			fout << s.maze[i - init_pos - 23] << "\n";
+		} else if (i == init_pos + 74) {
+			fout << s.username << "\n";
 		}
-		fout << lines[i] << "\n";
 	}
+	// for (int i = 0; i < lines.size(); i++) {
+	// 	if (i == lines.size() - 1) {
+	// 		fout << lines[i];
+	// 		break;
+	// 	}
+	// 	fout << lines[i] << "\n";
+	// }
 	fout.close();
+	delete[] save_parameters;
 
 	return;
 }
@@ -455,56 +504,44 @@ int print_start_page_helper() {
 			cursor = (cursor + 1) % options.size();
 		} else if (key == 'C' || key == 'c') {
 			verdict = cursor;
+			break;
 		}
 	}
-
 	return verdict;
 }
 
 // Includes: New Game, Continue Game, Save, Start Tutorial, Exit.
-save_file start_page() {
+int start_page(save_file &ret) {
 	int tmp_verdict = -1;
-	save_file ret;
-	while (tmp_verdict != 4) {
+	while (tmp_verdict != 2) {
 		tmp_verdict = print_start_page_helper();
-		switch (tmp_verdict) {
-		case 0: {
-			new_game();
-			break;
-		}
-		case 1: {
-			auto tmp = continue_or_modify_saving();
-			tmp_verdict = tmp.first;
-			ret = tmp.second;
+		// std::cerr << tmp_verdict << "\n";
+		if (tmp_verdict == 0) {
+			ret.username = new_game();
+			return 1;
+		} else if (tmp_verdict == 1) {
+			// std::cerr << "OK5\n";
+			// save_file ret;
+			auto tmp = continue_or_modify_saving(ret);
 			// successfully read settings.
-			if (tmp_verdict == 1) {
-				return ret;
+			if (tmp == 1) {
+				// return ret;
+				return 2;
 			}
-			break;
-		}
-		case 2:
-			save(save_file());
-			break;
-		case 3:
-			// tutorial();
-			break;
-		case 4: // Exit Game
+			// break;
+		} else if (tmp_verdict == 2) {
 			end();
-			break;
-		default:
-			// Never reach here. LOL
-			cout << "invalid choice, please try again" << endl;
 			break;
 		}
 	}
-	return {};
+	// return {};
 }
 
 // Load stored settings to the game.
 bool main_game(save_file s, Maze &mz, main_character &mc, vector<Monster> &ms) {
-	mz.addMainCharacter(mc);
-	mz.addMonsters(ms);
-	mz.loadMaze(s.maze);
+	// mz.addMainCharacter(mc);
+	// mz.addMonsters(ms);
+	// mz.loadMaze(s.maze);
 	return true; // successfully load settings
 }
 

@@ -23,9 +23,9 @@ void mon_show_reset() {
 
 // NOTE -  Modify the percentage distribution here.
 const int kNormalMonsterPercentage = 20; // 20
-const int kClonePercentage = 40;		 // 20+20
-const int kCithPercentage = 60;			 // 20+20+20
-const int kMandaloriansPercentage = 80;	 // 20+20+20+20
+const int kClonePercentage = 25;		 // 20+20
+const int kCithPercentage = 50;			 // 20+20+20
+const int kMandaloriansPercentage = 75;	 // 20+20+20+20
 const int kRobotPercentage = 100;		 // 20+20+20+20+20
 // Function call to create a new monster.
 Monster createMonster() {
@@ -70,6 +70,10 @@ std::pair<int, int> Monster::getPosition() {
 void Monster::setPosition(int x, int y) {
 	locate_x = x;
 	locate_y = y;
+}
+int Monster::normalAttack() {
+	recoverHP((hp_max_ - hp_) * 0.1);
+	return (damage());
 }
 bool Monster::isAlive() {
 	if (hp_ <= 0) {
@@ -260,8 +264,8 @@ void Mandalorians::hurt(int x) {
 	}
 }
 //改动----------------
-// Clone clo1;
-// Robot rob1;
-// Cith cit1;
-// Mandalorians man1;
+Clone clo1;
+Robot rob1;
+Cith cit1;
+Mandalorians man1;
 //改动----------------

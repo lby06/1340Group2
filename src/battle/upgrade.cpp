@@ -4,18 +4,18 @@
 
 vector<pair<string,string>> names = 
 {
-    make_pair("ac1.1","ac1.2"),
-    make_pair("ac2.1","ac2.2"),
-    make_pair("pa3.1","pa3.2"),
-    make_pair("pa4.1","pa4.2")
+    make_pair("recoverhit (Active Skill)","bladestorm (Active Skill)"),
+    make_pair("vengeance (Passive Skill)","magicdraw (Passive Skill)"),
+    make_pair("hellfire (Active Skill)","rage (Active Skill)"),
+    make_pair("doublecrit (Passive Skill)","ultimatedef (Passive Skill)")
   
 };
 vector<pair<string,string>> description = 
 {
-    make_pair("des1.1","des1.2"),
-    make_pair("des2.1","des2.2"),
-    make_pair("des3.1","des3.2"),
-    make_pair("des4.1","des4.2")
+    make_pair("restore HP after attacking","more damage to a certain enemy"),
+    make_pair("restore HP after being attacked","restore MP after using skills"),
+    make_pair("Cost more MP to get more attack","Strengthen the next two basic attacks"),
+    make_pair("chance for double ctritical hit","restore attributes after getting hurt")
 };
 
 // vector<pair<void (*)(),void(*)()>> activate_funs =
@@ -40,5 +40,11 @@ vector<pair<string,string>> description =
 //     name2 = names[level].second;
 //     int choice = UPGRADE(level);
 //     cout << "your choice is: " << choice << endl;
+// }
+
+// int main() {
+// 	int level;
+// 	cin >> level;
+// 	activate(level);
 // }
 
