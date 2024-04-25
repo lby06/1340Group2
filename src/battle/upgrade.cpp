@@ -42,9 +42,9 @@ vector<pair<string,string>> description =
 //     cout << "your choice is: " << choice << endl;
 // }
 
-int main() {
-	int level;
-	cin >> level;
-	activate(level);
-}
+// int main() {
+// 	int level;
+// 	cin >> level;
+// 	activate(level);
+// }
 
