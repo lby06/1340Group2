@@ -9,7 +9,7 @@
 void battle_monster(int level,std::string name_ms){
     clearScreen();
     string name_mc;
-//check the status
+//check the status when entering the game
     //character name_mc or the image
     if (level >= 0 && level <= 3) {
         name_mc="apprentice";
