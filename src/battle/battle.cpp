@@ -80,8 +80,8 @@ void battle_monster(int level,std::string name_ms){
     WordInsert(fight_map, skillname4, skill4_1);
     WordInsert(fight_map, skillmp4, skill4_2);
     
-    WordInsert(fight_map, "placeforbd1", boardcast_p1);
-    WordInsert(fight_map, "bd2", boardcast_p2);
+    // WordInsert(fight_map, "placeforbd1", boardcast_p1);
+    // WordInsert(fight_map, "bd2", boardcast_p2);
 
     
     roundNumber = 0;
