@@ -7,6 +7,8 @@
 #include "src/ui/start_endpage.h"
 #include "src/utils/utils.hpp"
 #include "src/battle/battle_upgrade.h"
+#include "src/battle/win.h"
+
 #include <iostream>
 
 int game_loop() {
@@ -104,6 +106,7 @@ int game_loop() {
 			cit1.reset(level, 0);
 
 			battle_monster(cha1.level, tmp1.second);
+			victorysettlement();
 			maze.winning();
 		}
 		// 1.1 Fighs
@@ -126,7 +129,7 @@ int game_loop() {
 		if (maze.isMainCharacterAtExit()) {
 			
 			activate(level);		// 3.1 Level up (and corresponding properties). implemente here finish
-			level++;
+			cha1.upgrade();
 			// Create new maze.
 			maze.newMaze();
 
@@ -145,6 +148,7 @@ int game_loop() {
 }
 
 int main(){
+
 	game_loop();
 	return 0;
 }

@@ -18,6 +18,7 @@ MAIN=$(SRC)/main/main.cpp
 BATTLE_HEADER=$(SRC)/battle/battle_upgrade.h
 BATTLE=$(SRC)/battle/battle_upgrade.cpp
 UPGRADE=$(SRC)/battle/upgrade.cpp
+WIN=$(SRC)/battle/win.cpp
 
 BATTLE_MAIN=$(SRC)/battle/battle.cpp
 BATTLE_MAIN_HEADER=$(SRC)/battle/battle.h
@@ -96,13 +97,14 @@ battle_upgrade.o: $(BATTLE)  $(CHARACTER) $(UTILS)
 	$(compiler) $(FLAG) -c $< -o battle_upgrade.o
 upgrade.o:  $(UPGRADE)
 	$(compiler) $(FLAG) -c $< -o upgrade.o
-
+win.o: $(WIN)
+	$(compiler) $(FLAG) -c $< -o win.o
 battle_upgrade: battle_upgrade.o character.o upgrade.o
 	$(compiler) $(FLAG) $^ -o battle_upgrade.out
 
 
 # GAME (Main entrance)
-game: game.cpp start.o utils.o maze.o character.o monster.o saving_ui.o battle.o print_features.o battle_upgrade.o upgrade.o
+game: game.cpp start.o utils.o maze.o character.o monster.o saving_ui.o battle.o print_features.o battle_upgrade.o upgrade.o win.o
 	$(compiler) $(FLAG) $^ -o game
 
 # MISC
