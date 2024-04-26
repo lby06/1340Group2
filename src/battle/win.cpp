@@ -38,4 +38,36 @@ void victorysettlement()
     return;
 }
 
+void diesettlement()
+{
+    system("printf \"\\033c\"");
+    string content = R"(*****************************************************************************
+*                                                                           *                  
+*                                                                           *
+*                                                                           *
+*                                                                           *
+*                                                                           *
+*                                                                           *
+*                                                                           *
+*                                                                           *
+*                                                                           *
+*                               you lose                                    *
+*                                                                           *
+*                                                                           *
+*                                                                           *
+*                                                                           *
+*                                                                           *
+*                                                                           *
+*                                                                           *
+*                                                                           *
+*                                                                           *
+*                                                                           *
+*                                                                           *
+*****************************************************************************)";
+    std::cout<< content << std::endl;
+    this_thread::sleep_for(chrono::seconds(1));
+    system("printf \"\\033c\"");
+    return;
+}
+
 
