@@ -1,5 +1,5 @@
 #include "monster.h"
-#include "../utils/utils.hpp"
+#include "utils.hpp"
 #include <iostream>
 #include <random>
 #include <sched.h>
@@ -107,7 +107,7 @@ void Monster::hurt(int x) {
 	mt19937 gen(rd());
 	uniform_real_distribution<> dis(0, 1);
 	if (dis(gen) <= evasion_rate_) {
-		cout << "Evasion successful.";
+		mon_show_evasion = "Evasion successful.";
 	} else {
 		int y = x - def_;
 		if ((hp_ - y) <= 0) {
@@ -133,7 +133,7 @@ void Clone::reset(int level, int number) {
 }
 int Clone::normalAttack() {
 	int x=damage();
-	recoverHP(x*0.3);
+	recoverHP(x*0.15);
 	return (x);
 }
 
@@ -143,7 +143,7 @@ void Robot::reset(int level, int number) {
 	hp_ = hp_max_;
 	mp_ = 0;
 	def_ = 1 + level * 1.2 + number * 1.0 / 4;
-	atk_ = 2 + level * 1.2 + number * 1.0 / 4;
+	atk_ = 2 + level * 1 + number * 1.0 / 4;
 	evasion_rate_ = 0.10 + level * 0.04 + number * 0.008;
 	critical_rate_ = 0.2 + level * 0.05 + number * 0.01;
 	critical_damage_ = 1.6;
@@ -159,7 +159,7 @@ void Cith::reset(int level, int number) {
 	hp_ = hp_max_;
 	mp_ = 0;
 	def_ = 0 + level*0.5 + number / 4;
-	atk_ = 3 + level * 2 + number * 1.0 / 4;
+	atk_ = 3 + level *1.5 + number * 1.0 / 4;
 	evasion_rate_ = 0.12 + level * 0.06 + number * 0.012;
 	critical_rate_ = 0.25 + level * 0.07 + number * 0.014;
 	critical_damage_ = 1.6;
@@ -167,8 +167,8 @@ void Cith::reset(int level, int number) {
 }
 //技能1
 void Cith::returntodark() {
-	mp_ -= 99;
-	life = 3;
+	mp_ -= 5;
+	life = 4;
 	critical_rate_ *= 1.2;
 	critical_damage_ = 1.8;
 }
@@ -192,7 +192,6 @@ void Cith::hurt(int x) {
 			hp_ = 0;
 		} else {
 			hp_ -= y;
-			cout << "hurt: hp_-" << y;
 			recoverMP(1);
 		}
 	}
@@ -208,7 +207,7 @@ void Mandalorians::reset(int level, int number) {
 	hp_ = hp_max_;
 	mp_ = 0;
 	def_ = 0 + level * 1 + number * 1.0 / 4;
-	atk_ = 3 + level * 1.5 + number * 1.0 / 4;
+	atk_ = 3 + level * 1 + number * 1.0 / 4;
 	evasion_rate_ = 0.10 + level * 0.04 + number * 0.008;
 	critical_rate_ = 0.2 + level * 0.05 + number * 0.01;
 	critical_damage_ = 1.6;
@@ -221,7 +220,7 @@ void Mandalorians::rage() {
 	hp_ *= 1.1;
 	critical_rate_ *= 1.1;
 	atk_ *= 1.1;
-	beatback += 1;
+	beatback += 2;
 }
 int Mandalorians::damage() {
 	if (beatback >= 1) {
@@ -260,7 +259,6 @@ void Mandalorians::hurt(int x) {
 			hp_ = 0;
 		} else {
 			hp_ -= y;
-			cout << "hurt: hp_-" << y;
 			recoverMP(1);
 		}
 	}
