@@ -50,7 +50,7 @@ string new_game() {
 	cout << "\n  press 'enter' to continue...";
 	cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 	print_file("data/scripts/ascii_images/script1.txt", 0, true);
-	cout << "\n                                          *** press 'enter' to continue... ***";
+	cout << "\n                                                *** press 'enter' to continue... ***";
 	cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 	
 	string name;
@@ -474,7 +474,7 @@ void end() {
 // Prints the start page and returns verdict of operation.
 int print_start_page_helper() {
 	// Show formatted options;
-	vector<string> options = {"New Game", "Continue", "Exit"};
+	vector<string> options = {"New Game", "Continue", "Tutorial", "Exit"};
 	int verdict = -1;
 	int cursor = 0; // Which entry is the cursor pointing.
 
@@ -537,7 +537,12 @@ int start_page(save_file &ret) {
 				return 2;
 			}
 			// break;
-		} else if (tmp_verdict == 2) {
+		} else if (tmp_verdict == 2){
+			print_file("data/scripts/ascii_images/tutorial.txt", 0, true);
+			cout << "\n*** press 'enter' to continue... ***";
+			cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			tmp_verdict = print_start_page_helper();
+		} else if (tmp_verdict == 3) {
 			end();
 			break;
 		}

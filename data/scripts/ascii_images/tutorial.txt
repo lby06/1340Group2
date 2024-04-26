@@ -1,0 +1,25 @@
+Numerical-related Concepts
+
+There is a chance for a character to be immune to damage when they are attacked. There is also a probability for a character to land a critical hit or a double critical hit when they deal damage.
+[MP]: Skills released by [Character] or [Monster] consume MP.
+[Evasion Rate]: The probability of avoiding damage when being attacked.
+[Critical Rate]: The probability of landing a critical hit when dealing damage.
+[Critical Damage]: The ratio of the damage caused by a critical hit to the original damage.
+
+Basic Mechanics
+
+[Combat]: When [Character] encounters [Monster] while moving through the maze, they enter into combat. If [Character] fails, the game ends.
+[Growth]: By defeating a certain number of enemies, [Character] can level up. Upon leveling up, their health is restored to maximum, and their base stats increase. Additionally, at levels 1, 4, 7, and 10, they can choose either an active or passive skill.
+
+Combat Mechanics
+
+Attack Mechanism: [Character] and [Monster] take turns attacking, using either a basic attack or a skill each round.
+MP Restoration Mechanism: When receiving damage, a certain amount of MP is restored. MP is consumed when using skills.
+Monster Skill Release: [Monster] releases an active skill every three rounds. If there is insufficient MP, the skill will be canceled.
+
+Types of Monsters:
+
+[Clone]: Basic monsters created based on the bounty hunter Jango Fett with moderate health, attack, and defense. Their attacks have a lifesteal effect based on the damage dealt.
+[Sith]: Force users with a belief in the dark side of the Force with low health and defense. They possess the active skill [Return to Dark], which grants invincibility and increased critical hit chance while active. When the effect ends, the Sith dies.
+[Droid]: High-tech creations of the empire. They have high defense and possess the active skill [Laser], which deals high damage.
+[Mandalorians]: An ancient humanoid species that values combat skills with high attack and defense. They possess the active skill [Rage], which increases their attack and grants them an opportunity to perform a [Beatback] counterattack, reflecting the full amount of damage received in the next attack.

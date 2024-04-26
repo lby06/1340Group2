@@ -115,8 +115,7 @@ int main() {
 		// End game check.
 		// 1. HP <= 0 (After fight)
 		if (!cha1.is_alive()) {
-			print_file("data/scripts/ascii_images/lose.txt");
-			print_file("data/scripts/ascii_images/script1.txt", 0, true);
+			print_file("data/scripts/ascii_images/lose.txt", 0, true);
 			cout << "\n                                          *** press 'enter' to continue... ***";
 			cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 			new_game_verdict = start_page(tmp);
