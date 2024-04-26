@@ -36,7 +36,7 @@ void battle_monster(int level,std::string name_ms){
     }
     if (cha1.skill_status[0]==2){
         skillname1="bladestorm";
-        skillmp2 = "MP: 4";
+        skillmp1 = "MP: 4";
     }
     if (cha1.skill_status[1]==1){
         skillname2="Vengeance";
