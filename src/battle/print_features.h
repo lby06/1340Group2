@@ -11,6 +11,7 @@ extern vector<pair<int, int>> position_mc, position_ms, state_mc, state_ms;
 extern vector<pair<int, int>> name_mc_p, name_ms_p, boardcast_p1,boardcast_p2;
 extern vector<pair<int, int>> skill1_1, skill1_2, skill2_1, skill2_2;
 extern vector<pair<int, int>> skill3_1, skill3_2, skill4_1, skill4_2;
+extern vector<pair<int, int>> chabar, monbar;
 
 //tests
 
@@ -19,6 +20,9 @@ extern int roundNumber;
 extern string filepath_ms, filepath_mc;
 extern vector<string> fight_map;
 
+extern string chat;
+extern string mont;
+//extern string hpbar;
 //test function
 // string readName();//insert name
 // void printLineLengths(const vector<string>& lines);//print length
@@ -49,5 +53,8 @@ void NewRound(vector<string>& fight_map, int& roundNumber);
 void clearScreen();
 //wait for SleepTime seconds 
 void WaitSecond(int SleepTime);
+// add the information of who attack
+void TurnInsert(vector<string> & map, string word);
 
+void stringratio(string & line, int hpmax, int hp,string name);
 #endif // PRINT_FEATURES_H

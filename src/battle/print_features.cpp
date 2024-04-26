@@ -27,7 +27,11 @@ vector<pair<int, int>> skill3_1 = {{18, 27},{18, 38}};
 vector<pair<int, int>> skill3_2 = {{19, 27},{19, 38}};
 vector<pair<int, int>> skill4_1 = {{18, 40},{18, 51}};
 vector<pair<int, int>> skill4_2 = {{19, 40},{19, 51}};
-
+vector<pair<int, int>> chabar = {{1, 13},{1, 30}};
+vector<pair<int, int>> monbar = {{1, 35},{1, 52}};
+string chat = ">-----------your turn------------<                                 ";
+string mont = "                                 >-------------charging-----------<";
+string hpbar= "=================";
 //a test for features
 int roundNumber = 0;
 //a test
@@ -39,7 +43,7 @@ string filepath_mc="data/animations/main_character_ASCii.txt";
 vector<string> fight_map = {
     //map resolution :22*67
 "-------------------------------Round    ---------------------------",
-"| HP:  [   ]                     |                   HP:  [   ]   |", 
+"| HP:  [   ][                 ]  |[                 ]HP:  [   ]   |", 
 "| MP:  [   ]                     |                   MP:  [   ]   |",             
 "| ATK: [   ]          Name:      |Name:              ATK: [   ]   |", 
 "|--------------------------------|--------------------------------|",
@@ -59,8 +63,9 @@ vector<string> fight_map = {
 "*            *            *            *             * Strike(S)  *",
 "*            *            *            *             * Info(I)    *",
 "*******************************************************************",
-"Press 1 or 2 to use the skills",
-"Press s for normal strike(in each round only one input allowed)"
+"                                                                   ", //line21
+// "Press 1 or 2 to use the skills",
+// "Press s for normal strike(in each round only one input allowed)"
 };
 
 // //read in names
@@ -203,3 +208,43 @@ void clearScreen() {
 void WaitSecond(int SleepTime) {
     sleep(SleepTime);
 }
+
+void TurnInsert(vector<string> & map, string word)
+{
+    map[21] = word;
+    return;
+}
+
+void stringratio(string & line, int hpmax, int hp,string name)
+{
+    int remain = line.length()*hp/hpmax;
+    for(int i = 0; i < remain;i++)
+    {
+        line[i] = '=';
+    }
+    for(int i = remain;i < line.length();i++)
+    {
+        line[i] = ' ';
+    }
+    if(name != "cha")
+    {
+        string temp = line;
+        for(int i = 0; i < line.length();i++)
+        {
+            line[i] = temp[line.length()-i-1];
+        }
+    }
+    return;
+}
+
+// int main()
+// {
+//     stringratio(hpbar,3,1);
+//     cout  << hpba
+// }
+
+
+
+
+
+

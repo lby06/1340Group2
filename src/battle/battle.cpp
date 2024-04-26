@@ -79,7 +79,10 @@ void battle_monster(int level,std::string name_ms){
     WordInsert(fight_map, skillmp3, skill3_2);
     WordInsert(fight_map, skillname4, skill4_1);
     WordInsert(fight_map, skillmp4, skill4_2);
-    
+    string hpbar = "=================";
+    WordInsert(fight_map, hpbar, chabar);
+    WordInsert(fight_map, hpbar, monbar);
+
     // WordInsert(fight_map, "placeforbd1", boardcast_p1);
     // WordInsert(fight_map, "bd2", boardcast_p2);
 
@@ -87,9 +90,14 @@ void battle_monster(int level,std::string name_ms){
     roundNumber = 0;
     NewRound(fight_map, roundNumber);
     StateInsert(fight_map, convertNumber(cha1.HP(), cha1.MP(), cha1.ATK()), state_mc);
+    TurnInsert(fight_map,chat);
     //monster added later
+
+    int chamax = cha1.HP();
+    
     if (name_ms =="Clone"){
         StateInsert(fight_map, convertNumber(clo1.HP(), clo1.MP(), clo1.ATK()), state_ms);
+        int monmax = clo1.HP();
         while (true){
 
             printMap(fight_map);
@@ -129,11 +137,14 @@ void battle_monster(int level,std::string name_ms){
             clearScreen();
             StateInsert(fight_map, convertNumber(cha1.HP(), cha1.MP(), cha1.ATK()), state_mc);
             StateInsert(fight_map, convertNumber(clo1.HP(), clo1.MP(), clo1.ATK()), state_ms);
+            stringratio(hpbar, monmax,clo1.HP()," ");
+            WordInsert(fight_map,hpbar,monbar);
+            TurnInsert(fight_map,mont);
             printMap(fight_map);
             WaitSecond(1);
             cha1.hurt(clo1.normalAttack());
             clearScreen();
-            WaitSecond(1);
+            //WaitSecond(1);
             //one round finish
             //implement win or lose
             if (cha1.is_alive() == false){
@@ -143,10 +154,14 @@ void battle_monster(int level,std::string name_ms){
         NewRound(fight_map, roundNumber);
         StateInsert(fight_map, convertNumber(cha1.HP(), cha1.MP(), cha1.ATK()), state_mc);
         StateInsert(fight_map, convertNumber(clo1.HP(), clo1.MP(), clo1.ATK()), state_ms);
+        TurnInsert(fight_map,chat);
+        stringratio(hpbar, chamax, cha1.HP(),"cha");
+        WordInsert(fight_map,hpbar,chabar);
         }
     }
     if (name_ms =="Robot"){
         StateInsert(fight_map, convertNumber(rob1.HP(), rob1.MP(), rob1.ATK()), state_ms);
+        int monmax = rob1.HP();
         while (true){
 
             printMap(fight_map);
@@ -185,6 +200,9 @@ void battle_monster(int level,std::string name_ms){
             }
             StateInsert(fight_map, convertNumber(cha1.HP(), cha1.MP(), cha1.ATK()), state_mc);
             StateInsert(fight_map, convertNumber(rob1.HP(), rob1.MP(), rob1.ATK()), state_ms);
+            stringratio(hpbar, monmax,rob1.HP()," ");
+            WordInsert(fight_map,hpbar,monbar);
+            TurnInsert(fight_map,mont);
             clearScreen();
             printMap(fight_map);
             WaitSecond(1);
@@ -195,7 +213,7 @@ void battle_monster(int level,std::string name_ms){
                 }
             
             clearScreen();
-            WaitSecond(1);
+            // WaitSecond(1);
             //one round finish
             //implement win or lose
 
@@ -206,10 +224,14 @@ void battle_monster(int level,std::string name_ms){
         NewRound(fight_map, roundNumber);
         StateInsert(fight_map, convertNumber(cha1.HP(), cha1.MP(), cha1.ATK()), state_mc);
         StateInsert(fight_map, convertNumber(rob1.HP(), rob1.MP(), rob1.ATK()), state_ms);
+        TurnInsert(fight_map,chat);
+        stringratio(hpbar, chamax, cha1.HP(),"cha");
+        WordInsert(fight_map,hpbar,chabar);
         }
     }
-        if (name_ms =="Cith"){
+    if (name_ms =="Cith"){
         StateInsert(fight_map, convertNumber(cit1.HP(), cit1.MP(), cit1.ATK()), state_ms);
+        int monmax = cit1.HP();
         while (true){
 
             printMap(fight_map);
@@ -248,6 +270,9 @@ void battle_monster(int level,std::string name_ms){
             }
             StateInsert(fight_map, convertNumber(cha1.HP(), cha1.MP(), cha1.ATK()), state_mc);
             StateInsert(fight_map, convertNumber(cit1.HP(), cit1.MP(), cit1.ATK()), state_ms);
+            stringratio(hpbar, monmax,cit1.HP()," ");
+            WordInsert(fight_map,hpbar,monbar);
+            TurnInsert(fight_map,mont);
             clearScreen();
             printMap(fight_map);
             WaitSecond(1);
@@ -258,7 +283,7 @@ void battle_monster(int level,std::string name_ms){
                 }
             
             clearScreen();
-            WaitSecond(1);
+            // WaitSecond(1);
             //one round finish
             //implement win or lose
 
@@ -269,10 +294,14 @@ void battle_monster(int level,std::string name_ms){
         NewRound(fight_map, roundNumber);
         StateInsert(fight_map, convertNumber(cha1.HP(), cha1.MP(), cha1.ATK()), state_mc);
         StateInsert(fight_map, convertNumber(cit1.HP(), cit1.MP(), cit1.ATK()), state_ms);
+        TurnInsert(fight_map,chat);
+        stringratio(hpbar, chamax, cha1.HP(),"cha");
+        WordInsert(fight_map,hpbar,chabar);
         }
     }
     if (name_ms =="Mandalorians"){
         StateInsert(fight_map, convertNumber(man1.HP(), man1.MP(), man1.ATK()), state_ms);
+        int monmax = man1.HP();
         while (true){
 
             printMap(fight_map);
@@ -311,6 +340,9 @@ void battle_monster(int level,std::string name_ms){
             }           
             StateInsert(fight_map, convertNumber(cha1.HP(), cha1.MP(), cha1.ATK()), state_mc);
             StateInsert(fight_map, convertNumber(man1.HP(), man1.MP(), man1.ATK()), state_ms);
+            stringratio(hpbar, monmax,man1.HP()," ");
+            WordInsert(fight_map,hpbar,monbar);
+            TurnInsert(fight_map,mont);
             clearScreen();
             printMap(fight_map);
             WaitSecond(1);
@@ -323,7 +355,7 @@ void battle_monster(int level,std::string name_ms){
             
             
             clearScreen();
-            WaitSecond(1);
+            // WaitSecond(1);
             //one round finish
             //implement win or lose
             if (cha1.is_alive() == false){
@@ -333,6 +365,9 @@ void battle_monster(int level,std::string name_ms){
         NewRound(fight_map, roundNumber);
         StateInsert(fight_map, convertNumber(cha1.HP(), cha1.MP(), cha1.ATK()), state_mc);
         StateInsert(fight_map, convertNumber(man1.HP(), man1.MP(), man1.ATK()), state_ms);
+        TurnInsert(fight_map,chat);
+        stringratio(hpbar, chamax, cha1.HP(),"cha");
+        WordInsert(fight_map,hpbar,chabar);
         }
     }
 }
