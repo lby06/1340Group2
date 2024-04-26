@@ -99,8 +99,7 @@ void battle_monster(int level,std::string name_ms){
         StateInsert(fight_map, convertNumber(clo1.HP(), clo1.MP(), clo1.ATK()), state_ms);
         int monmax = clo1.HP();
         while (true){
-
-            printMap(fight_map);
+            printMap(fight_map,{chabar});
             //for player to choose skill
             char in;
             while (true) {
@@ -140,7 +139,7 @@ void battle_monster(int level,std::string name_ms){
             stringratio(hpbar, monmax,clo1.HP()," ");
             WordInsert(fight_map,hpbar,monbar);
             TurnInsert(fight_map,mont);
-            printMap(fight_map);
+            printMap(fight_map, {monbar});
             WaitSecond(1);
             cha1.hurt(clo1.normalAttack());
             clearScreen();
@@ -164,7 +163,8 @@ void battle_monster(int level,std::string name_ms){
         int monmax = rob1.HP();
         while (true){
 
-            printMap(fight_map);
+            printMap(fight_map,{chabar});
+
             //for player to choose skill
             char in;
             while (true) {
@@ -204,7 +204,7 @@ void battle_monster(int level,std::string name_ms){
             WordInsert(fight_map,hpbar,monbar);
             TurnInsert(fight_map,mont);
             clearScreen();
-            printMap(fight_map);
+            printMap(fight_map,{monbar});
             WaitSecond(1);
             if (roundNumber % 3 == 0 && rob1.MP() >=3) {
                 cha1.hurt(rob1.lasers());
@@ -233,8 +233,8 @@ void battle_monster(int level,std::string name_ms){
         StateInsert(fight_map, convertNumber(cit1.HP(), cit1.MP(), cit1.ATK()), state_ms);
         int monmax = cit1.HP();
         while (true){
+            printMap(fight_map,{chabar});
 
-            printMap(fight_map);
             //for player to choose skill
             char in;
             while (true) {
@@ -274,7 +274,7 @@ void battle_monster(int level,std::string name_ms){
             WordInsert(fight_map,hpbar,monbar);
             TurnInsert(fight_map,mont);
             clearScreen();
-            printMap(fight_map);
+            printMap(fight_map,{monbar});
             WaitSecond(1);
             if (roundNumber % 3 == 0 && cit1.MP() >=3) {
                 cha1.hurt(cit1.lasers());
@@ -303,8 +303,8 @@ void battle_monster(int level,std::string name_ms){
         StateInsert(fight_map, convertNumber(man1.HP(), man1.MP(), man1.ATK()), state_ms);
         int monmax = man1.HP();
         while (true){
+            printMap(fight_map,{chabar});
 
-            printMap(fight_map);
             //for player to choose skill
             char in;
             while (true) {
@@ -344,7 +344,7 @@ void battle_monster(int level,std::string name_ms){
             WordInsert(fight_map,hpbar,monbar);
             TurnInsert(fight_map,mont);
             clearScreen();
-            printMap(fight_map);
+            printMap(fight_map,{monbar});
             WaitSecond(1);
 
             if (roundNumber % 3 == 0 && man1.MP() >=3) {

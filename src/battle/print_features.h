@@ -35,6 +35,7 @@ void CharacterInsert(vector<string>& fight_map, const vector<string>& lines, vec
 
 //printout the fight_map
 void printMap(const vector<string>& lines);
+void printMap(const vector<string>& lines, vector<vector<pair<int,int>>> positionpairs);
 
 // formate the int to string i.e. 1 --> "001"
 string convertNumber(int HP, int MP, int ATK);

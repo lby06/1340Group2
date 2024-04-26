@@ -126,8 +126,34 @@ vector<string> ReadCharacters(const string& filePath, string name) {
 
 //printing everything out
 void printMap(const vector<string>& lines) {
-    for (const auto& line : lines) {
-        cout << line << endl;
+    for (const string& line : lines) {
+        for(int i = 0;i<line.length();i++)
+        {
+            cout << line[i] ;
+        }
+        cout << endl;
+    }
+}
+//change some color when printing
+int positionin(vector<vector<pair<int,int>>> positionpairs, pair<int,int> pos)
+{
+    for(int i = 0; i< positionpairs.size(); i++)
+    {
+        if(positionpairs[i][0] == pos){return 1;}
+        else if(positionpairs[i][1] == pos){return -1;}
+    }
+    return 0;
+}
+
+void printMap(const vector<string>& lines, vector<vector<pair<int,int>>> positionpairs) {
+    for (int i = 0; i<lines.size();i++) {
+        for(int j = 0;j<lines[i].length();j++)
+        {
+            if(positionin(positionpairs, make_pair(i,j)) == 1){cout << "\033[91;1m";}
+            if(positionin(positionpairs, make_pair(i,j)) == -1){cout << "\033[0m";}
+            cout << lines[i][j] ;
+        }
+        cout << endl;
     }
 }
 //inserting the character in
