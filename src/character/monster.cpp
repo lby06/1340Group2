@@ -1,5 +1,5 @@
 #include "monster.h"
-#include "utils.hpp"
+#include "../utils/utils.hpp"
 #include <iostream>
 #include <random>
 #include <sched.h>
