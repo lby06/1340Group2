@@ -9,7 +9,7 @@
 #include "src/battle/battle_upgrade.h"
 #include <iostream>
 
-int main() {
+int game_loop() {
 	save_file tmp;
 	Maze maze;
 	int level;
@@ -118,7 +118,7 @@ int main() {
 			print_file("data/scripts/ascii_images/lose.txt", 0, true);
 			cout << "\n                                          *** press 'enter' to continue... ***";
 			cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-			new_game_verdict = start_page(tmp);
+			game_loop();
 			//should implement a end page 
 			return 0;
 		}
@@ -141,5 +141,10 @@ int main() {
 			// std::cout << "You have reached the exit!" << std::endl;
 		}
 	}
+	return 0;
+}
+
+int main(){
+	game_loop();
 	return 0;
 }
