@@ -252,7 +252,7 @@ void battle_monster(int level,std::string name_ms){
         StateInsert(fight_map, convertNumber(cit1.HP(), cit1.MP(), cit1.ATK()), state_ms);
         }
     }
-    if (name_ms =="Mandalorains"){
+    if (name_ms =="Mandalorians"){
         StateInsert(fight_map, convertNumber(man1.HP(), man1.MP(), man1.ATK()), state_ms);
         while (true){
 
