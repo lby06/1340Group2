@@ -9,7 +9,7 @@
 void battle_monster(int level,std::string name_ms){
     clearScreen();
     string name_mc;
-//check the status when entering the game
+//check the status
     //character name_mc or the image
     if (level >= 0 && level <= 3) {
         name_mc="apprentice";
@@ -123,14 +123,19 @@ void battle_monster(int level,std::string name_ms){
                     break;
                 }
             }
+            if (clo1.isAlive() == false){
+                break;
+            }
+            clearScreen();
+            StateInsert(fight_map, convertNumber(cha1.HP(), cha1.MP(), cha1.ATK()), state_mc);
+            StateInsert(fight_map, convertNumber(clo1.HP(), clo1.MP(), clo1.ATK()), state_ms);
+            printMap(fight_map);
+            WaitSecond(1);
             cha1.hurt(clo1.normalAttack());
             clearScreen();
             WaitSecond(1);
             //one round finish
             //implement win or lose
-            if (clo1.isAlive() == false){
-                break;
-            }
             if (cha1.is_alive() == false){
                 break;
             }
@@ -175,18 +180,25 @@ void battle_monster(int level,std::string name_ms){
                     break;
                 }
             }
+            if (rob1.isAlive() == false){
+                break;
+            }
+            StateInsert(fight_map, convertNumber(cha1.HP(), cha1.MP(), cha1.ATK()), state_mc);
+            StateInsert(fight_map, convertNumber(rob1.HP(), rob1.MP(), rob1.ATK()), state_ms);
+            clearScreen();
+            printMap(fight_map);
+            WaitSecond(1);
             if (roundNumber % 3 == 0 && rob1.MP() >=3) {
                 cha1.hurt(rob1.lasers());
                 } else {
                 cha1.hurt(rob1.normalAttack());
                 }
+            
             clearScreen();
             WaitSecond(1);
             //one round finish
             //implement win or lose
-            if (rob1.isAlive() == false){
-                break;
-            }
+
             if (cha1.is_alive() == false){
                 break;
             }
@@ -231,18 +243,25 @@ void battle_monster(int level,std::string name_ms){
                     break;
                 }
             }
+            if (cit1.isAlive() == false){
+                break;
+            }
+            StateInsert(fight_map, convertNumber(cha1.HP(), cha1.MP(), cha1.ATK()), state_mc);
+            StateInsert(fight_map, convertNumber(cit1.HP(), cit1.MP(), cit1.ATK()), state_ms);
+            clearScreen();
+            printMap(fight_map);
+            WaitSecond(1);
             if (roundNumber % 3 == 0 && cit1.MP() >=3) {
                 cha1.hurt(cit1.lasers());
                 } else {
                 cha1.hurt(cit1.normalAttack());
                 }
+            
             clearScreen();
             WaitSecond(1);
             //one round finish
             //implement win or lose
-            if (cit1.isAlive() == false){
-                break;
-            }
+
             if (cha1.is_alive() == false){
                 break;
             }
@@ -287,18 +306,26 @@ void battle_monster(int level,std::string name_ms){
                     break;
                 }
             }
+            if (man1.isAlive() == false){
+                break;
+            }           
+            StateInsert(fight_map, convertNumber(cha1.HP(), cha1.MP(), cha1.ATK()), state_mc);
+            StateInsert(fight_map, convertNumber(man1.HP(), man1.MP(), man1.ATK()), state_ms);
+            clearScreen();
+            printMap(fight_map);
+            WaitSecond(1);
+
             if (roundNumber % 3 == 0 && man1.MP() >=3) {
                 cha1.hurt(man1.damage());
                 } else {
                 cha1.hurt(man1.normalAttack());
                 }
+            
+            
             clearScreen();
             WaitSecond(1);
             //one round finish
             //implement win or lose
-            if (man1.isAlive() == false){
-                break;
-            }
             if (cha1.is_alive() == false){
                 break;
             }
