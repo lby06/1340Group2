@@ -24,7 +24,7 @@ void mon_show_reset() {
 // NOTE -  Modify the percentage distribution here.
 const int kNormalMonsterPercentage = 20; // 20
 const int kClonePercentage = 40;		 // 20+20
-const int kCithPercentage = 60;			 // 20+20+20
+const int kSithPercentage = 60;			 // 20+20+20
 const int kMandaloriansPercentage = 80;	 // 20+20+20+20
 const int kRobotPercentage = 100;		 // 20+20+20+20+20
 // Function call to create a new monster.
@@ -37,8 +37,8 @@ Monster createMonster() {
 		auto f = Clone();
 		f.setPosition(pos.first, pos.second);
 		return f;
-	} else if (tmp < kCithPercentage) {
-		auto f = Cith();
+	} else if (tmp < kSithPercentage) {
+		auto f = Sith();
 		f.setPosition(pos.first, pos.second);
 		return f;
 	} else if (tmp < kMandaloriansPercentage) {
@@ -153,7 +153,7 @@ int Robot::lasers() {
 	mp_ -= 3;
 	return (damage() * 2);
 }
-void Cith::reset(int level, int number) {
+void Sith::reset(int level, int number) {
 	int rate = level + number * 0.2;
 	hp_max_ = 9 * rate + 18;
 	hp_ = hp_max_;
@@ -166,13 +166,13 @@ void Cith::reset(int level, int number) {
 	life = 0;
 }
 //技能1
-void Cith::returntodark() {
+void Sith::returntodark() {
 	mp_ -= 5;
 	life = 4;
 	critical_rate_ *= 1.2;
 	critical_damage_ = 1.8;
 }
-void Cith::hurt(int x) {
+void Sith::hurt(int x) {
 	if (life >= 2) {
 		life -= 1;
 		return;
@@ -196,7 +196,7 @@ void Cith::hurt(int x) {
 		}
 	}
 }
-int Cith::lasers() {
+int Sith::lasers() {
 	mp_ -= 3;
 	return (damage() * 1.5);
 }
@@ -266,6 +266,6 @@ void Mandalorians::hurt(int x) {
 //改动----------------
 Clone clo1;
 Robot rob1;
-Cith cit1;
+Sith sit1;
 Mandalorians man1;
 //改动----------------
