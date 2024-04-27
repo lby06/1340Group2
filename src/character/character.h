@@ -14,12 +14,14 @@ class main_character {
 	int HP();
 	int MP();
 	int ATK();
+	int EXP();
 	// Position.
 	std::pair<int, int> getPosition();
 	void setPosition(int, int);
 	// Basic behaviours.
 	bool is_alive();
 	void reset();
+	void getEXP(int x);
 	void set(double a[]);
 	double *save();
 	void display();
