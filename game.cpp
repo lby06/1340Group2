@@ -105,7 +105,7 @@ int game_loop() {
 			sit1.reset(level * 0.8, 0);
 
 			battle_monster(cha1.level, tmp1.second);
-			if(cha1.is_alive){
+			if(cha1.is_alive()){
 				victorysettlement();
 			}
 			cha1.getEXP(12);
