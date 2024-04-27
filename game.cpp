@@ -119,7 +119,7 @@ int game_loop() {
 		// 1. HP <= 0 (After fight)
 		if (!cha1.is_alive()) {
 			print_file("data/scripts/ascii_images/lose.txt", 0, true);
-			cout << "\n                                          *** press 'enter' to continue... ***";
+			cout << "\n                                          			*** press 'enter' to continue... ***";
 			cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 			game_loop();
 			//should implement a end page 
