@@ -102,7 +102,7 @@ int game_loop() {
 			clo1.reset(level * 0.8, 0);
 			rob1.reset(level * 0.8, 0);
 			man1.reset(level * 0.8, 0);
-			cit1.reset(level * 0.8, 0);
+			sit1.reset(level * 0.8, 0);
 
 			battle_monster(cha1.level, tmp1.second);
 			victorysettlement();
