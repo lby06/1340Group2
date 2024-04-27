@@ -122,10 +122,10 @@ void Monster::hurt(int x) {
 
 void Clone::reset(int level, int number) {
 	int rate = level + number * 0.2;
-	hp_max_ = 25 * rate + 8;
+	hp_max_ = 20 * rate + 16;
 	hp_ = hp_max_;
 	mp_ = 0;
-	def_ = 0 + level * 1 + number * 1.0 / 4;
+	def_ = 1 + level * 1 + number * 1.0 / 4;
 	atk_ = 3 + level * 1.5 + number * 1.0 / 4;
 	evasion_rate_ = 0.10 + level * 0.04 + number * 0.008;
 	critical_rate_ = 0.2 + level * 0.05 + number * 0.01;
@@ -139,7 +139,7 @@ int Clone::normalAttack() {
 
 void Robot::reset(int level, int number) {
 	int rate = level + number * 0.2;
-	hp_max_ = 30 * rate + 10;
+	hp_max_ = 25 * rate + 22;
 	hp_ = hp_max_;
 	mp_ = 0;
 	def_ = 1 + level * 1.2 + number * 1.0 / 4;
@@ -155,7 +155,7 @@ int Robot::lasers() {
 }
 void Cith::reset(int level, int number) {
 	int rate = level + number * 0.2;
-	hp_max_ = 25 * rate + 9;
+	hp_max_ = 16 * rate + 18;
 	hp_ = hp_max_;
 	mp_ = 0;
 	def_ = 0 + level*0.5 + number / 4;
@@ -203,7 +203,7 @@ int Cith::lasers() {
 
 void Mandalorians::reset(int level, int number) {
 	int rate = level + number * 0.2;
-	hp_max_ = 20 * rate + 8;
+	hp_max_ = 18 * rate + 17;
 	hp_ = hp_max_;
 	mp_ = 0;
 	def_ = 0 + level * 1 + number * 1.0 / 4;
