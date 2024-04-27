@@ -521,7 +521,7 @@ int print_start_page_helper() {
 // Includes: New Game, Continue Game, Save, Start Tutorial, Exit.
 int start_page(save_file &ret) {
 	int tmp_verdict = -1;
-	while (tmp_verdict != 2) {
+	while (tmp_verdict != 3) {
 		tmp_verdict = print_start_page_helper();
 		// std::cerr << tmp_verdict << "\n";
 		if (tmp_verdict == 0) {
@@ -540,11 +540,12 @@ int start_page(save_file &ret) {
 		} else if (tmp_verdict == 2){
 			print_file("data/scripts/ascii_images/tutorial.txt", 0, true);
 			cout << "\n*** press 'enter' to continue... ***";
-			cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-			tmp_verdict = print_start_page_helper();
+			// cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			getchar();
 		} else if (tmp_verdict == 3) {
 			end();
-			break;
+			// break;
+			exit(0);
 		}
 	}
 	// return {};

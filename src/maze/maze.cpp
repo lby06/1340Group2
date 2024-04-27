@@ -129,7 +129,7 @@ void Maze::winning() {
 	for (auto it = monsters_->begin(); it != monsters_->end();) {
 		if (it->getPosition().first == main_character_->getPosition().first &&
 			it->getPosition().second == main_character_->getPosition().second) {
-			std::cerr << it->genre_ << std::endl;
+			// std::cerr << it->genre_ << std::endl;
 			getchar();
 			it = monsters_->erase(it);
 		} else {

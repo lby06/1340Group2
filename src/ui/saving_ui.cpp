@@ -109,7 +109,7 @@ void SavingsUI::saveEntries() {
 	std::ofstream fout(sav_info_path);
 	for (auto &entry : entries) {
 		fout << entry.getId() << std::endl
-			 << entry.getBriefInfo() << std::endl
+			 << entry.brief_info_ << std::endl
 			 << entry.getLevel() << std::endl;
 	}
 	fout.close();
