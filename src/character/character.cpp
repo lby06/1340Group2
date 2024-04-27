@@ -176,7 +176,7 @@ void main_character::upgrade() {
 	exp -= 100;
 	atk += level/2+1;
 	def += level/2+1;
-	hp_max += 15 * level;
+	hp_max += 8 * level + 10;
 	hp = hp_max;
 	mp = 1.4 * level + 4;
 	critical_rate += level * 0.006 + 0.008;
