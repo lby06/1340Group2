@@ -107,6 +107,7 @@ int game_loop() {
 
 			battle_monster(cha1.level, tmp1.second);
 			victorysettlement();
+			cha1.getEXP(12);
 			maze.winning();
 		}
 		// 1.1 Fighs
@@ -130,7 +131,10 @@ int game_loop() {
 			
 			activate(level);		// 3.1 Level up (and corresponding properties). implemente here finish
 			level++;
-			cha1.upgrade();
+			if (cha1.EXP() >= 100)
+			{
+				cha1.upgrade();
+			}	
 			// Create new maze.
 			maze.newMaze();
 
