@@ -29,9 +29,22 @@ vector<pair<int, int>> skill4_1 = {{18, 40},{18, 51}};
 vector<pair<int, int>> skill4_2 = {{19, 40},{19, 51}};
 vector<pair<int, int>> chabar = {{1, 13},{1, 30}};
 vector<pair<int, int>> monbar = {{1, 35},{1, 52}};
-string chat = ">-----------your turn------------<                                 ";
-string mont = "                                 >-------------charging-----------<";
+string chat = ">-----------your turn------------<                                                                ";
+string mont = "                                 >-------------charging-----------<                               ";
 string hpbar= "=================";
+vector<vector<pair<int, int>>> bc_rounds_p = {{{1, 67},{1, 70}},{{2, 67},{2, 70}},{{3, 67},{3, 70}},{{4, 67},{4, 70}},{{5, 67},{5, 70}}};
+vector<vector<pair<int, int>>> bc_whos_p =   {{{1, 71},{1, 75}},{{2, 71},{2, 75}},{{3, 71},{3, 75}},{{4, 71},{4, 75}},{{5, 71},{5, 75}}};
+vector<vector<pair<int, int>>> bc_hows_p =   {{{1, 76},{1, 84}},{{2, 76},{2, 84}},{{3, 76},{3, 84}},{{4, 76},{4, 84}},{{5, 76},{5, 84}}};
+vector<vector<pair<int, int>>> bc_effects_p ={{{1, 83},{1, 89}},{{2, 83},{2, 89}},{{3, 83},{3, 89}},{{4, 83},{4, 89}},{{5, 83},{5, 89}}};
+// vector<pair<int, int>> bc2 = ;
+// vector<pair<int, int>> bc3 = ;
+// vector<pair<int, int>> bc4 = ;
+// vector<pair<int, int>> bc5 = ;
+vector<vector<vector<pair<int, int>>>> bc_p = {bc_rounds_p,bc_whos_p,bc_hows_p,bc_effects_p};
+vector<string> bc_rounds = {};
+vector<string> bc_whos = {};
+vector<string> bc_hows = {};
+vector<string> bc_effects = {};
 //a test for features
 int roundNumber = 0;
 //a test
@@ -42,28 +55,28 @@ string filepath_mc="data/animations/main_character_ASCii.txt";
 //basic background for battle
 vector<string> fight_map = {
     //map resolution :22*67
-"-------------------------------Round    ---------------------------",
-"| HP:  [   ][                 ]  |[                 ]HP:  [   ]   |", 
-"| MP:  [   ]                     |                   MP:  [   ]   |",             
-"| ATK: [   ]          Name:      |Name:              ATK: [   ]   |", 
-"|--------------------------------|--------------------------------|",
-"|                                |                                |",
-"|                                |                                |",
-"|                                |                                |",
-"|                                |                                |",
-"|                                |                                |",
-"|                                |                                |",
-"|                                |                                |",
-"|                                |                                |",
-"|                                |                                |",
-"|                                |                                |",
-"* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *",
-"|     01     *            *             *     02     *            |",
-"* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *",
-"*            *            *            *             * strike:[s] *",
-"*            *            *            *             * skill:[1/2]*",
-"*******************************************************************",
-"                                                                   ", //line21
+"-------------------------------Round    -------------------------------------boardcast------------",
+"| HP:  [   ][                 ]  |[                 ]HP:  [   ]   |   |    |          |          |", 
+"| MP:  [   ]                     |                   MP:  [   ]   |   |    |          |          |",             
+"| ATK: [   ]          Name:      |Name:              ATK: [   ]   |   |    |          |          |", 
+"|--------------------------------|--------------------------------|   |    |          |          |",
+"|                                |                                |   |    |          |          |",
+"|                                |                                |   |    |          |          |",
+"|                                |                                |   |    |          |          |",
+"|                                |                                |   |    |          |          |",
+"|                                |                                |   |    |          |          |",
+"|                                |                                |-------------------------------",
+"|                                |                                |                               ",
+"|                                |                                |                               ",
+"|                                |                                |                               ",
+"|                                |                                |                               ",
+"* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *                               ",
+"|     01     *            *      02     *            *            |                               ",
+"* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *                               ",
+"*            *            *            *             * strike:[s] *                               ",
+"*            *            *            *             * skill:[1/2]*                               ",
+"*******************************************************************                               ",
+"                                                                                                  ", //line21
 // "Press 1 or 2 to use the skills",
 // "Press s for normal strike(in each round only one input allowed)"
 };
@@ -243,7 +256,8 @@ void TurnInsert(vector<string> & map, string word)
 
 void stringratio(string & line, int hpmax, int hp,string name)
 {
-    int remain = line.length()*hp/hpmax;
+    if(hp > hpmax){cout << "caonima" <<endl;return;}
+    int remain = (line.length()*hp/hpmax) > hpmax ? hpmax : (line.length()*hp/hpmax);
     for(int i = 0; i < remain;i++)
     {
         line[i] = '=';
@@ -262,6 +276,45 @@ void stringratio(string & line, int hpmax, int hp,string name)
     }
     return;
 }
+
+
+void appendword(vector<string> & words, string word,int limit)
+{
+    vector <string> temp = words;
+    if(words.size() < limit){words.push_back(word);}
+    else
+    {
+        for(int i = 0;i<words.size()-1;i++)
+        {
+            words[i] = temp[i+1];
+        }
+        words[words.size()-1] = word;
+    }
+    return;
+}
+
+void clear(vector<string> & words)
+{
+    words = {};
+    return;
+}
+
+void wordsinsert (vector<string>& fight_map, const vector<vector<string>> & words, vector<vector<vector<pair<int, int>>>> positionpairs)
+{
+    if(words[0].size() > positionpairs[0].size()){cout << "there may be some error"<<endl;}
+    else
+    {
+        for(int i = 0 ; i< words.size();i++)
+        {
+            for(int j = 0; j<words[0].size();j++)
+            {
+            WordInsert(fight_map,words[i][j],positionpairs[i][j]);
+            }
+        }
+    }
+    return;
+}
+
 
 // int main()
 // {

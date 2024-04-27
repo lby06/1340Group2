@@ -7,6 +7,11 @@
 
 
 void battle_monster(int level,std::string name_ms){
+    vector <string> temp = fight_map;
+    clear(bc_rounds);
+    clear(bc_whos);
+    clear(bc_hows);
+    clear(bc_effects);
     clearScreen();
     string name_mc;
 //check the status
@@ -82,7 +87,10 @@ void battle_monster(int level,std::string name_ms){
     string hpbar = "=================";
     WordInsert(fight_map, hpbar, chabar);
     WordInsert(fight_map, hpbar, monbar);
-
+    string bc_round;
+    string bc_who;
+    string bc_how;
+    string bc_effect;
     // WordInsert(fight_map, "placeforbd1", boardcast_p1);
     // WordInsert(fight_map, "bd2", boardcast_p2);
 
@@ -106,15 +114,23 @@ void battle_monster(int level,std::string name_ms){
                 in = readKeyboard();
                 if (in == 's' ) {
                     clo1.hurt(cha1.normal_attack());
+                    appendword(bc_hows,"strike",5);
+                    
                     break;
                 }
                 if (in =='2'){
 
-                if (cha1.skill_status[0]==1){
+                if (cha1.skill_status[2]==1){
                     clo1.hurt(cha1.act_hellfire());
+                    appendword(bc_hows,"hellfire",5);
+
                     }
-                if (cha1.skill_status[0]==2){
+                else if (cha1.skill_status[2]==2){
                     cha1.act_rage();
+                    appendword(bc_hows,"rage",5);
+                }
+                else{
+                    appendword(bc_hows,"miss",5);
                 }
                     //skill 2
                     break;
@@ -122,10 +138,16 @@ void battle_monster(int level,std::string name_ms){
                 if (in =='1'){
                     if (cha1.skill_status[0]==1){
                         clo1.hurt(cha1.act_recoverhit());
+                        appendword(bc_hows,"recover",5);
                         }
-                    if (cha1.skill_status[0]==2){
+                    else if (cha1.skill_status[0]==2){
                         clo1.hurt(cha1.act_bladestorm());
+                        appendword(bc_hows,"blade",5);
                     }
+                    else{
+                    appendword(bc_hows,"miss",5);
+                    }
+
                         //skill 1
                     break;
                 }
@@ -139,6 +161,9 @@ void battle_monster(int level,std::string name_ms){
             stringratio(hpbar, monmax,clo1.HP()," ");
             WordInsert(fight_map,hpbar,monbar);
             TurnInsert(fight_map,mont);
+            appendword(bc_rounds,std::to_string(roundNumber),5);
+            appendword(bc_whos,"you",5);
+            wordsinsert(fight_map,{bc_rounds,bc_whos,bc_hows},bc_p);
             printMap(fight_map, {monbar});
             WaitSecond(1);
             cha1.hurt(clo1.normalAttack());
@@ -150,12 +175,17 @@ void battle_monster(int level,std::string name_ms){
                 break;
             }
             //refresh status and round number
+        appendword(bc_rounds,std::to_string(roundNumber),5);
+        appendword(bc_hows,"attack",5);
+        appendword(bc_whos,"mon",5);
         NewRound(fight_map, roundNumber);
         StateInsert(fight_map, convertNumber(cha1.HP(), cha1.MP(), cha1.ATK()), state_mc);
         StateInsert(fight_map, convertNumber(clo1.HP(), clo1.MP(), clo1.ATK()), state_ms);
         TurnInsert(fight_map,chat);
         stringratio(hpbar, chamax, cha1.HP(),"cha");
         WordInsert(fight_map,hpbar,chabar);
+
+        wordsinsert(fight_map,{bc_rounds,bc_whos,bc_hows},bc_p);
         }
     }
     if (name_ms =="Robot"){
@@ -171,15 +201,21 @@ void battle_monster(int level,std::string name_ms){
                 in = readKeyboard();
                 if (in == 's' ) {
                     rob1.hurt(cha1.normal_attack());
+                    appendword(bc_hows,"strike",5);
                     break;
                 }
                 if (in =='2'){
 
-                    if (cha1.skill_status[0]==1){
+                    if (cha1.skill_status[2]==1){
                         rob1.hurt(cha1.act_hellfire());
+                        appendword(bc_hows,"hellfire",5);
                         }
-                    if (cha1.skill_status[0]==2){
+                    else if (cha1.skill_status[2]==2){
                         cha1.act_rage();
+                        appendword(bc_hows,"rage",5);
+                    }
+                    else{
+                        appendword(bc_hows,"miss",5);
                     }
                         //skill 1
                         break;
@@ -187,9 +223,15 @@ void battle_monster(int level,std::string name_ms){
                 if (in =='1'){
                     if (cha1.skill_status[0]==1){
                         rob1.hurt(cha1.act_recoverhit());
+                        appendword(bc_hows,"recover",5);
                         }
-                    if (cha1.skill_status[0]==2){
+                    else if (cha1.skill_status[0]==2){
                         rob1.hurt(cha1.act_bladestorm());
+                        appendword(bc_hows,"blade",5);
+                    }
+                    else
+                    {
+                        appendword(bc_hows,"miss",5);
                     }
                         //skill 2
                     break;
@@ -203,13 +245,18 @@ void battle_monster(int level,std::string name_ms){
             stringratio(hpbar, monmax,rob1.HP()," ");
             WordInsert(fight_map,hpbar,monbar);
             TurnInsert(fight_map,mont);
+            appendword(bc_rounds,std::to_string(roundNumber),5);
+            appendword(bc_whos,"you",5);
+            wordsinsert(fight_map,{bc_rounds,bc_whos,bc_hows},bc_p);
             clearScreen();
             printMap(fight_map,{monbar});
             WaitSecond(1);
             if (roundNumber % 3 == 0 && rob1.MP() >=3) {
                 cha1.hurt(rob1.lasers());
+                appendword(bc_hows,"lasers",5);
                 } else {
                 cha1.hurt(rob1.normalAttack());
+                appendword(bc_hows,"attack",5);
                 }
             
             clearScreen();
@@ -221,12 +268,17 @@ void battle_monster(int level,std::string name_ms){
                 break;
             }
             //refresh status and round number
+        appendword(bc_rounds,std::to_string(roundNumber),5);
+        appendword(bc_whos,"mon",5);
+
         NewRound(fight_map, roundNumber);
         StateInsert(fight_map, convertNumber(cha1.HP(), cha1.MP(), cha1.ATK()), state_mc);
         StateInsert(fight_map, convertNumber(rob1.HP(), rob1.MP(), rob1.ATK()), state_ms);
         TurnInsert(fight_map,chat);
         stringratio(hpbar, chamax, cha1.HP(),"cha");
         WordInsert(fight_map,hpbar,chabar);
+        wordsinsert(fight_map,{bc_rounds,bc_whos,bc_hows},bc_p);
+
         }
     }
     if (name_ms =="Sith"){
@@ -241,25 +293,36 @@ void battle_monster(int level,std::string name_ms){
                 in = readKeyboard();
                 if (in == 's' ) {
                     sit1.hurt(cha1.normal_attack());
+                    appendword(bc_hows,"strike",5);
                     break;
                 }
                 if (in =='2'){
 
-                if (cha1.skill_status[0]==1){
-                    sit1.hurt(cha1.act_hellfire());
+                    if (cha1.skill_status[2]==1){
+                        sit1.hurt(cha1.act_hellfire());
+                        appendword(bc_hows,"hellfire",5);
+                        }
+                    else if (cha1.skill_status[2]==2){
+                        cha1.act_rage();
+                        appendword(bc_hows,"rage",5);
                     }
-                if (cha1.skill_status[0]==2){
-                    cha1.act_rage();
-                }
-                    //skill 1
-                    break;
-                }
+                    else{
+                        appendword(bc_hows,"miss",5);
+                    }
+                        //skill 1
+                        break;
+                    }
                 if (in =='1'){
                     if (cha1.skill_status[0]==1){
                         sit1.hurt(cha1.act_recoverhit());
+                        appendword(bc_hows,"recover",5);
                         }
-                    if (cha1.skill_status[0]==2){
+                    else if (cha1.skill_status[0]==2){
                         sit1.hurt(cha1.act_bladestorm());
+                        appendword(bc_hows,"blade",5);
+                    }
+                    else{
+                        appendword(bc_hows,"miss",5);
                     }
                         //skill 2
                     break;
@@ -273,13 +336,18 @@ void battle_monster(int level,std::string name_ms){
             stringratio(hpbar, monmax,sit1.HP()," ");
             WordInsert(fight_map,hpbar,monbar);
             TurnInsert(fight_map,mont);
+            appendword(bc_rounds,std::to_string(roundNumber),5);
+            appendword(bc_whos,"you",5);
+            wordsinsert(fight_map,{bc_rounds,bc_whos,bc_hows},bc_p);
             clearScreen();
             printMap(fight_map,{monbar});
             WaitSecond(1);
             if (roundNumber % 3 == 0 && sit1.MP() >=3) {
                 cha1.hurt(sit1.lasers());
+                appendword(bc_hows,"lasers",5);
                 } else {
                 cha1.hurt(sit1.normalAttack());
+                appendword(bc_hows,"attack",5);
                 }
             
             clearScreen();
@@ -291,12 +359,15 @@ void battle_monster(int level,std::string name_ms){
                 break;
             }
             //refresh status and round number
+        appendword(bc_rounds,std::to_string(roundNumber),5);
+        appendword(bc_whos,"mon",5);
         NewRound(fight_map, roundNumber);
         StateInsert(fight_map, convertNumber(cha1.HP(), cha1.MP(), cha1.ATK()), state_mc);
         StateInsert(fight_map, convertNumber(sit1.HP(), sit1.MP(), sit1.ATK()), state_ms);
         TurnInsert(fight_map,chat);
         stringratio(hpbar, chamax, cha1.HP(),"cha");
         WordInsert(fight_map,hpbar,chabar);
+        wordsinsert(fight_map,{bc_rounds,bc_whos,bc_hows},bc_p);
         }
     }
     if (name_ms =="Mandalorians"){
@@ -311,25 +382,38 @@ void battle_monster(int level,std::string name_ms){
                 in = readKeyboard();
                 if (in == 's' ) {
                     man1.hurt(cha1.normal_attack());
+                    appendword(bc_hows,"strike",5);
                     break;
                 }
                 if (in =='2'){
 
-                if (cha1.skill_status[0]==1){
-                    man1.hurt(cha1.act_hellfire());
+                    if (cha1.skill_status[2]==1){
+                        man1.hurt(cha1.act_hellfire());
+                        appendword(bc_hows,"hellfire",5);
+                        }
+                    else if (cha1.skill_status[2]==2){
+                        cha1.act_rage();
+                        appendword(bc_hows,"rage",5);
                     }
-                if (cha1.skill_status[0]==2){
-                    cha1.act_rage();
-                }
-                    //skill 2
-                    break;
-                }
+                    else
+                    {
+                        appendword(bc_hows,"miss",5);
+                    }
+                        //skill 2
+                        break;
+                    }
                 if (in =='1'){
                     if (cha1.skill_status[0]==1){
                         man1.hurt(cha1.act_recoverhit());
+                        appendword(bc_hows,"recover",5);
                         }
-                    if (cha1.skill_status[0]==2){
+                    else if (cha1.skill_status[0]==2){
                         man1.hurt(cha1.act_bladestorm());
+                        appendword(bc_hows,"blade",5);
+                    }
+                    else
+                    {
+                        appendword(bc_hows,"miss",5);
                     }
                         //skill 1
                     break;
@@ -343,14 +427,19 @@ void battle_monster(int level,std::string name_ms){
             stringratio(hpbar, monmax,man1.HP()," ");
             WordInsert(fight_map,hpbar,monbar);
             TurnInsert(fight_map,mont);
+            appendword(bc_rounds,std::to_string(roundNumber),5);
+            appendword(bc_whos,"you",5);
+            wordsinsert(fight_map,{bc_rounds,bc_whos,bc_hows},bc_p);
             clearScreen();
             printMap(fight_map,{monbar});
             WaitSecond(1);
 
             if (roundNumber % 3 == 0 && man1.MP() >=3) {
                 cha1.hurt(man1.damage());
+                appendword(bc_hows,"damage",5);
                 } else {
                 cha1.hurt(man1.normalAttack());
+                appendword(bc_hows,"attack",5);
                 }
             
             
@@ -362,13 +451,17 @@ void battle_monster(int level,std::string name_ms){
                 break;
             }
             //refresh status and round number
+        appendword(bc_rounds,std::to_string(roundNumber),5);
+        appendword(bc_whos,"mon",5);
         NewRound(fight_map, roundNumber);
         StateInsert(fight_map, convertNumber(cha1.HP(), cha1.MP(), cha1.ATK()), state_mc);
         StateInsert(fight_map, convertNumber(man1.HP(), man1.MP(), man1.ATK()), state_ms);
         TurnInsert(fight_map,chat);
         stringratio(hpbar, chamax, cha1.HP(),"cha");
         WordInsert(fight_map,hpbar,chabar);
+        wordsinsert(fight_map,{bc_rounds,bc_whos,bc_hows},bc_p);
         }
     }
+    fight_map = temp;
 }
 // //test
