@@ -173,7 +173,7 @@ int main_character::damage() {
 }
 void main_character::upgrade() {
 	level++;
-	exp = 0;
+	exp -= 100;
 	atk += level/2+1;
 	def += level/2+1;
 	hp_max += 15 * level;
