@@ -373,7 +373,6 @@ void main_character::act_rage() {
 	if (skill_status[2] == 2) {
 		if (mp >= 7) {
 			mp -= 7;
-
 			hp_max *= 0.8;
 			hp *= 0.6;
 			def *= 0.7;
