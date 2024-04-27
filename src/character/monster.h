@@ -50,9 +50,9 @@ class Robot : public Monster {
 	void reset(int, int);
 };
 
-class Cith : public Monster {
+class Sith : public Monster {
   public:
-	Cith() { genre_ = "Cith"; };
+	Sith() { genre_ = "Sith"; };
 	void returntodark();
 	int lasers();
 	void hurt(int);
@@ -83,7 +83,7 @@ std::vector<Monster> createMonsters(int);
 void mon_show_reset();
 extern Clone clo1;
 extern Robot rob1;
-extern Cith cit1;
+extern Sith sit1;
 extern Mandalorians man1;
 extern std::string mon_show_crit;
 extern std::string mon_show_evasion;
