@@ -1,5 +1,4 @@
 #include "character.h"
-#include "../maze/maze.hpp"
 #include <cmath>
 #include <iostream>
 #include <random>
@@ -23,6 +22,7 @@ void cha_show_reset() {
 int main_character::HP() { return hp; }
 int main_character::MP() { return mp; }
 int main_character::ATK() { return atk; }
+int main_character::EXP() { return exp; }
 
 main_character::main_character() {
 	level = 0;
@@ -91,6 +91,9 @@ void main_character::reset() {
 	for (int i = 0; i < 3; ++i) {
 		status[i] = 0;
 	}
+}
+void main_character::getEXP(int x) {
+	exp+=x;
 }
 void main_character::set(double a[]) {
 	level = a[0];
@@ -173,7 +176,7 @@ void main_character::upgrade() {
 	exp = 0;
 	atk += level/2+1;
 	def += level/2+1;
-	hp_max += 20 * level;
+	hp_max += 15 * level;
 	hp = hp_max;
 	mp = 1.4 * level + 4;
 	critical_rate += level * 0.006 + 0.008;
