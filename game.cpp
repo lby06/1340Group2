@@ -32,7 +32,6 @@ int game_loop() {
 				cha1.setPosition(p.first, p.second);
 			}
 		}
-                cha1.reset();
 		maze.addMainCharacter(cha1);
 		maze.addMonsters(monsters);
 		tmp.maze = maze.getExtendedGrid();
