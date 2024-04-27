@@ -100,10 +100,10 @@ int game_loop() {
 		auto tmp1 = maze.isMainCharacterEncounterMonster();
 		if (tmp1.first) {
 			// init monster before battle
-			clo1.reset(level * 0.4, 0);
-			rob1.reset(level * 0.4, 0);
-			man1.reset(level * 0.4, 0);
-			cit1.reset(level * 0.4, 0);
+			clo1.reset(level * 0.8, 0);
+			rob1.reset(level * 0.8, 0);
+			man1.reset(level * 0.8, 0);
+			cit1.reset(level * 0.8, 0);
 
 			battle_monster(cha1.level, tmp1.second);
 			victorysettlement();
@@ -129,10 +129,11 @@ int game_loop() {
 		// 2. Reach exit
 		if (maze.isMainCharacterAtExit()) {
 			
-			activate(level);		// 3.1 Level up (and corresponding properties). implemente here finish
+					// 3.1 Level up (and corresponding properties). implemente here finish
 			level++;
 			if (cha1.EXP() >= 100)
 			{
+				activate(cha1.level);
 				cha1.upgrade();
 			}	
 			// Create new maze.
