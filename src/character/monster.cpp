@@ -107,7 +107,7 @@ void Monster::hurt(int x) {
 	mt19937 gen(rd());
 	uniform_real_distribution<> dis(0, 1);
 	if (dis(gen) <= evasion_rate_) {
-		mon_show_evasion = "Evasion successful.";
+		mon_show_evasion = "Missed， it is dodged.";
 	} else {
 		int y = x - def_;
 		if ((hp_ - y) <= 0) {
@@ -185,7 +185,7 @@ void Sith::hurt(int x) {
 	mt19937 gen(rd());
 	uniform_real_distribution<> dis(0, 1);
 	if (dis(gen) <= evasion_rate_) {
-		mon_show_evasion = "Evasion successful."; //改动--------------
+		mon_show_evasion = "Missed， it is dodged."; //改动--------------
 	} else {
 		int y = x - def_;
 		if ((hp_ - y) <= 0) {
@@ -252,7 +252,7 @@ void Mandalorians::hurt(int x) {
 	mt19937 gen(rd());
 	uniform_real_distribution<> dis(0, 1);
 	if (dis(gen) <= evasion_rate_) {
-		mon_show_evasion = "Evasion successful."; //改动--------------
+		mon_show_evasion = "Missed， it is dodged."; //改动--------------
 	} else {
 		int y = x - def_;
 		if ((hp_ - y) <= 0) {
