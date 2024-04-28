@@ -152,6 +152,8 @@ void Maze::showMaze() {
 				 "[d] to move right, [q] to quit, [e] to show menu."
 			  << std::endl;
 
+	std::cout << "\tCurrent EXP: " << main_character_->EXP() << std::endl;
+
 	for (int i = 0; i < kMaxMazeSizeWidth; i++) {
 		for (int j = 0; j < kMaxMazeSizeHeight; j++) {
 			bool isCharacter = false;

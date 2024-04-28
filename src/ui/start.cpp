@@ -259,7 +259,7 @@ void parse_file(const string filename, save_file &s, int slot) {
 			parameters[i - 2] = stod(lines[i]);
 		} else if (i >= 23 && i <= 52) {
 			maze.push_back(lines[i]);
-		} else if (i == 74) {
+		} else if (i == 54) {
 			username = lines[i];
 		}
 	}

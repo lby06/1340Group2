@@ -101,7 +101,7 @@ void SavingsUI::renameSlot(int slot) {
 	std::cout << "Enter new name (There should be no [space]): ";
 	std::cin >> new_name;
 
-	entries[slot].brief_info_ = new_name;
+	sf->username = entries[slot].brief_info_ = new_name;
 }
 
 void SavingsUI::saveEntries() {
@@ -110,7 +110,7 @@ void SavingsUI::saveEntries() {
 	for (auto &entry : entries) {
 		fout << entry.getId() << std::endl
 			 << entry.brief_info_ << std::endl
-			 << entry.getLevel() << std::endl;
+			 << sf->level << std::endl;
 	}
 	fout.close();
 }

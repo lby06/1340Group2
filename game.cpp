@@ -70,15 +70,10 @@ int game_loop() {
 		// 0. Make a move
 		int key = readKeyboard();
 		if (key == 'Q' || key == 'q') { // quit game
-			// std::cout << cha1.getPosition().first << ", "
-			// 		  << cha1.getPosition().second << std::endl;
-			// save_file a;
-			// parse_file("data/savings/sav.txt", a, 1);
-			// std::cout << a.save_character.getPosition().first << ", "
-			// 		  << a.save_character.getPosition().second << std::endl;
 			exit(0);
 		} else if (key == 'e' || key == 'E') { // show menu (save)
 			tmp.save_character = cha1;
+			tmp.level = level;
 
 			// std::cout << tmp.username << std::endl;
 			// getchar();
@@ -88,7 +83,6 @@ int game_loop() {
 			ui.loadSavingfile(tmp);
 			ui.display();
 			ui.saveEntries();
-			// std::cerr << "Successfully saved the game.\n";
 			continue;
 		}
 		maze.moveMainCharacter(key);
