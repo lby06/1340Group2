@@ -107,7 +107,7 @@ void Monster::hurt(int x) {
 	mt19937 gen(rd());
 	uniform_real_distribution<> dis(0, 1);
 	if (dis(gen) <= evasion_rate_) {
-		mon_show_evasion = "Missed， it is dodged.";
+		mon_show_evasion = "Missed, it is dodged.";
 	} else {
 		int y = x - def_;
 		if ((hp_ - y) <= 0) {
