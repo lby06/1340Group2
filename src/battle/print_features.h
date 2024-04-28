@@ -65,5 +65,5 @@ void wordsinsert (vector<string>& fight_map, const vector<vector<string>> & word
 
 void appendword(vector<string> & words, string word,int limit);
 void clear(vector<string> & words);
-
+string some(vector <string> strings);
 #endif // PRINT_FEATURES_H
