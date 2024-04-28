@@ -199,7 +199,7 @@ void main_character::hurt(int x) {
 	mt19937 gen(rd());
 	uniform_real_distribution<> dis(0, 1);
 	if (dis(gen) <= evasion_rate) {
-		cha_show_evasion = "Successfully evaded.";
+		cha_show_evasion = "Missed， it is dodged.";
 	} else {
 		int y = x - def;
 		if ((hp - y) <= 0) {
