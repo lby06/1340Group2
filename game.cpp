@@ -117,7 +117,7 @@ int game_loop() {
 			print_file("data/scripts/ascii_images/lose.txt", 0, true);
 			cout << "\n                                          			*** press 'enter' to continue... ***";
 			cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-			game_loop();
+			exit(0);
 			//should implement a end page 
 			return 0;
 		}
@@ -149,7 +149,8 @@ int game_loop() {
 }
 
 int main(){
-
-	game_loop();
+	while(1){
+		game_loop();
+	}
 	return 0;
 }
