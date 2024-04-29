@@ -158,6 +158,50 @@ int delete_slot(int slot) {
 	return slot;
 }
 
+void rename_slot(int slot, SavingsUI &ui) {
+	// rename the slot in the ui entry
+	ui.renameSlot(slot);
+	ui.saveEntries();
+	// rewrite the username in the txt file
+	int row_of_username;
+	//   read in
+	ifstream fin;
+	fin.open("data/savings/sav.txt");
+	if (fin.fail()) {
+		cout << "error: file not found" << endl;
+		exit(1);
+	}
+	vector<string> lines;
+	string line;
+	while (getline(fin, line)) {
+		lines.push_back(line);
+	}
+	fin.close();
+	//    modify
+	if(slot == 0){
+		row_of_username = 54;
+	} else if (slot == 1){
+		row_of_username = 109;
+	} else if (slot == 2){
+		row_of_username = 164;
+	}
+	lines[row_of_username] = ui.entries[slot].getUsername();
+	//    write out
+	ofstream fout;
+	fout.open("data/savings/sav.txt");
+	if (fout.fail()) {
+		cout << "error: file not found" << endl;
+		exit(1);
+	}
+	for (int i = 0; i < lines.size(); i++) {
+		if (i == lines.size() - 1) {
+			fout << lines[i];
+			break;
+		}
+		fout << lines[i] << "\n";
+	}
+}
+
 // Choose a slot and continue gaming.
 // Returns verdict and `save_file`. -1 if user wants to exit. 1 if ok.
 int continue_or_modify_saving(save_file &s) {
@@ -167,15 +211,14 @@ int continue_or_modify_saving(save_file &s) {
 	SavingsUI ui;
 	ui.loadEntries();
 	ui.loadSavingfile(s);
-	for (auto &x : ui.entries) {
-		options.push_back(x.getBriefInfo());
-	}
-
 	int slot = 0;
 	int padding = 3;
 	bool confirmed = false;
 
 	while (!confirmed) {
+		for (auto &x : ui.entries) {
+			options.push_back(x.getBriefInfo());
+		}
 		clear_screen();
 		// Show cursor movement help tips.
 		printPadded(
@@ -209,8 +252,11 @@ int continue_or_modify_saving(save_file &s) {
 			confirmed = true;
 			return -1;
 		} else if (key == 'D' || key == 'd') {
-			delete_slot(slot + 1);
+			delete_slot(slot);
+		} else if (key == 'R' || key == 'r') {
+			rename_slot(slot, ui);
 		}
+		options.clear();
 	}
 
 	// Load stored setting to main game
@@ -279,46 +325,6 @@ void parse_file(const string filename, save_file &s, int slot) {
 	fin.close();
 	// std::cerr << "OK2\n";
 	return;
-}
-
-int rename_slot() {
-	int slot;
-	string new_name;
-	bool valid = false;
-
-	while (!valid) {
-		cout << "Enter the number of the slot you want to rename: ";
-		cin >> slot;
-		if (slot == 1 || slot == 2 || slot == 3) {
-			valid = true;
-		} else {
-			cout << "Invalid slot number.\n";
-		}
-	}
-
-	cout << "Enter a new name for the slot: ";
-	cin.ignore();
-	getline(cin, new_name);
-
-	ifstream file_in("data/scripts/ascii_images/save.txt");
-	vector<string> lines;
-	string line;
-	while (getline(file_in, line)) {
-		lines.push_back(line);
-	}
-	file_in.close();
-	lines[2 * slot - 1] = lines[2 * slot - 1].substr(0, 11) + new_name;
-
-	ofstream file_out("data/scripts/ascii_images/save.txt");
-	if (file_out.fail()) {
-		cout << "error: file not found" << endl;
-	}
-	for (const string &line : lines) {
-		file_out << line << "\n";
-	}
-	file_out.close();
-
-	return slot;
 }
 
 //

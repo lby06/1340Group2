@@ -17,6 +17,9 @@ class Savingentry {
 	std::string getBriefInfo() const {
 		return brief_info_ + "(level: " + std::to_string(level_) + ")";
 	}
+	std::string getUsername() const {
+		return brief_info_;
+	}
 	int getLevel() const { return level_; }
 };
 

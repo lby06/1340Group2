@@ -33,6 +33,5 @@ void parse_file(const std::string filename, save_file &s, int slot);
 std::string new_game();
 void save(save_file &s, int slot);
 int start_page(save_file &s);
-int rename_slot();
 void end();
 bool main_game(save_file s, Maze &, main_character &, std::vector<Monster> &);
