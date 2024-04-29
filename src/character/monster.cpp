@@ -10,7 +10,7 @@ using namespace std;
 	Defines common behaviours of monsters.
 
  */
-//改动---------------
+
 string mon_show_crit = "";
 string mon_show_evasion = "";
 string mon_show = "";
@@ -19,7 +19,7 @@ void mon_show_reset() {
 	mon_show_evasion = "";
 	mon_show = "";
 }
-//改动----------------
+
 
 // NOTE -  Modify the percentage distribution here.
 const int kNormalMonsterPercentage = 20; // 20
@@ -91,7 +91,7 @@ int Monster::damage() {
 	mt19937 gen(rd());
 	uniform_real_distribution<> dis(0, 1);
 	if (dis(gen) <= critical_rate_) {
-		mon_show_crit = "Critical Strike!"; //改动----------------
+		mon_show_crit = "Critical Strike!"; 
 		return atk_ * critical_damage_;
 	} else {
 		return atk_;
@@ -165,7 +165,7 @@ void Sith::reset(int level, int number) {
 	critical_damage_ = 1.6;
 	life = 0;
 }
-//技能1
+
 void Sith::returntodark() {
 	mp_ -= 5;
 	life = 4;
@@ -185,7 +185,7 @@ void Sith::hurt(int x) {
 	mt19937 gen(rd());
 	uniform_real_distribution<> dis(0, 1);
 	if (dis(gen) <= evasion_rate_) {
-		mon_show_evasion = "Missed， it is dodged."; //改动--------------
+		mon_show_evasion = "Missed， it is dodged."; 
 	} else {
 		int y = x - def_;
 		if ((hp_ - y) <= 0) {
@@ -233,7 +233,7 @@ int Mandalorians::damage() {
 	mt19937 gen(rd());
 	uniform_real_distribution<> dis(0, 1);
 	if (dis(gen) <= critical_rate_) {
-		mon_show_crit = "Critical Strike!"; //改动----------------
+		mon_show_crit = "Critical Strike!"; 
 		return atk_ * critical_damage_;
 	} else {
 		return atk_;
@@ -252,7 +252,7 @@ void Mandalorians::hurt(int x) {
 	mt19937 gen(rd());
 	uniform_real_distribution<> dis(0, 1);
 	if (dis(gen) <= evasion_rate_) {
-		mon_show_evasion = "Missed， it is dodged."; //改动--------------
+		mon_show_evasion = "Missed， it is dodged."; 
 	} else {
 		int y = x - def_;
 		if ((hp_ - y) <= 0) {
@@ -263,9 +263,9 @@ void Mandalorians::hurt(int x) {
 		}
 	}
 }
-//改动----------------
+
 Clone clo1;
 Robot rob1;
 Sith sit1;
 Mandalorians man1;
-//改动----------------
+
