@@ -93,10 +93,10 @@ int game_loop() {
 		auto tmp1 = maze.isMainCharacterEncounterMonster();
 		if (tmp1.first) {
 			// init monster before battle
-			clo1.reset(level * 0.8, 0);
-			rob1.reset(level * 0.8, 0);
-			man1.reset(level * 0.8, 0);
-			sit1.reset(level * 0.8, 0);
+			clo1.reset(level * 1, 0);
+			rob1.reset(level * 1, 0);
+			man1.reset(level * 1, 0);
+			sit1.reset(level * 1, 0);
 
 			battle_monster(cha1.level, tmp1.second);
 			if(cha1.is_alive()){
