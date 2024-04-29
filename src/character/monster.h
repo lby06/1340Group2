@@ -3,9 +3,9 @@
 
 #include <iostream>
 #include <random>
-//改动
+//change
 #include <string>
-//改动
+//change
 class Monster {
   public:
 	// Returns monsters' basic properties
@@ -79,7 +79,7 @@ class Mandalorians : public Monster {
 // Function call to create a list of new monsters.
 std::vector<Monster> createMonsters(int);
 
-//改动
+//change
 void mon_show_reset();
 extern Clone clo1;
 extern Robot rob1;
@@ -88,5 +88,5 @@ extern Mandalorians man1;
 extern std::string mon_show_crit;
 extern std::string mon_show_evasion;
 extern std::string mon_show;
-//改动
+//change
 #endif

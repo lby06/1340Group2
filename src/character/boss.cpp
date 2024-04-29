@@ -14,7 +14,7 @@ void boss_show_reset() {
 }
 double *bossskill::a(int atk) {
 	double *x = new double[20];
-	//回复
+	//regenerate
 	x[0] = 5 * difficulty;
 	x[1] = 0;
 	x[2] = 1;
@@ -27,7 +27,7 @@ double *bossskill::a(int atk) {
 }
 double *bossskill::b(int atk) {
 	double *x = new double[20];
-	//攻击
+	//attack
 	x[0] = 0;
 	x[1] = 1 + difficulty;
 	x[2] = 1;
@@ -40,7 +40,7 @@ double *bossskill::b(int atk) {
 }
 double *bossskill::c(int atk) {
 	double *x = new double[20];
-	//加固
+	//reinforce
 	x[0] = 0;
 	x[1] = 0;
 	x[2] = 0.8;
@@ -54,7 +54,7 @@ double *bossskill::c(int atk) {
 double *bossskill::d(int atk) {
 
 	double *x = new double[20];
-	//狂暴
+	//rage
 	x[0] = -5;
 	x[1] = 0;
 	x[2] = 1.2;
@@ -68,7 +68,7 @@ double *bossskill::d(int atk) {
 double *bossskill::e(int atk) {
 
 	double *x = new double[20];
-	//重击
+	//heavy atk
 	x[0] = -5;
 	x[1] = 2 + difficulty;
 	x[2] = 1;
@@ -82,7 +82,7 @@ double *bossskill::e(int atk) {
 double *bossskill::f(int atk) {
 
 	double *x = new double[20];
-	//上盾
+	//shield
 	x[0] = -5;
 	x[1] = 0;
 	x[2] = 1;
@@ -97,7 +97,7 @@ double *bossskill::f(int atk) {
 double *bossskill::g(int atk) {
 
 	double *x = new double[20];
-	//自毁
+	//self_kill
 	x[0] = -8 * difficulty;
 	x[1] = 0;
 	x[2] = 1;
@@ -112,7 +112,7 @@ double *bossskill::g(int atk) {
 double *bossskill::h(int atk) {
 
 	double *x = new double[20];
-	//吸血攻击
+	//drain blood
 	x[0] = atk * 0.8 * difficulty;
 	x[1] = 1;
 	x[2] = 1;
@@ -206,7 +206,7 @@ void Vadar::display() {
 	cout << "Evasion Rate: " << evasion_rate * 100 << "%"
 		 << "\n";
 }
-//技能1
+//skill 1
 void Vadar::hurt(int x) {
 	random_device rd;
 	mt19937 gen(rd());

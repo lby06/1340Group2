@@ -14,9 +14,9 @@ using namespace std;
 
 void clear_screen() {
 #ifdef _WIN32
-	system("CLS"); // 奇形怪状的bug
+	system("CLS"); // not work
 #elif __unix__
-	system("clear"); // 正常
+	system("clear"); // normal
 #endif
 }
 
@@ -40,7 +40,7 @@ int print_file(const string filename, int wait_time, bool clean) {
 	}
 	file.close();
 	this_thread::sleep_for(
-		chrono::seconds(wait_time)); // windows 上无法运行, linux 上正常
+		chrono::seconds(wait_time)); // failed to work on Windows
 	return line.size();
 }
 
