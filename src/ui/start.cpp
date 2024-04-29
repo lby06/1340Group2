@@ -43,15 +43,37 @@ int print_file(const string filename, int wait_time, bool clean) {
 	return line.size();
 }
 
+// Interactive print screen
+void print_file_I(const string filename, string padding_type) {
+	clear_screen();
+	ifstream file;
+	string line;
+	file.open(filename.c_str());
+	if (file.fail()) {
+		cout << "error: file not found" << endl;
+		exit(1);
+	}
+	while (getline(file, line)) {
+		cout << line << endl;
+	}
+	file.close();
+	if (padding_type == "sith_code") {
+		cout << "\n  press 'enter' to continue...";
+	} else if (padding_type == "script1") {
+		cout << "\n                                                *** press 'enter' to continue... ***";
+	} else if (padding_type == "luke") {
+		cout << "\n                                          *** press 'enter' to continue... ***";
+	} else if (padding_type == "script3") {
+		cout << "\n    *** press 'enter' to continue... ***";
+	}
+	cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+	return;
+}
 /// Starts a new game, including animation, starting page.
 string new_game() {
 	// Loading Animation
-	print_file("data/scripts/ascii_images/sith_code.txt", 0, true);
-	cout << "\n  press 'enter' to continue...";
-	cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-	print_file("data/scripts/ascii_images/script1.txt", 0, true);
-	cout << "\n                                                *** press 'enter' to continue... ***";
-	cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+	print_file_I("data/scripts/ascii_images/sith_code.txt", "sith_code");
+	print_file_I("data/scripts/ascii_images/script1.txt", "script1");
 	
 	string name;
 	bool valid = false;
@@ -110,12 +132,8 @@ string new_game() {
 			fout.close();
 		}
 	} while (!valid);
-	print_file("data/scripts/ascii_images/luke_skywalker.txt", 0, true);
-	cout << "\n                                          *** press 'enter' to continue... ***";
-	cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-	print_file("data/scripts/ascii_images/script3.txt", 0, true);
-	cout << "\n    *** press 'enter' to continue... ***";
-	cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+	print_file_I("data/scripts/ascii_images/luke_skywalker.txt", "luke");
+	print_file_I("data/scripts/ascii_images/script3.txt", "script3");
 	// main_game(choice);
 	return name;
 }

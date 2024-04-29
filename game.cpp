@@ -70,7 +70,7 @@ int game_loop() {
 		// 0. Make a move
 		int key = readKeyboard();
 		if (key == 'Q' || key == 'q') { // quit game
-			exit(0);
+			end();
 		} else if (key == 'e' || key == 'E') { // show menu (save)
 			tmp.save_character = cha1;
 			tmp.level = level;
