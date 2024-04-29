@@ -77,7 +77,7 @@ saving_ui.o: $(SAVING_UI)
 saving_ui: saving_ui.o utils.o maze.o start.o character.o monster.o
 	$(compiler) $(FLAG) $^ -o saving_ui.out
 
-# BATTLE
+
 # PRINT_FEATURES
 print_features.o: $(PRINT_FEATURES)
 	$(compiler) $(FLAG) -c $< -o print_features.o

@@ -23,9 +23,6 @@ int readKeyboard() {
 
 	tcsetattr(0, TCSANOW, &stored_settings);
 
-	if (in == 27) { // [esc] is pressed
-	}
-
 	return in;
 }
 

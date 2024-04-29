@@ -81,6 +81,7 @@ void SavingsUI::display() {
 		} else if (key == 'c' || key == 'C') { // Confirm.
 			confirmed = true;
 			entries[cursorAt].brief_info_ = sf->username;
+			entries[cursorAt].level_ = sf->level;
 			save(*sf, cursorAt + 1);
 		} else if (key == 'q' || key == 'Q') { // Quit saving mode.
 			// exit(0);
@@ -120,7 +121,7 @@ void SavingsUI::saveEntries() {
 	for (auto &entry : entries) {
 		fout << entry.getId() << std::endl
 			 << entry.brief_info_ << std::endl
-			 << sf->level << std::endl;
+			 << entry.level_ << std::endl;
 	}
 	fout.close();
 }

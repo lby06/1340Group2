@@ -5,7 +5,7 @@
 #include <vector>
 
 class Savingentry {
-  private:
+  public:
 	int id_;
 	int level_;
 
