@@ -1,6 +1,7 @@
 #include "../character/character.h"
 #include "../utils/utils.hpp"
 #include "saving_ui.hpp"
+#include "../maze/maze.hpp"
 #include "start_endpage.h"
 #include <chrono>
 #include <fstream>
@@ -139,41 +140,119 @@ string new_game() {
 }
 
 // Delete a slot of saving.
-int delete_slot(int slot) {
-	// int slot;
-	// bool valid = false;
+void delete_slot(int slot, SavingsUI ui) {
+	/* reset character in the save file and generate a new maze */
+	// read in
+	ui.confirmAndDelete(slot);
+	// reset character and generate a new maze
+	save_file sf;
+	Maze maze;
+	maze.newMaze();
+	sf.maze = maze.getExtendedGrid();
+	sf.save_character.reset();
+	sf.username = ui.entries[slot].getUsername();
+	sf.level = 0;
+	ui.loadSavingfile(sf);
+	ui.saveEntries();
+	// push
+	auto save_parameters = sf.save_character.save();
+	// input save file
+	ifstream fin;
+	fin.open("data/savings/sav.txt");
+	if (fin.fail()) {
+		cout << "error: file not found" << endl;
+		exit(1);
+	}
 
-	// while (!valid) {
-	// 	cout << "Enter the number of the slot you want to delete: ";
-	// 	cin >> slot;
-	// 	if (slot == 1 || slot == 2 || slot == 3) {
-	// 		valid = true;
-	// 	} else {
-	// 		cout << "Invalid slot number.\n";
+	vector<string> lines;
+	string line;
+	while (getline(fin, line)) {
+		lines.push_back(line);
+	}
+	fin.close();
+
+	// calculate the part that needs to change
+	int init_pos, end_pos;
+	if (slot == 0) {
+		init_pos = 0;
+		end_pos = 54;
+	} else if (slot == 1) {
+		init_pos = 55;
+		end_pos = 109;
+	} else if (slot == 2) {
+		init_pos = 110;
+		end_pos = 164;
+	}
+	// cerr << lines.size() << endl;
+	// change content of the save file
+	//      delete
+	// if (command == 'd') {
+	// 	for (int i = init_pos; i <= end_pos; i++) {
+	// 		if (lines[i].substr(0, 1) != "@") {
+	// 			lines[i] = "";
+	// 		}
+	// 	}
+
+	// 	// rewrite save file
+	// 	ofstream fout("data/savings/sav.txt");
+	// 	if (fout.fail()) {
+	// 		cout << "error: file not found" << endl;
+	// 	}
+	// 	for (int i = 0; i < lines.size(); i++) {
+	// 		if (i == lines.size() - 1) {
+	// 			fout << lines[i];
+	// 			break;
+	// 		}
+	// 		fout << lines[i] << "\n";
+	// 	}
+	// 	fout.close();
+
+	// 	return;
+	// }
+	//      save
+	// for (int i = init_pos + 2; i <= end_pos; i++) {
+	// 	if (i > init_pos + 1 && i < init_pos + 22) {
+	// 		auto t = to_string(save_parameters[i - init_pos - 2]);
+	// 		lines[i].swap(t);
+	// 	} else if (i >= init_pos + 23 && i <= init_pos + 72) {
+	// 		auto t = s.maze[i - init_pos - 23];
+	// 		lines[i].swap(t);
+	// 	} else if (i == init_pos + 74) {
+	// 		// lines[i] = username;
+	// 		auto t = s.username;
+	// 		lines[i].swap(t);
 	// 	}
 	// }
 
-	ifstream file_in("data/scripts/ascii_images/save.txt");
-	vector<string> lines;
-	string line;
-	while (getline(file_in, line)) {
-		lines.push_back(line);
-	}
-	file_in.close();
-	lines[2 * slot - 1] =
-		lines[2 * slot - 1].substr(0, 11) + "Slot " + to_string(slot);
-
-	ofstream file_out("data/scripts/ascii_images/save.txt");
-	if (file_out.fail()) {
+	// rewrite save file
+	ofstream fout("data/savings/sav.txt");
+	if (fout.fail()) {
 		cout << "error: file not found" << endl;
-		return slot;
+		exit(1);
 	}
-	for (const string &line : lines) {
-		file_out << line << "\n";
+	for (int i = 0; i < lines.size(); i++) {
+		if (i < init_pos || i > end_pos) {
+			fout << lines[i] << "\n";
+		} else if (i == init_pos)
+			fout << "@slot " << slot << "\n";
+		else if (i == init_pos + 1)
+			fout << "@character\n";
+		else if (i == init_pos + 22)
+			fout << "@maze\n";
+		else if (i == init_pos + 53)
+			fout << "@username\n";
+		else if (i > init_pos + 1 && i < init_pos + 22) {
+			fout << to_string(save_parameters[i - init_pos - 2]) << "\n";
+		} else if (i >= init_pos + 23 && i <= init_pos + 52) {
+			fout << sf.maze[i - init_pos - 23] << "\n";
+		} else if (i == init_pos + 54) {
+			fout << sf.username << "\n";
+		}
 	}
-	file_out.close();
+	fout.close();
+	delete[] save_parameters;
 
-	return slot;
+	return;
 }
 
 void rename_slot(int slot, SavingsUI &ui) {
@@ -227,8 +306,8 @@ int continue_or_modify_saving(save_file &s) {
 	vector<string> options; // = {"Slot 1", "Slot 2", "Slot 3"};
 
 	SavingsUI ui;
-	ui.loadEntries();
-	ui.loadSavingfile(s);
+	ui.loadEntries();		// ui has 3 entries
+	ui.loadSavingfile(s);	// ui only has 1 save_file
 	int slot = 0;
 	int padding = 3;
 	bool confirmed = false;
@@ -270,7 +349,7 @@ int continue_or_modify_saving(save_file &s) {
 			confirmed = true;
 			return -1;
 		} else if (key == 'D' || key == 'd') {
-			delete_slot(slot);
+			delete_slot(slot, ui);
 		} else if (key == 'R' || key == 'r') {
 			rename_slot(slot, ui);
 		}

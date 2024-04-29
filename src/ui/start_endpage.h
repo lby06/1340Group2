@@ -12,13 +12,11 @@ struct save_file{
 	std::vector<std::string> maze;
 	// int seed;
 	// Needed if the maze will be generated from the beginning
-    int slot_number;
-	std::string username;
+    std::string username;
 
 	save_file(const save_file &sf) {
 		save_character = sf.save_character;
 		maze = sf.maze;
-		slot_number = sf.slot_number;
 		username = sf.username;
 	}
 	save_file() {}

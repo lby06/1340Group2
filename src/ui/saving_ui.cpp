@@ -98,10 +98,20 @@ void SavingsUI::display() {
 void SavingsUI::renameSlot(int slot) {
 	// Rename the slot.
 	std::string new_name;
-	std::cout << "Enter new name (There should be no [space]): ";
+	std::cout << "Enter a new name (There should be no [space]): ";
 	std::cin >> new_name;
 
 	sf->username = entries[slot].brief_info_ = new_name;
+}
+
+void SavingsUI::confirmAndDelete(int slot) {
+	// Confirm and delete the slot.
+	bool confirmed = true;
+	std::cout << "Your progress will be removed, but your username will not change.\n";
+	std::cout << "Are you sure you want to delete this saving? [1/0]: ";
+	confirmed = readKeyboard() - '0';
+	if (!confirmed) return;
+	// reset level, character, enemy, maze; username not changed
 }
 
 void SavingsUI::saveEntries() {

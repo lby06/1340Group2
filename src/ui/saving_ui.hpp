@@ -33,7 +33,7 @@ class SavingsUI {
 	// Show all existing savings within TUI
 	void showAllEntries();
 	// Confirmation before deleting a saving.
-	void confirmBeforeDeleting();
+	void confirmAndDelete(int);
 	void renameSlot(int);
 	void loadEntries();
 	void loadSavingfile(save_file &);
