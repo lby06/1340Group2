@@ -148,111 +148,24 @@ void delete_slot(int slot, SavingsUI ui) {
 	save_file sf;
 	Maze maze;
 	maze.newMaze();
+	// Create a main character for test.
+	bool successfullyCreated = false;
+	while (!successfullyCreated) {
+		// std::cerr << "Creating main character..." << std::endl;
+		auto p = randomPosition();
+		if (maze.whatIsThisCell(p.first, p.second) == 0) {
+			successfullyCreated = true;
+			cha1.setPosition(p.first, p.second);
+		}
+	}
 	sf.maze = maze.getExtendedGrid();
-	sf.save_character.reset();
+	sf.save_character = cha1;
 	sf.username = ui.entries[slot].getUsername();
 	sf.level = 0;
 	ui.loadSavingfile(sf);
 	ui.saveEntries();
 	// push
-	auto save_parameters = sf.save_character.save();
-	// input save file
-	ifstream fin;
-	fin.open("data/savings/sav.txt");
-	if (fin.fail()) {
-		cout << "error: file not found" << endl;
-		exit(1);
-	}
-
-	vector<string> lines;
-	string line;
-	while (getline(fin, line)) {
-		lines.push_back(line);
-	}
-	fin.close();
-
-	// calculate the part that needs to change
-	int init_pos, end_pos;
-	if (slot == 0) {
-		init_pos = 0;
-		end_pos = 54;
-	} else if (slot == 1) {
-		init_pos = 55;
-		end_pos = 109;
-	} else if (slot == 2) {
-		init_pos = 110;
-		end_pos = 164;
-	}
-	// cerr << lines.size() << endl;
-	// change content of the save file
-	//      delete
-	// if (command == 'd') {
-	// 	for (int i = init_pos; i <= end_pos; i++) {
-	// 		if (lines[i].substr(0, 1) != "@") {
-	// 			lines[i] = "";
-	// 		}
-	// 	}
-
-	// 	// rewrite save file
-	// 	ofstream fout("data/savings/sav.txt");
-	// 	if (fout.fail()) {
-	// 		cout << "error: file not found" << endl;
-	// 	}
-	// 	for (int i = 0; i < lines.size(); i++) {
-	// 		if (i == lines.size() - 1) {
-	// 			fout << lines[i];
-	// 			break;
-	// 		}
-	// 		fout << lines[i] << "\n";
-	// 	}
-	// 	fout.close();
-
-	// 	return;
-	// }
-	//      save
-	// for (int i = init_pos + 2; i <= end_pos; i++) {
-	// 	if (i > init_pos + 1 && i < init_pos + 22) {
-	// 		auto t = to_string(save_parameters[i - init_pos - 2]);
-	// 		lines[i].swap(t);
-	// 	} else if (i >= init_pos + 23 && i <= init_pos + 72) {
-	// 		auto t = s.maze[i - init_pos - 23];
-	// 		lines[i].swap(t);
-	// 	} else if (i == init_pos + 74) {
-	// 		// lines[i] = username;
-	// 		auto t = s.username;
-	// 		lines[i].swap(t);
-	// 	}
-	// }
-
-	// rewrite save file
-	ofstream fout("data/savings/sav.txt");
-	if (fout.fail()) {
-		cout << "error: file not found" << endl;
-		exit(1);
-	}
-	for (int i = 0; i < lines.size(); i++) {
-		if (i < init_pos || i > end_pos) {
-			fout << lines[i] << "\n";
-		} else if (i == init_pos)
-			fout << "@slot " << slot << "\n";
-		else if (i == init_pos + 1)
-			fout << "@character\n";
-		else if (i == init_pos + 22)
-			fout << "@maze\n";
-		else if (i == init_pos + 53)
-			fout << "@username\n";
-		else if (i > init_pos + 1 && i < init_pos + 22) {
-			fout << to_string(save_parameters[i - init_pos - 2]) << "\n";
-		} else if (i >= init_pos + 23 && i <= init_pos + 52) {
-			fout << sf.maze[i - init_pos - 23] << "\n";
-		} else if (i == init_pos + 54) {
-			fout << sf.username << "\n";
-		}
-	}
-	fout.close();
-	delete[] save_parameters;
-
-	return;
+	save(sf, slot + 1);
 }
 
 void rename_slot(int slot, SavingsUI &ui) {
