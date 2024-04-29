@@ -194,6 +194,8 @@ void main_character::hp_recover(int x) {
 	}
 }
 void main_character::mp_recover(int x) { mp += x; }
+
+// Receiving damage
 void main_character::hurt(int x) {
 	random_device rd;
 	mt19937 gen(rd());
@@ -206,7 +208,7 @@ void main_character::hurt(int x) {
 			hp = 0;
 		} else {
 			hp -= y;
-			mp_recover(1); //受击回蓝
+			mp_recover(1); // gain magic power
 			if (skill_status[3] == 1) {
 				double rate = hp / hp_max;
 				hp += y * (1 - rate) / 1.5;
@@ -218,7 +220,7 @@ void main_character::hurt(int x) {
 	}
 }
 
-//状态
+//Status
 void main_character::activate_attackup() {
 	cout << "Attack Increased";
 	status[0] = 1;
@@ -251,7 +253,7 @@ void main_character::clear_status() {
 	}
 	cout << "Status Cleared";
 }
-//普通攻击
+//Normal Attack
 int main_character::normal_attack() {
 	if (rageattack >= 1) {
 		// cout<<"Attack with raaaage"<<endl;
@@ -260,8 +262,8 @@ int main_character::normal_attack() {
 	}
 	return damage();
 }
-//主动技能1.1：原力攻击 Hit with the Force
-//造成伤害，一定比例回血，不可暴击
+//Active skill 1.1：Hit with the Force
+
 void main_character::activate_recoverhit() { skill_status[0] = 1; }
 int main_character::act_recoverhit() {
 	if (skill_status[0] == 1) {
@@ -288,9 +290,8 @@ int main_character::act_recoverhit() {
 		return 0;
 	}
 }
-//主动技能1.2：光剑风暴 Storm of lightsaber
-// 对指定敌方造成3-5段伤害
-//可暴击，且释放技能期间暴击伤害提升（40%）
+//Active skill 1.2： Storm of lightsaber
+
 void main_character::activate_bladestorm() { skill_status[0] = 2; }
 int main_character::act_bladestorm() {
 	if (skill_status[0] == 2) {
@@ -328,15 +329,11 @@ int main_character::act_bladestorm() {
 		return 0;
 	}
 }
-//被动技能1.1：血族 Vengeance
-//普攻，技能最终伤害一定比例回复生命值
+//Passive skill 1.1：Vengeance
 void main_character::activate_vengeance() { skill_status[1] = 1; }
-//被动技能1.2 原力汇聚 Force convergence
-// 使用技能后按一定比例返还技能消耗的原力
+//Passive skill 1.2 Force convergence
 void main_character::activate_magicdraw() { skill_status[1] = 2; }
-//主动技能2.1 黑暗烈焰 Dark Force Flame
-// 耗尽魔法值进行攻击，消耗魔法值越多增伤越高（1.5次方）
-// 可暴击
+//Active skill 2.1 Dark Force Flame
 void main_character::activate_hellfire() { skill_status[2] = 1; }
 int main_character::act_hellfire() {
 	if (skill_status[2] == 1) {
@@ -364,10 +361,8 @@ int main_character::act_hellfire() {
 		return 0;
 	}
 }
-//主动技能2.2 绝地之怒 Rage of Jedi
-//一定比例减少生命值，生命值上限，防御
-//一定比例增加伤害，暴击率，暴击伤害
-//强化接下来两次普攻，强化为Rage attack（最终伤害值*1.6）
+//Active skill 2.2：Rage of Jedi
+
 void main_character::activate_rage() { skill_status[2] = 2; }
 void main_character::act_rage() {
 	if (skill_status[2] == 2) {
@@ -389,11 +384,9 @@ void main_character::act_rage() {
 		return;
 	}
 }
-//被动2.1 索罗之力 Gift of Solo
-// 改良暴击机制，触发暴击时有一定概率（根据自身暴击率）触发二次暴击
+//Passive skill 2.1：Gift of Solo
 void main_character::activate_doublecrit() { skill_status[3] = 2; }
-//被动2.2 最终防御 Ultimate shield
-// 血量越低，减伤越高，且血量低于40%时，受击回能额外加1
+//Passive skill 2.2：Ultimate shield
 void main_character::activate_ultimatedef() { skill_status[3] = 1; }
 main_character cha1;
 // a test
