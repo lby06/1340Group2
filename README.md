@@ -19,13 +19,13 @@
 
 # For Player
 ## Team members 🧑‍💻 ( In alphabetical order )
-[Liu Boyuan]()&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;(3036128315)
+[Liu Boyuan]()&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;(3036128315)
 
 [Lyu Wenzhuang]()&ensp;&ensp;&ensp;&ensp;(3036128004)
 
-[Qiu Xuze]()&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp; (3036128169)
+[Qiu Xuze]()&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;(3036128169)
 
-[Xu Qiyue]()&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp; (3036127359)
+[Xu Qiyue]()&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;(3036127359)
 
 [Zhang Shenru]()&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;(3036128157)
 
