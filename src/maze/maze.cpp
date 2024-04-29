@@ -1,41 +1,51 @@
 #include "maze.hpp"
-#include "../ui/start_endpage.h"
 #include "../utils/utils.hpp"
 
 #include <cstdlib>
 #include <fstream>
 #include <iostream>
-// Defines the size of a maze.
 
+// Defines the size of a maze.
 int kMaxMazeSizeWidth = 30;
 int kMaxMazeSizeHeight = 30;
 
 // Define the max number of monsters in each maze.
 int kMaxNumberOfMonsters = 10;
 
+// [Deprecated]
+// Generate path to saving files.
 const std::string kPathPrefix = "./data/savings/sav";
 const std::string kPathSuffix = ".dat";
 std::string constructPath(int i) {
 	return kPathPrefix + std::to_string(i) + kPathSuffix;
 }
 
-Maze::Maze() : main_character_(nullptr), monsters_(nullptr) {
-	// TODO for testing only, need delete it.
-}
+/// Default constructor. Set pointers to null to avoid memory fatal error.
+Maze::Maze() : main_character_(nullptr), monsters_(nullptr) {}
 
+/// @brief Adds pointer to main-game main character to interact with maze
+/// elements involving positions more conveniently
+/// @param main_character Main character in main game
 void Maze::addMainCharacter(main_character &main_character) {
 	this->main_character_ = &main_character;
 }
+
+/**
+ * @brief Adds pointers to monsters. Purpose is the same as the above.
+ *
+ * @param monsters Monsters in main game.
+ */
 void Maze::addMonsters(std::vector<Monster> &monsters) {
 	this->monsters_ = &monsters;
 
-	// Check validity
+	// Check position validity
 	for (auto &monster : monsters) {
 		while (1) {
 			auto tmp = monster.getPosition();
 			if (whatIsThisCell(tmp.first, tmp.second) == 3 ||
 				whatIsThisCell(tmp.first, tmp.second) == 4 ||
 				tmp == main_character_->getPosition()) {
+				// If not ok, generate new position
 				auto new_pos = randomPosition();
 				monster.setPosition(new_pos.first, new_pos.second);
 			} else {
@@ -45,6 +55,17 @@ void Maze::addMonsters(std::vector<Monster> &monsters) {
 	}
 }
 
+/**
+ * @brief Return what is this cell (walls, main character, monster, exit)
+ *
+ * @param x
+ * @param y
+ * @return 1->main character;
+ * 2->monster;
+ * 3->wall;
+ * 4->exit;
+ * 0->empty cell
+ */
 char Maze::whatIsThisCell(int x, int y) {
 	// is it main charac?
 	if (main_character_ != nullptr) {
@@ -78,7 +99,12 @@ char Maze::whatIsThisCell(int x, int y) {
 	return 0;
 }
 
-// Read a key from keyboard and move main character.
+/**
+ * @brief Accept a key from keyboard and move main character. This method
+ * invokes `main_character` class method.
+ *
+ * @param key key read from keyboard
+ */
 void Maze::moveMainCharacter(int key) {
 	auto tmp = main_character_->getPosition();
 	int x = tmp.first, y = tmp.second;
@@ -112,7 +138,13 @@ void Maze::moveMainCharacter(int key) {
 	}
 }
 
-// Check if the main character encounter a monster. (Then triggers a battle)
+/**
+ * @brief Check if the main character encounters a monster.
+ *
+ * @return Return a pair of bool and string. First element indicates whether
+ * encounters (true: encounter), second element indicates the genre of monster
+ * (needed by the battle part)
+ */
 std::pair<bool, std::string> Maze::isMainCharacterEncounterMonster() {
 	auto tmp = main_character_->getPosition();
 	int x = tmp.first, y = tmp.second;
@@ -125,12 +157,15 @@ std::pair<bool, std::string> Maze::isMainCharacterEncounterMonster() {
 	return {false, "-1"};
 }
 
+/**
+ * @brief Only invoked after battle. Remove the monster defeated, by checking
+ * position collapse.
+ *
+ */
 void Maze::winning() {
 	for (auto it = monsters_->begin(); it != monsters_->end();) {
 		if (it->getPosition().first == main_character_->getPosition().first &&
 			it->getPosition().second == main_character_->getPosition().second) {
-			// std::cerr << it->genre_ << std::endl;
-			// getchar();
 			it = monsters_->erase(it);
 		} else {
 			++it;
@@ -138,13 +173,24 @@ void Maze::winning() {
 	}
 }
 
+/**
+ * @brief Invoked after each move. Check if main character is at the exit and
+ * satisfy maze-clearing condition (defeat more than 7 monsters).
+ *
+ * @return true Yes.
+ * @return false No.
+ */
 bool Maze::isMainCharacterAtExit() {
 	auto tmp = main_character_->getPosition();
 	int x = tmp.first, y = tmp.second;
 	return this->grid_[x][y] == '@' && this->monsters_->size() <= 3;
 }
 
-// Refresh screen. And print the maze to the terminal.
+/**
+ * @brief Refresh screen. And print the maze to the terminal, along with main
+ * character and monsters. (with colour highlighting)
+ *
+ */
 void Maze::showMaze() {
 
 	/* Print Helper */
@@ -152,6 +198,7 @@ void Maze::showMaze() {
 				 "[d] to move right, [q] to quit, [e] to show menu."
 			  << std::endl;
 
+	// Print current EXP.
 	std::cout << "\tCurrent EXP: " << main_character_->EXP() << std::endl;
 
 	for (int i = 0; i < kMaxMazeSizeWidth; i++) {
@@ -165,12 +212,10 @@ void Maze::showMaze() {
 					std::cout << "\033[5;32m"
 							  << "U"
 							  << "\033[0m";
-					// std::cout << " ";
 					isCharacter = 1;
 					continue;
 				}
 			}
-			// std::cerr << "test\n";
 
 			// If is the position of a monster, print it.
 			if (monsters_ != nullptr) {
@@ -179,7 +224,6 @@ void Maze::showMaze() {
 					if (i == tmp.first && j == tmp.second) {
 						std::cout << "\033[31m" << monster.genre_[0]
 								  << "\033[0m";
-						// std::cout << " ";
 						isCharacter = 1;
 						break;
 					}
@@ -191,20 +235,28 @@ void Maze::showMaze() {
 					std::cout << "\033[5;33m" << this->grid_[i][j] << "\033[0m";
 				else
 					std::cout << this->grid_[i][j];
-				// std::cout << " ";
 			}
 		}
 		std::cout << std::endl;
 	}
 }
-// Read information from savings.
+/**
+ * @brief Load a maze from `vector<string>`
+ * @deprecated This functionality is provided or has alternatives in `ui/`.
+ *
+ * @param m
+ */
 void Maze::loadMaze(std::vector<std::string> &m) {
 	// Select a save.
 	// TODO let user select saveID.
 	this->grid_ = m;
 }
 
-// Saves maze to saving.
+/**
+ * @brief Saves the maze to the file.
+ * @deprecated This functionality is provided or has alternative in `ui/`
+ *
+ */
 void Maze::saveMaze() {
 	// Whether covers an existing save or saves to a new empty save.
 	bool save_to_new = true;
@@ -248,7 +300,10 @@ std::vector<std::string> Maze::getExtendedGrid() {
 	return extended_grid;
 }
 
-// Create a new maze.
+/**
+ * @brief Creates a new maze. Generate walls, and exit randomly.
+ *
+ */
 void Maze::newMaze() {
 	// Clear.
 	this->grid_.clear();

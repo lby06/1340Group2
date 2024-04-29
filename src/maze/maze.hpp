@@ -24,34 +24,94 @@ class Maze {
 	main_character *main_character_;  // Store main character's info
 
   public:
+	/// Default constructor. Set pointers to null to avoid memory fatal error.
 	Maze();
 	// Get extended grid (i.e. filled with spaces), otherwise height is much
 	// larger than width. Not suitable for display.
 	std::vector<std::string> getExtendedGrid();
-	// Deprecated. As API is provided in `battle/print_features.h`.
+
+	/**
+	 * @brief Refresh screen. And print the maze to the terminal, along with
+	 * main character and monsters. (with colour highlighting)
+	 *
+	 */
 	void showMaze();
-	// Load the maze from loaded.
+
+	/**
+	 * @brief Load a maze from `vector<string>`
+	 * @deprecated This functionality is provided or has alternatives in `ui/`.
+	 *
+	 * @param m
+	 */
 	void loadMaze(std::vector<std::string> &);
-	// Save the maze to data file.
+
+	/**
+	 * @brief Saves the maze to the file.
+	 * @deprecated This functionality is provided or has alternative in `ui/`
+	 *
+	 */
 	void saveMaze();
-	// Manage the main character pointer.
+
+	/// @brief Adds pointer to main-game main character to interact with maze
+	/// elements involving positions more conveniently
+	/// @param main_character Main character in main game
 	void addMainCharacter(main_character &);
-	// Manage the monsters pointer.
+
+	/**
+	 * @brief Adds pointers to monsters. Purpose is the same as the above.
+	 *
+	 * @param monsters Monsters in main game.
+	 */
 	void addMonsters(std::vector<Monster> &);
-	// Create a new maze. (Entering a new level / New game)
+
+	/**
+	 * @brief Creates a new maze. Generate walls, and exit randomly.
+	 *
+	 */
 	void newMaze();
 	// Fill the maze with monsters
 	void init_grid();
 	// Randomize a grid.
 	void randomGrid();
-	// What is this cell.
+	/**
+	 * @brief Return what is this cell (walls, main character, monster, exit)
+	 *
+	 * @param x
+	 * @param y
+	 * @return 1->main character;
+	 * 2->monster;
+	 * 3->wall;
+	 * 4->exit;
+	 * 0->empty cell
+	 */
 	char whatIsThisCell(int, int);
-	// Read a key and move main character.
+	/**
+	 * @brief Accept a key from keyboard and move main character. This method
+	 * invokes `main_character` class method.
+	 *
+	 * @param key key read from keyboard
+	 */
 	void moveMainCharacter(int);
-	// Check if the main character is at the exit.
+	/**
+	 * @brief Invoked after each move. Check if main character is at the exit
+	 * and satisfy maze-clearing condition (defeat more than 7 monsters).
+	 *
+	 * @return true Yes.
+	 * @return false No.
+	 */
 	bool isMainCharacterAtExit();
-	// Delete a defeated monster
+	/**
+	 * @brief Only invoked after battle. Remove the monster defeated, by
+	 * checking position collapse.
+	 *
+	 */
 	void winning();
-	// Check if the main character encounters a monster.
+	/**
+	 * @brief Check if the main character encounters a monster.
+	 *
+	 * @return Return a pair of bool and string. First element indicates whether
+	 * encounters (true: encounter), second element indicates the genre of
+	 * monster (needed by the battle part)
+	 */
 	std::pair<bool, std::string> isMainCharacterEncounterMonster();
 };
