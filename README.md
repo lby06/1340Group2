@@ -31,7 +31,7 @@
 
 ## How to play 🤗
 ### Quick DEMO
-[![asciicast](https://youtu.be/4_AzfZmNWAg)](video link)
+[![asciicast]()]([video link](https://youtu.be/4_AzfZmNWAg))
 
 **Remember to zoom in the terminal window to get a better experience.**
 ```bash
